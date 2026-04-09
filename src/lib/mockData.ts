@@ -7,7 +7,7 @@ export const weeklyCheckIns = [
   { week: "W6", energy: 9, stress: 3, focus: 9, confidence: 9, sleep: 9, habits: 95, score: 91 },
 ];
 
-export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected";
+export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected" | "proof_pending" | "proof_submitted";
 
 export interface Goal {
   id: string;
@@ -30,6 +30,11 @@ export interface Goal {
   clientName?: string;
   clientScore?: number;
   clientType?: string;
+  proofDescription?: string;
+  proofFileUrl?: string;
+  selfCompleted?: boolean;
+  coachVerificationNote?: string;
+  proofSubmittedAt?: string;
 }
 
 export const goals: Goal[] = [
@@ -160,6 +165,54 @@ export const pendingCoachGoals: Goal[] = [
   },
 ];
 
+export const proofSubmittedGoals: Goal[] = [
+  {
+    id: "7",
+    title: "Run a half marathon",
+    category: "Life",
+    target: "Complete 13.1 miles",
+    progress: 100,
+    status: "proof_submitted",
+    dueDate: "Apr 10",
+    stake: 75,
+    metricType: "yes/no",
+    targetValue: 1,
+    currentValue: 1,
+    proofRequirement: "Race finish photo or GPS tracker screenshot",
+    coachApproved: true,
+    approvedAt: "Mar 15, 2026",
+    resubmissionCount: 0,
+    clientName: "James Wright",
+    clientScore: 91,
+    clientType: "Business",
+    proofDescription: "Completed the Austin Half Marathon on April 8th. Finished in 1:52:34. Attached my Strava screenshot and finisher medal photo.",
+    selfCompleted: true,
+    proofSubmittedAt: "Apr 9, 2026",
+  },
+  {
+    id: "8",
+    title: "Launch email newsletter",
+    category: "Business",
+    target: "First issue sent to 100+ subscribers",
+    progress: 100,
+    status: "proof_submitted",
+    dueDate: "Apr 8",
+    stake: 75,
+    metricType: "yes/no",
+    targetValue: 1,
+    currentValue: 1,
+    proofRequirement: "Screenshot of sent newsletter and subscriber count",
+    coachApproved: true,
+    approvedAt: "Mar 10, 2026",
+    resubmissionCount: 0,
+    clientName: "Alex Rivera",
+    clientScore: 78,
+    clientType: "Business",
+    proofDescription: "Sent first edition of 'The Builder's Brief' to 142 subscribers via ConvertKit. Open rate was 48%.",
+    selfCompleted: true,
+    proofSubmittedAt: "Apr 8, 2026",
+  },
+];
 export const goalApprovalHistory = [
   { id: "1", goalTitle: "Close 3 enterprise deals", action: "approved" as const, coachNotes: null, createdAt: "Apr 2, 2026", clientName: "Marcus Chen" },
   { id: "2", goalTitle: "Morning routine 6 days/week", action: "approved" as const, coachNotes: null, createdAt: "Apr 1, 2026", clientName: "Marcus Chen" },

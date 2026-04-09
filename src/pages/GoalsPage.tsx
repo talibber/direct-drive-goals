@@ -2,16 +2,18 @@ import { useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { GoalCard } from "@/components/GoalCard";
 import { GoalBuilderDialog } from "@/components/GoalBuilderDialog";
+import { ProofSubmissionDialog } from "@/components/ProofSubmissionDialog";
 import { goals as initialGoals, type Goal } from "@/lib/mockData";
-import { Clock } from "lucide-react";
 
 export default function GoalsPage() {
   const [goals, setGoals] = useState<Goal[]>(initialGoals);
+  const [proofGoal, setProofGoal] = useState<Goal | null>(null);
 
   const pendingGoals = goals.filter((g) => g.status === "pending_approval");
   const revisionGoals = goals.filter((g) => g.status === "revision_requested");
+  const proofPendingGoals = goals.filter((g) => g.status === "proof_pending");
+  const proofSubmittedGoals = goals.filter((g) => g.status === "proof_submitted");
   const activeGoals = goals.filter((g) => g.status === "active" || g.status === "at_risk");
-  const completedGoals = goals.filter((g) => g.status === "completed" || g.status === "missed");
 
   const handleNewGoal = () => {
     const newGoal: Goal = {
@@ -42,6 +44,24 @@ export default function GoalsPage() {
     );
   };
 
+  const handleProofSubmit = (goalId: string, data: { description: string; selfCompleted: boolean; file?: File }) => {
+    setGoals((prev) =>
+      prev.map((g) => {
+        if (g.id !== goalId) return g;
+        if (!data.selfCompleted) {
+          return { ...g, status: "missed" as const, proofDescription: data.description, selfCompleted: false };
+        }
+        return {
+          ...g,
+          status: "proof_submitted" as const,
+          proofDescription: data.description,
+          selfCompleted: true,
+          proofSubmittedAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+        };
+      })
+    );
+  };
+
   return (
     <DashboardLayout>
       <div className="flex items-center justify-between mb-8">
@@ -51,6 +71,36 @@ export default function GoalsPage() {
         </div>
         <GoalBuilderDialog onSubmit={handleNewGoal} />
       </div>
+
+      {/* Proof Pending */}
+      {proofPendingGoals.length > 0 && (
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <h2 className="font-display font-semibold text-foreground">Proof Pending — Action Required</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {proofPendingGoals.map((g) => (
+              <GoalCard key={g.id} {...g} onSubmitProof={() => setProofGoal(g)} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Proof Submitted */}
+      {proofSubmittedGoals.length > 0 && (
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            <h2 className="font-display font-semibold text-foreground">Proof Submitted — Awaiting Verification</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {proofSubmittedGoals.map((g) => (
+              <GoalCard key={g.id} {...g} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Pending Approval */}
       {pendingGoals.length > 0 && (
@@ -121,6 +171,14 @@ export default function GoalsPage() {
           ))}
         </div>
       </div>
+
+      {/* Proof Submission Dialog */}
+      <ProofSubmissionDialog
+        goal={proofGoal}
+        open={!!proofGoal}
+        onClose={() => setProofGoal(null)}
+        onSubmit={handleProofSubmit}
+      />
     </DashboardLayout>
   );
 }

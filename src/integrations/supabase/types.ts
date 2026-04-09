@@ -56,14 +56,19 @@ export type Database = {
           coach_approved: boolean
           coach_id: string | null
           coach_notes: string | null
+          coach_verification_note: string | null
           created_at: string
           current_value: number
           description: string | null
           due_date: string
           id: string
           metric_type: string
+          proof_description: string | null
+          proof_file_url: string | null
           proof_requirement: string | null
+          proof_submitted_at: string | null
           resubmission_count: number
+          self_completed: boolean | null
           stake: number
           status: Database["public"]["Enums"]["goal_status"]
           target: string
@@ -78,14 +83,19 @@ export type Database = {
           coach_approved?: boolean
           coach_id?: string | null
           coach_notes?: string | null
+          coach_verification_note?: string | null
           created_at?: string
           current_value?: number
           description?: string | null
           due_date: string
           id?: string
           metric_type?: string
+          proof_description?: string | null
+          proof_file_url?: string | null
           proof_requirement?: string | null
+          proof_submitted_at?: string | null
           resubmission_count?: number
+          self_completed?: boolean | null
           stake?: number
           status?: Database["public"]["Enums"]["goal_status"]
           target: string
@@ -100,14 +110,19 @@ export type Database = {
           coach_approved?: boolean
           coach_id?: string | null
           coach_notes?: string | null
+          coach_verification_note?: string | null
           created_at?: string
           current_value?: number
           description?: string | null
           due_date?: string
           id?: string
           metric_type?: string
+          proof_description?: string | null
+          proof_file_url?: string | null
           proof_requirement?: string | null
+          proof_submitted_at?: string | null
           resubmission_count?: number
+          self_completed?: boolean | null
           stake?: number
           status?: Database["public"]["Enums"]["goal_status"]
           target?: string
@@ -117,6 +132,50 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      missed_goal_charges: {
+        Row: {
+          amount: number
+          charge_date: string
+          coach_verification_note: string | null
+          coach_verified: boolean
+          created_at: string
+          goal_id: string
+          id: string
+          pattern_call_scheduled: boolean
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          charge_date?: string
+          coach_verification_note?: string | null
+          coach_verified?: boolean
+          created_at?: string
+          goal_id: string
+          id?: string
+          pattern_call_scheduled?: boolean
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          charge_date?: string
+          coach_verification_note?: string | null
+          coach_verified?: boolean
+          created_at?: string
+          goal_id?: string
+          id?: string
+          pattern_call_scheduled?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "missed_goal_charges_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -135,6 +194,8 @@ export type Database = {
         | "missed"
         | "completed"
         | "rejected"
+        | "proof_pending"
+        | "proof_submitted"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -271,6 +332,8 @@ export const Constants = {
         "missed",
         "completed",
         "rejected",
+        "proof_pending",
+        "proof_submitted",
       ],
     },
   },
