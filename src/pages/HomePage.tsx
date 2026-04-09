@@ -294,7 +294,7 @@ export default function HomePage() {
             {[
               { num: 1, title: "You Apply", desc: "Tell us who you are and what's not working. We review within 48 hours.", border: "" },
               { num: 2, title: "Goals Get Set and Approved", desc: "You build 1-3 measurable goals. Your coach reviews every one. Vague goals get sent back. Only approved goals carry a stake.", border: "" },
-              { num: 3, title: "You Check In Every Week", desc: "Energy, focus, stress, habits, wins, failures, and what you're avoiding. No hiding from the data.", border: "" },
+              { num: 3, title: "You Check In Every Week", desc: "Energy, focus, stress, habits, wins, failures, and what you're avoiding. No hiding from the data.", border: "", note: "Between check-ins, use Help Radar to flag anything outside your goals — marketing, sales, mindset, decisions. Your coach sees it all." },
               { num: 4, title: "You Submit Proof", desc: "When a goal is due, you submit proof — description, photo, or document. Your coach reviews and verifies. No coach sign-off, no charge.", border: "" },
               { num: 5, title: "Miss a Goal", desc: "$75 stake charged. You're enrolled in the monthly Reset Session — a group call where common patterns get addressed without attribution. Think of it like church. The sermon might be about you. You'll know. That's the point.", border: "border-l-2 border-l-danger" },
               { num: 6, title: "Hit Everything", desc: "Perfect Month unlocked. Next Level Call scheduled. We talk about what you're capable of next. Then we raise the bar.", border: "border-l-2 border-l-primary" },

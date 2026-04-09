@@ -308,6 +308,78 @@ export const clientPerfectMonth = {
   perfectMonthCount: 2,
 };
 
+// Help Radar data
+export interface HelpRadarItem {
+  id: string;
+  clientId: string;
+  clientName?: string;
+  category: string;
+  customDescription: string | null;
+  context: string | null;
+  coachStatus: "seen" | "on_deck" | "addressed";
+  coachNote: string | null;
+  flaggedAt: string;
+  addressedAt: string | null;
+  resolvedByClient: boolean;
+  resolvedAt: string | null;
+}
+
+export const helpRadarItems: HelpRadarItem[] = [
+  {
+    id: "hr-1",
+    clientId: "self",
+    category: "Sales & Closing",
+    customDescription: null,
+    context: "I'm getting meetings booked but I freeze when it's time to ask for the sale. I've lost 3 deals this month because I couldn't close. I don't know if it's pricing confidence or fear of rejection.",
+    coachStatus: "on_deck",
+    coachNote: null,
+    flaggedAt: "Apr 7, 2026",
+    addressedAt: null,
+    resolvedByClient: false,
+    resolvedAt: null,
+  },
+  {
+    id: "hr-2",
+    clientId: "self",
+    category: "Energy & Health",
+    customDescription: null,
+    context: "Sleeping 5 hours most nights. Caffeine is the only thing keeping me functional. I know it's affecting my decision making but I can't figure out where the time goes.",
+    coachStatus: "addressed",
+    coachNote: "We need to address the 10pm cutoff again. This is non-negotiable. Your performance data already shows the correlation — weeks with <6hrs sleep, your score drops 15+ points. Let's lock in a sleep protocol this week.",
+    flaggedAt: "Apr 3, 2026",
+    addressedAt: "Apr 5, 2026",
+    resolvedByClient: false,
+    resolvedAt: null,
+  },
+  {
+    id: "hr-3",
+    clientId: "self",
+    category: "Decision Making",
+    customDescription: null,
+    context: "I have two potential co-founders and I can't decide. One is more experienced but I don't fully trust them. The other is less experienced but I'd trust them with anything.",
+    coachStatus: "seen",
+    coachNote: null,
+    flaggedAt: "Apr 8, 2026",
+    addressedAt: null,
+    resolvedByClient: false,
+    resolvedAt: null,
+  },
+];
+
+// Coach-side Help Radar data (across all clients)
+export const coachHelpRadarItems: HelpRadarItem[] = [
+  { id: "chr-1", clientId: "1", clientName: "Marcus Chen", category: "Sales & Closing", customDescription: null, context: "Getting meetings but can't close. Lost 3 deals this month.", coachStatus: "on_deck", coachNote: null, flaggedAt: "Apr 7, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-2", clientId: "1", clientName: "Marcus Chen", category: "Energy & Health", customDescription: null, context: "Sleeping 5 hours most nights.", coachStatus: "addressed", coachNote: "Addressed sleep protocol.", flaggedAt: "Apr 3, 2026", addressedAt: "Apr 5, 2026", resolvedByClient: false, resolvedAt: null },
+  { id: "chr-3", clientId: "1", clientName: "Marcus Chen", category: "Decision Making", customDescription: null, context: "Co-founder decision paralysis.", coachStatus: "seen", coachNote: null, flaggedAt: "Apr 8, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-4", clientId: "2", clientName: "Sarah Kim", category: "Work-Life Balance", customDescription: null, context: "Working until midnight every day. Relationship suffering.", coachStatus: "seen", coachNote: null, flaggedAt: "Apr 6, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-5", clientId: "2", clientName: "Sarah Kim", category: "Confidence & Mindset", customDescription: null, context: "Imposter syndrome at the VP level.", coachStatus: "seen", coachNote: null, flaggedAt: "Apr 6, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-6", clientId: "2", clientName: "Sarah Kim", category: "Communication", customDescription: null, context: "Can't give direct feedback to reports.", coachStatus: "seen", coachNote: null, flaggedAt: "Apr 6, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-7", clientId: "4", clientName: "Priya Patel", category: "Time Management", customDescription: null, context: "Constantly reactive. Never working on priorities.", coachStatus: "on_deck", coachNote: null, flaggedAt: "Apr 5, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-8", clientId: "5", clientName: "Alex Rivera", category: "Hiring & Team Building", customDescription: null, context: "Need to make first hire but don't know how to evaluate candidates.", coachStatus: "addressed", coachNote: "Sent hiring framework. Review in next session.", flaggedAt: "Apr 2, 2026", addressedAt: "Apr 4, 2026", resolvedByClient: false, resolvedAt: null },
+  { id: "chr-9", clientId: "4", clientName: "Priya Patel", category: "Marketing & Brand", customDescription: null, context: "No idea where to start with marketing.", coachStatus: "seen", coachNote: null, flaggedAt: "Apr 7, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+  { id: "chr-10", clientId: "4", clientName: "Priya Patel", category: "Revenue & Pricing", customDescription: null, context: "Undercharging for services but afraid to raise prices.", coachStatus: "seen", coachNote: null, flaggedAt: "Apr 7, 2026", addressedAt: null, resolvedByClient: false, resolvedAt: null },
+];
+
 // Reset Session data
 export interface ResetSession {
   id: string;

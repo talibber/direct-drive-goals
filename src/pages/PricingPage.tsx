@@ -11,6 +11,7 @@ const included = [
   "Coach reviews and approves every goal",
   "Proof-based goal verification",
   "Direct coach notes and feedback",
+  "Help Radar — flag challenges outside your goals and get direct coach perspective",
   "Performance trend dashboards",
   "$75 accountability stake per missed goal",
   "Missed goal enrolls you in the monthly Reset Session — group coaching, no call-outs, real patterns addressed",
