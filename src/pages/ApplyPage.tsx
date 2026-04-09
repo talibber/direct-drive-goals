@@ -7,13 +7,37 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
+const supportOptions = [
+  {
+    value: "accountability_only",
+    title: "System + Accountability",
+    subtitle: "I'm self-directed. I need structure, a scorecard, and consequences. I don't need frequent check-ins beyond the weekly system.",
+  },
+  {
+    value: "monthly_coaching",
+    title: "System + Monthly Coaching",
+    subtitle: "I want the full accountability system plus a dedicated monthly coaching call to work through strategy, decisions, and roadblocks.",
+  },
+  {
+    value: "undecided",
+    title: "I'm not sure yet",
+    subtitle: "I'll figure it out once I understand the program better.",
+  },
+] as const;
 
 export default function ApplyPage() {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
+  const [supportLevel, setSupportLevel] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!supportLevel) {
+      toast({ title: "Required field", description: "Please select your preferred level of support.", variant: "destructive" });
+      return;
+    }
     setSubmitted(true);
     toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
   };
@@ -116,6 +140,38 @@ export default function ApplyPage() {
                   <SelectItem value="extensive">Extensive experience</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div>
+              <Label>What level of support are you looking for? <span className="text-destructive">*</span></Label>
+              <div className="grid gap-3 mt-3">
+                {supportOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setSupportLevel(option.value)}
+                    className={cn(
+                      "text-left rounded-lg border-2 p-4 transition-all",
+                      supportLevel === option.value
+                        ? "border-amber-500/80 bg-amber-500/5"
+                        : "border-muted hover:border-muted-foreground/30"
+                    )}
+                  >
+                    <p className={cn(
+                      "font-semibold text-sm",
+                      supportLevel === option.value ? "text-amber-400" : "text-foreground"
+                    )}>
+                      {option.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      {option.subtitle}
+                    </p>
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground italic mt-2.5">
+                This helps us match you to the right structure. There's no wrong answer.
+              </p>
             </div>
 
             <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4">
