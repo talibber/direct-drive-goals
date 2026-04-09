@@ -306,6 +306,9 @@ export default function HomePage() {
                 <div className={`flex-1 rounded-lg border border-border bg-card p-5 shadow-card ${step.border} ${step.num === 6 ? "shadow-[0_8px_30px_-8px_hsl(45_100%_51%/0.15)]" : ""}`}>
                   <h4 className="font-display font-bold text-foreground text-lg">{step.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed mt-1">{step.desc}</p>
+                  {"note" in step && step.note && (
+                    <p className="text-xs text-primary/80 mt-2 italic border-t border-border/50 pt-2">{step.note}</p>
+                  )}
                 </div>
               </div>
             ))}
