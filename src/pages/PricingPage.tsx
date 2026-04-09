@@ -13,7 +13,7 @@ const included = [
   "Direct coach notes and feedback",
   "Performance trend dashboards",
   "$75 accountability stake per missed goal",
-  "Missed goal triggers a Pattern Call within 7 days",
+  "Missed goal enrolls you in the monthly Reset Session — group coaching, no call-outs, real patterns addressed",
   "Coach waiver option — judgment over automation",
   "Perfect Month triggers a Next Level Call",
   "Cancel anytime — no contracts",
@@ -72,7 +72,7 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start gap-3 text-sm">
                   <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
-                  <span className="text-foreground">Missed goal triggers a Pattern Call — not just a charge</span>
+                  <span className="text-foreground">Missed goal enrolls you in the monthly Reset Session — not just a charge</span>
                 </li>
               </ul>
             </div>
@@ -102,16 +102,16 @@ export default function PricingPage() {
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p className="text-foreground font-medium">Missing a goal isn't just a charge — it's a signal.</p>
               <p>
-                When you miss a pre-agreed goal, two things happen: a $75 stake is charged to your payment method, and a Pattern Call is automatically scheduled with your coach.
+                When you miss a pre-agreed goal, two things happen: a $75 stake is charged to your payment method, and you're enrolled in the monthly Reset Session.
               </p>
               <p>
-                The Pattern Call is a focused 30-minute session built around one question: what's actually in the way?
+                The Reset Session is a group coaching call where common patterns get addressed — without attribution. No one is called out. Everyone benefits.
               </p>
               <p>
-                Not motivation. Not encouragement. A direct conversation about the pattern behind the miss — and a clear commitment for what changes next.
+                Think of it like church. The sermon might be about you. You'll know. That's the point.
               </p>
               <p className="text-foreground font-medium">
-                The stake creates urgency. The call creates insight. Together, they're why this works.
+                The stake creates urgency. The session creates insight. Together, they're why this works.
               </p>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex items-start gap-2 text-sm text-muted-foreground">
                     <X size={14} className="text-danger/60 mt-0.5 shrink-0" />
-                    Pattern Call scheduled within 7 days
+                    Enrolled in the monthly Reset Session
                   </li>
                   <li className="flex items-start gap-2 text-sm text-muted-foreground">
                     <X size={14} className="text-danger/60 mt-0.5 shrink-0" />

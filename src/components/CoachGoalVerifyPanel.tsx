@@ -239,7 +239,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
             <AlertTriangle size={40} className="mx-auto text-danger" />
             <h3 className="font-display font-semibold text-lg text-foreground">Confirm — Mark Missed</h3>
             <p className="text-sm text-muted-foreground">
-              This will charge the client <span className="font-semibold text-foreground">${goal.stake}</span> and schedule a Pattern Call. This cannot be undone.
+              This will charge the client <span className="font-semibold text-foreground">${goal.stake}</span> and enroll them in the monthly Reset Session. This cannot be undone.
             </p>
             <div className="flex gap-3 pt-2">
               <Button onClick={() => setShowMissConfirm(false)} variant="outline" className="flex-1">

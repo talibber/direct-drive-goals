@@ -15,6 +15,7 @@ import GoalsPage from "./pages/GoalsPage";
 import BillingPage from "./pages/BillingPage";
 import SessionsPage from "./pages/SessionsPage";
 import ProfilePage from "./pages/ProfilePage";
+import ResetSessionPage from "./pages/ResetSessionPage";
 import CoachDashboard from "./pages/CoachDashboard";
 import CoachClientsPage from "./pages/CoachClientsPage";
 import CoachApplicationsPage from "./pages/CoachApplicationsPage";
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/dashboard/billing" element={<BillingPage />} />
           <Route path="/dashboard/sessions" element={<SessionsPage />} />
           <Route path="/dashboard/profile" element={<ProfilePage />} />
+          <Route path="/dashboard/reset-session" element={<ResetSessionPage />} />
 
           {/* Coach */}
           <Route path="/coach" element={<CoachDashboard />} />

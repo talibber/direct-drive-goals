@@ -266,6 +266,42 @@ export type Database = {
         }
         Relationships: []
       }
+      reset_sessions: {
+        Row: {
+          completed: boolean
+          created_at: string
+          enrolled_clients: string[]
+          id: string
+          month: string
+          session_date: string
+          session_notes: string | null
+          session_recap: string | null
+          updated_at: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          enrolled_clients?: string[]
+          id?: string
+          month: string
+          session_date: string
+          session_notes?: string | null
+          session_recap?: string | null
+          updated_at?: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          enrolled_clients?: string[]
+          id?: string
+          month?: string
+          session_date?: string
+          session_notes?: string | null
+          session_recap?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
