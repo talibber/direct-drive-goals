@@ -3,8 +3,23 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
+import PricingPage from "./pages/PricingPage";
+import ApplyPage from "./pages/ApplyPage";
+import LoginPage from "./pages/LoginPage";
+import ClientDashboard from "./pages/ClientDashboard";
+import WeeklyCheckInPage from "./pages/WeeklyCheckInPage";
+import GoalsPage from "./pages/GoalsPage";
+import BillingPage from "./pages/BillingPage";
+import SessionsPage from "./pages/SessionsPage";
+import ProfilePage from "./pages/ProfilePage";
+import CoachDashboard from "./pages/CoachDashboard";
+import CoachClientsPage from "./pages/CoachClientsPage";
+import CoachApplicationsPage from "./pages/CoachApplicationsPage";
+import CoachMetricsPage from "./pages/CoachMetricsPage";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -15,8 +30,28 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Public */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/apply" element={<ApplyPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* Client */}
+          <Route path="/dashboard" element={<ClientDashboard />} />
+          <Route path="/dashboard/check-in" element={<WeeklyCheckInPage />} />
+          <Route path="/dashboard/goals" element={<GoalsPage />} />
+          <Route path="/dashboard/billing" element={<BillingPage />} />
+          <Route path="/dashboard/sessions" element={<SessionsPage />} />
+          <Route path="/dashboard/profile" element={<ProfilePage />} />
+
+          {/* Coach */}
+          <Route path="/coach" element={<CoachDashboard />} />
+          <Route path="/coach/clients" element={<CoachClientsPage />} />
+          <Route path="/coach/applications" element={<CoachApplicationsPage />} />
+          <Route path="/coach/metrics" element={<CoachMetricsPage />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
