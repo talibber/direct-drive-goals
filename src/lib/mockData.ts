@@ -7,7 +7,7 @@ export const weeklyCheckIns = [
   { week: "W6", energy: 9, stress: 3, focus: 9, confidence: 9, sleep: 9, habits: 95, score: 91 },
 ];
 
-export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected" | "proof_pending" | "proof_submitted";
+export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected" | "proof_pending" | "proof_submitted" | "waived";
 
 export interface Goal {
   id: string;
@@ -32,9 +32,25 @@ export interface Goal {
   clientType?: string;
   proofDescription?: string;
   proofFileUrl?: string;
+  proofFileUrls?: string[];
   selfCompleted?: boolean;
   coachVerificationNote?: string;
   proofSubmittedAt?: string;
+  selfAssessment?: "completed" | "not_completed";
+  coachDecision?: "verified" | "waived" | "missed" | null;
+}
+
+export interface ProofSubmission {
+  id: string;
+  goalId: string;
+  clientId: string;
+  completionDescription: string;
+  fileUrls: string[];
+  selfAssessment: "completed" | "not_completed";
+  coachDecision: "verified" | "waived" | "missed" | null;
+  coachNote: string | null;
+  submittedAt: string;
+  decidedAt: string | null;
 }
 
 export const goals: Goal[] = [
@@ -61,8 +77,8 @@ export const goals: Goal[] = [
     category: "Life",
     target: "6 days per week",
     progress: 83,
-    status: "active",
-    dueDate: "Apr 30",
+    status: "proof_pending",
+    dueDate: "Apr 9",
     stake: 75,
     metricType: "count",
     targetValue: 24,
@@ -187,7 +203,12 @@ export const proofSubmittedGoals: Goal[] = [
     clientType: "Business",
     proofDescription: "Completed the Austin Half Marathon on April 8th. Finished in 1:52:34. Attached my Strava screenshot and finisher medal photo.",
     selfCompleted: true,
+    selfAssessment: "completed",
     proofSubmittedAt: "Apr 9, 2026",
+    proofFileUrls: [
+      "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=400",
+      "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400",
+    ],
   },
   {
     id: "8",
@@ -210,14 +231,23 @@ export const proofSubmittedGoals: Goal[] = [
     clientType: "Business",
     proofDescription: "Sent first edition of 'The Builder's Brief' to 142 subscribers via ConvertKit. Open rate was 48%.",
     selfCompleted: true,
+    selfAssessment: "completed",
     proofSubmittedAt: "Apr 8, 2026",
+    proofFileUrls: [],
   },
 ];
+
 export const goalApprovalHistory = [
   { id: "1", goalTitle: "Close 3 enterprise deals", action: "approved" as const, coachNotes: null, createdAt: "Apr 2, 2026", clientName: "Marcus Chen" },
   { id: "2", goalTitle: "Morning routine 6 days/week", action: "approved" as const, coachNotes: null, createdAt: "Apr 1, 2026", clientName: "Marcus Chen" },
   { id: "3", goalTitle: "Work out more", action: "revision_requested" as const, coachNotes: "This goal needs a clearer metric. Instead of 'work out more,' define the exact frequency and duration so we can score it fairly.", createdAt: "Apr 5, 2026", clientName: "Marcus Chen" },
   { id: "4", goalTitle: "Ship MVP by end of month", action: "approved" as const, coachNotes: null, createdAt: "Apr 1, 2026", clientName: "Marcus Chen" },
+];
+
+export const goalDecisionHistory = [
+  { id: "1", goalTitle: "Run a half marathon", dueDate: "Apr 10", selfAssessment: "completed" as const, coachDecision: "verified" as const, coachNote: "Great job on a strong finish time.", decidedAt: "Apr 10, 2026", stakeCharged: false, clientName: "James Wright" },
+  { id: "2", goalTitle: "Daily journaling for 30 days", dueDate: "Mar 31", selfAssessment: "not_completed" as const, coachDecision: "missed" as const, coachNote: "Only 12 of 30 days completed. Pattern Call scheduled.", decidedAt: "Apr 1, 2026", stakeCharged: true, clientName: "Marcus Chen" },
+  { id: "3", goalTitle: "Complete sales playbook", dueDate: "Mar 31", selfAssessment: "completed" as const, coachDecision: "waived" as const, coachNote: "Playbook was 80% done with strong content. Waiving stake given extenuating travel schedule. Must complete remaining 20% this month.", decidedAt: "Apr 1, 2026", stakeCharged: false, clientName: "Alex Rivera" },
 ];
 
 export const billingHistory = [
