@@ -9,11 +9,11 @@ import { useToast } from "@/hooks/use-toast";
 import { goals } from "@/lib/mockData";
 
 const ratingFields = [
-  { key: "energy", label: "Energy Level" },
-  { key: "stress", label: "Stress Level" },
-  { key: "focus", label: "Focus Level" },
-  { key: "confidence", label: "Confidence Level" },
-  { key: "sleep", label: "Sleep Quality" },
+  { key: "energy", label: "Energy Level", borderColor: "border-l-green-500" },
+  { key: "stress", label: "Stress Level", borderColor: "border-l-amber-600" },
+  { key: "focus", label: "Focus Level", borderColor: "border-l-blue-500" },
+  { key: "confidence", label: "Confidence Level", borderColor: "border-l-primary" },
+  { key: "sleep", label: "Sleep Quality", borderColor: "border-l-purple-500" },
 ];
 
 export default function WeeklyCheckInPage() {
@@ -49,22 +49,30 @@ export default function WeeklyCheckInPage() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Ratings */}
-          <div className="rounded-lg border border-border bg-card p-6 shadow-card space-y-6">
-            <h3 className="font-display font-semibold">How are you doing? (1–10)</h3>
-            {ratingFields.map((f) => (
-              <div key={f.key}>
-                <div className="flex justify-between mb-2">
-                  <Label className="text-sm">{f.label}</Label>
-                  <span className="text-sm font-mono text-primary font-semibold">{ratings[f.key]}</span>
+          <div className="rounded-lg border border-border bg-card p-6 shadow-card">
+            <h3 className="font-display font-semibold mb-1">How are you doing? (1–10)</h3>
+            <p className="text-sm italic text-muted-foreground mb-6">No right answers. Just honest ones.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {ratingFields.map((f, i) => (
+                <div
+                  key={f.key}
+                  className={`rounded-lg border border-border border-l-[3px] ${f.borderColor} bg-background/50 p-4 ${
+                    i === ratingFields.length - 1 ? "sm:col-start-1 sm:col-end-2 sm:justify-self-center sm:w-full sm:max-w-[calc(50%-0.5rem)]" : ""
+                  }`}
+                >
+                  <div className="flex justify-between mb-2">
+                    <Label className="text-sm">{f.label}</Label>
+                    <span className="text-sm font-mono text-primary font-semibold">{ratings[f.key]}</span>
+                  </div>
+                  <Slider
+                    min={1} max={10} step={1}
+                    value={[ratings[f.key]]}
+                    onValueChange={([v]) => setRatings((prev) => ({ ...prev, [f.key]: v }))}
+                    className="w-full"
+                  />
                 </div>
-                <Slider
-                  min={1} max={10} step={1}
-                  value={[ratings[f.key]]}
-                  onValueChange={([v]) => setRatings((prev) => ({ ...prev, [f.key]: v }))}
-                  className="w-full"
-                />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Habit completion */}
