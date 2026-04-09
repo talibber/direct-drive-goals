@@ -16,6 +16,7 @@ import BillingPage from "./pages/BillingPage";
 import SessionsPage from "./pages/SessionsPage";
 import ProfilePage from "./pages/ProfilePage";
 import ResetSessionPage from "./pages/ResetSessionPage";
+import HelpRadarPage from "./pages/HelpRadarPage";
 import CoachDashboard from "./pages/CoachDashboard";
 import CoachClientsPage from "./pages/CoachClientsPage";
 import CoachApplicationsPage from "./pages/CoachApplicationsPage";
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/dashboard/sessions" element={<SessionsPage />} />
           <Route path="/dashboard/profile" element={<ProfilePage />} />
           <Route path="/dashboard/reset-session" element={<ResetSessionPage />} />
+          <Route path="/dashboard/help-radar" element={<HelpRadarPage />} />
 
           {/* Coach */}
           <Route path="/coach" element={<CoachDashboard />} />
