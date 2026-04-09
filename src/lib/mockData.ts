@@ -7,7 +7,7 @@ export const weeklyCheckIns = [
   { week: "W6", energy: 9, stress: 3, focus: 9, confidence: 9, sleep: 9, habits: 95, score: 91 },
 ];
 
-export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected";
+export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected" | "proof_pending" | "proof_submitted";
 
 export interface Goal {
   id: string;
@@ -30,6 +30,11 @@ export interface Goal {
   clientName?: string;
   clientScore?: number;
   clientType?: string;
+  proofDescription?: string;
+  proofFileUrl?: string;
+  selfCompleted?: boolean;
+  coachVerificationNote?: string;
+  proofSubmittedAt?: string;
 }
 
 export const goals: Goal[] = [
