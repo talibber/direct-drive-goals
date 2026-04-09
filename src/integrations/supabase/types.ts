@@ -224,6 +224,48 @@ export type Database = {
           },
         ]
       }
+      perfect_month_calls: {
+        Row: {
+          call_completed_at: string | null
+          call_scheduled_at: string | null
+          call_title: string | null
+          client_id: string
+          coach_notes: string | null
+          created_at: string
+          id: string
+          month: string
+          next_goals_set: boolean
+          triggered_at: string
+          updated_at: string
+        }
+        Insert: {
+          call_completed_at?: string | null
+          call_scheduled_at?: string | null
+          call_title?: string | null
+          client_id: string
+          coach_notes?: string | null
+          created_at?: string
+          id?: string
+          month: string
+          next_goals_set?: boolean
+          triggered_at?: string
+          updated_at?: string
+        }
+        Update: {
+          call_completed_at?: string | null
+          call_scheduled_at?: string | null
+          call_title?: string | null
+          client_id?: string
+          coach_notes?: string | null
+          created_at?: string
+          id?: string
+          month?: string
+          next_goals_set?: boolean
+          triggered_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
