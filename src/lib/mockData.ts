@@ -7,19 +7,48 @@ export const weeklyCheckIns = [
   { week: "W6", energy: 9, stress: 3, focus: 9, confidence: 9, sleep: 9, habits: 95, score: 91 },
 ];
 
-export const goals = [
+export type GoalStatus = "pending_approval" | "revision_requested" | "active" | "at_risk" | "missed" | "completed" | "rejected";
+
+export interface Goal {
+  id: string;
+  title: string;
+  description?: string;
+  category: string;
+  target: string;
+  progress: number;
+  status: GoalStatus;
+  dueDate: string;
+  stake: number;
+  metricType: string;
+  targetValue: number;
+  currentValue: number;
+  proofRequirement?: string;
+  coachApproved: boolean;
+  approvedAt?: string;
+  coachNotes?: string;
+  resubmissionCount: number;
+  clientName?: string;
+  clientScore?: number;
+  clientType?: string;
+}
+
+export const goals: Goal[] = [
   {
     id: "1",
     title: "Close 3 enterprise deals",
     category: "Business",
     target: "3 signed contracts",
     progress: 66,
-    status: "on-track" as const,
+    status: "active",
     dueDate: "Apr 30",
     stake: 75,
     metricType: "count",
     targetValue: 3,
     currentValue: 2,
+    proofRequirement: "Screenshot of signed contracts",
+    coachApproved: true,
+    approvedAt: "Apr 2, 2026",
+    resubmissionCount: 0,
   },
   {
     id: "2",
@@ -27,12 +56,16 @@ export const goals = [
     category: "Life",
     target: "6 days per week",
     progress: 83,
-    status: "on-track" as const,
+    status: "active",
     dueDate: "Apr 30",
     stake: 75,
     metricType: "count",
     targetValue: 24,
     currentValue: 20,
+    proofRequirement: "Daily check-in log",
+    coachApproved: true,
+    approvedAt: "Apr 1, 2026",
+    resubmissionCount: 0,
   },
   {
     id: "3",
@@ -40,13 +73,98 @@ export const goals = [
     category: "Business",
     target: "Deployed product",
     progress: 40,
-    status: "at-risk" as const,
+    status: "at_risk",
     dueDate: "Apr 30",
     stake: 75,
     metricType: "yes/no",
     targetValue: 1,
     currentValue: 0,
+    proofRequirement: "Live URL",
+    coachApproved: true,
+    approvedAt: "Apr 1, 2026",
+    resubmissionCount: 0,
   },
+  {
+    id: "4",
+    title: "Read 2 business books",
+    category: "Business",
+    target: "2 books completed",
+    progress: 0,
+    status: "pending_approval",
+    dueDate: "May 31",
+    stake: 75,
+    metricType: "count",
+    targetValue: 2,
+    currentValue: 0,
+    proofRequirement: "Book summary notes",
+    coachApproved: false,
+    resubmissionCount: 0,
+  },
+  {
+    id: "5",
+    title: "Work out more",
+    category: "Life",
+    target: "Exercise regularly",
+    progress: 0,
+    status: "revision_requested",
+    dueDate: "May 31",
+    stake: 75,
+    metricType: "count",
+    targetValue: 10,
+    currentValue: 0,
+    proofRequirement: "Gym check-in screenshots",
+    coachApproved: false,
+    coachNotes: "This goal needs a clearer metric. Instead of 'work out more,' define the exact frequency and duration so we can score it fairly.",
+    resubmissionCount: 1,
+  },
+];
+
+export const pendingCoachGoals: Goal[] = [
+  {
+    id: "4",
+    title: "Read 2 business books",
+    category: "Business",
+    target: "2 books completed",
+    progress: 0,
+    status: "pending_approval",
+    dueDate: "May 31",
+    stake: 75,
+    metricType: "count",
+    targetValue: 2,
+    currentValue: 0,
+    proofRequirement: "Book summary notes",
+    coachApproved: false,
+    resubmissionCount: 0,
+    clientName: "Marcus Chen",
+    clientScore: 86,
+    clientType: "Business",
+  },
+  {
+    id: "6",
+    title: "Meditate 15 min daily",
+    category: "Life",
+    target: "15 minutes every day for 30 days",
+    progress: 0,
+    status: "pending_approval",
+    dueDate: "May 31",
+    stake: 75,
+    metricType: "count",
+    targetValue: 30,
+    currentValue: 0,
+    proofRequirement: "Meditation app screenshots",
+    coachApproved: false,
+    resubmissionCount: 0,
+    clientName: "Sarah Kim",
+    clientScore: 72,
+    clientType: "Life",
+  },
+];
+
+export const goalApprovalHistory = [
+  { id: "1", goalTitle: "Close 3 enterprise deals", action: "approved" as const, coachNotes: null, createdAt: "Apr 2, 2026", clientName: "Marcus Chen" },
+  { id: "2", goalTitle: "Morning routine 6 days/week", action: "approved" as const, coachNotes: null, createdAt: "Apr 1, 2026", clientName: "Marcus Chen" },
+  { id: "3", goalTitle: "Work out more", action: "revision_requested" as const, coachNotes: "This goal needs a clearer metric. Instead of 'work out more,' define the exact frequency and duration so we can score it fairly.", createdAt: "Apr 5, 2026", clientName: "Marcus Chen" },
+  { id: "4", goalTitle: "Ship MVP by end of month", action: "approved" as const, coachNotes: null, createdAt: "Apr 1, 2026", clientName: "Marcus Chen" },
 ];
 
 export const billingHistory = [
