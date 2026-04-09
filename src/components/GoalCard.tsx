@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Target, TrendingUp, AlertTriangle, XCircle, Clock, Edit3, CheckCircle, FileCheck, Upload } from "lucide-react";
+import { Target, TrendingUp, AlertTriangle, XCircle, Clock, Edit3, CheckCircle, FileCheck, Upload, Shield } from "lucide-react";
 import type { GoalStatus } from "@/lib/mockData";
 
 interface GoalCardProps {
@@ -15,6 +15,8 @@ interface GoalCardProps {
   resubmissionCount?: number;
   proofDescription?: string;
   selfCompleted?: boolean;
+  selfAssessment?: "completed" | "not_completed";
+  coachDecision?: "verified" | "waived" | "missed" | null;
   onResubmit?: () => void;
   onSubmitProof?: () => void;
 }
@@ -29,12 +31,13 @@ const statusConfig: Record<GoalStatus, { label: string; sublabel: string; color:
   rejected: { label: "Rejected", sublabel: "Goal not approved", color: "text-danger border-danger/30 bg-danger/10", icon: XCircle },
   proof_pending: { label: "Proof Pending", sublabel: "Due date reached — submit your proof", color: "text-primary border-primary/30 bg-primary/10", icon: Upload },
   proof_submitted: { label: "Proof Submitted", sublabel: "Awaiting coach verification", color: "text-primary border-primary/30 bg-primary/10", icon: FileCheck },
+  waived: { label: "Waived", sublabel: "Stake waived by coach", color: "text-primary border-primary/30 bg-primary/10", icon: Shield },
 };
 
 export function GoalCard({
   title, category, target, progress, status, dueDate, stake,
   coachNotes, coachVerificationNote, resubmissionCount, proofDescription,
-  selfCompleted, onResubmit, onSubmitProof,
+  selfCompleted, selfAssessment, coachDecision, onResubmit, onSubmitProof,
 }: GoalCardProps) {
   const cfg = statusConfig[status];
   const Icon = cfg.icon;
@@ -63,9 +66,17 @@ export function GoalCard({
       )}
 
       {/* Coach verification note */}
-      {coachVerificationNote && (status === "completed" || status === "missed") && (
-        <div className={cn("rounded-md border p-3 mb-3", status === "completed" ? "bg-success/5 border-success/20" : "bg-danger/5 border-danger/20")}>
-          <p className={cn("text-xs font-medium mb-1", status === "completed" ? "text-success" : "text-danger")}>Coach Note:</p>
+      {coachVerificationNote && (status === "completed" || status === "missed" || status === "waived") && (
+        <div className={cn("rounded-md border p-3 mb-3",
+          status === "completed" ? "bg-success/5 border-success/20" :
+          status === "waived" ? "bg-primary/5 border-primary/20" :
+          "bg-danger/5 border-danger/20"
+        )}>
+          <p className={cn("text-xs font-medium mb-1",
+            status === "completed" ? "text-success" :
+            status === "waived" ? "text-primary" :
+            "text-danger"
+          )}>Coach Note:</p>
           <p className="text-sm text-muted-foreground italic">{coachVerificationNote}</p>
         </div>
       )}
@@ -75,9 +86,9 @@ export function GoalCard({
         <div className="rounded-md bg-primary/5 border border-primary/20 p-3 mb-3">
           <p className="text-xs font-medium text-primary mb-1">Your Proof:</p>
           <p className="text-sm text-muted-foreground italic">{proofDescription}</p>
-          {selfCompleted !== undefined && (
+          {(selfAssessment || selfCompleted !== undefined) && (
             <p className="text-xs mt-1 text-muted-foreground">
-              Self-assessment: {selfCompleted ? "✓ Completed" : "✗ Not completed"}
+              Self-assessment: {(selfAssessment === "completed" || selfCompleted) ? "✓ Completed" : "✗ Not completed"}
             </p>
           )}
         </div>

@@ -20,7 +20,7 @@ export default function CoachDashboard() {
     setPendingGoals((prev) => prev.filter((g) => g.id !== goalId));
   };
 
-  const handleVerifyAction = (goalId: string, action: "completed" | "missed", note?: string) => {
+  const handleVerifyAction = (goalId: string, action: "verified" | "waived" | "missed", note?: string) => {
     setProofGoals((prev) => prev.filter((g) => g.id !== goalId));
   };
 
@@ -81,11 +81,19 @@ export default function CoachDashboard() {
                   <div>
                     <p className="text-sm font-medium text-foreground">{g.title}</p>
                     <p className="text-xs text-muted-foreground">
-                      {g.clientName} · Proof submitted {g.proofSubmittedAt}
+                      {g.clientName} · Submitted {g.proofSubmittedAt}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-0.5 truncate max-w-[250px]">
-                      {g.selfCompleted ? "✓ Self-reported complete" : "✗ Self-reported incomplete"}
-                    </p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${
+                        (g.selfAssessment === "completed" || g.selfCompleted)
+                          ? "text-success bg-success/10" : "text-danger bg-danger/10"
+                      }`}>
+                        {(g.selfAssessment === "completed" || g.selfCompleted) ? "Client says completed" : "Client self-reported missed"}
+                      </span>
+                      {(g.proofFileUrls?.length ?? 0) > 0 && (
+                        <span className="text-xs text-muted-foreground">{g.proofFileUrls!.length} file{g.proofFileUrls!.length > 1 ? "s" : ""}</span>
+                      )}
+                    </div>
                   </div>
                   <button onClick={() => setVerifyGoal(g)} className="text-xs font-medium text-success hover:underline">
                     Verify →

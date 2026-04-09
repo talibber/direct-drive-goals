@@ -14,6 +14,7 @@ export default function GoalsPage() {
   const proofPendingGoals = goals.filter((g) => g.status === "proof_pending");
   const proofSubmittedGoals = goals.filter((g) => g.status === "proof_submitted");
   const activeGoals = goals.filter((g) => g.status === "active" || g.status === "at_risk");
+  const waivedGoals = goals.filter((g) => g.status === "waived");
 
   const handleNewGoal = () => {
     const newGoal: Goal = {
@@ -44,17 +45,18 @@ export default function GoalsPage() {
     );
   };
 
-  const handleProofSubmit = (goalId: string, data: { description: string; selfCompleted: boolean; file?: File }) => {
+  const handleProofSubmit = (goalId: string, data: { description: string; selfAssessment: "completed" | "not_completed"; files: File[] }) => {
     setGoals((prev) =>
       prev.map((g) => {
         if (g.id !== goalId) return g;
-        if (!data.selfCompleted) {
-          return { ...g, status: "missed" as const, proofDescription: data.description, selfCompleted: false };
+        if (data.selfAssessment === "not_completed") {
+          return { ...g, status: "missed" as const, proofDescription: data.description, selfAssessment: "not_completed" as const, selfCompleted: false };
         }
         return {
           ...g,
           status: "proof_submitted" as const,
           proofDescription: data.description,
+          selfAssessment: "completed" as const,
           selfCompleted: true,
           proofSubmittedAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
         };
@@ -142,6 +144,21 @@ export default function GoalsPage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {activeGoals.map((g) => (
+              <GoalCard key={g.id} {...g} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Waived Goals */}
+      {waivedGoals.length > 0 && (
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            <h2 className="font-display font-semibold text-foreground">Waived Goals</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {waivedGoals.map((g) => (
               <GoalCard key={g.id} {...g} />
             ))}
           </div>
