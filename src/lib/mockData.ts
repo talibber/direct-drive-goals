@@ -307,3 +307,36 @@ export const clientPerfectMonth = {
   callScheduledAt: null as string | null,
   perfectMonthCount: 2,
 };
+
+// Reset Session data
+export interface ResetSession {
+  id: string;
+  sessionDate: string;
+  month: string;
+  enrolledClients: string[];
+  sessionNotes: string | null;
+  sessionRecap: string | null;
+  completed: boolean;
+}
+
+export const resetSessions: ResetSession[] = [
+  {
+    id: "rs-1",
+    sessionDate: "Apr 25, 2026 at 7:00 PM EST",
+    month: "April 2026",
+    enrolledClients: ["1", "4"],
+    sessionNotes: "Themes: avoidance patterns, scope creep, overcommitting.",
+    sessionRecap: null,
+    completed: false,
+  },
+];
+
+export const clientResetSession = {
+  enrolled: true,
+  sessionDate: "Apr 25, 2026 at 7:00 PM EST",
+  month: "April 2026",
+  sessionRecap: null as string | null,
+  completed: false,
+  reflection: null as string | null,
+  commitment: null as string | null,
+};
