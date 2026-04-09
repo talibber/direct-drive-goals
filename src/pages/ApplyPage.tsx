@@ -1,0 +1,135 @@
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+
+export default function ApplyPage() {
+  const { toast } = useToast();
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
+  };
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <section className="pt-32 pb-20 md:pt-40">
+          <div className="container max-w-lg text-center">
+            <div className="text-5xl mb-4">🔥</div>
+            <h1 className="font-display text-3xl font-bold mb-4">Application Received</h1>
+            <p className="text-muted-foreground">
+              We'll review your application within 48 hours. If you're a fit, you'll receive 
+              an email with next steps. No sales calls. No BS.
+            </p>
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <section className="pt-32 pb-20 md:pt-40">
+        <div className="container max-w-lg">
+          <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">
+            Apply for <span className="text-gradient-gold">Terrible Coaching</span>
+          </h1>
+          <p className="text-muted-foreground mb-8">
+            This takes 3 minutes. Be honest—that's the whole point.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="name">Full Name</Label>
+                <Input id="name" placeholder="Your name" required className="mt-1.5" />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" placeholder="you@example.com" required className="mt-1.5" />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="occupation">Occupation / Role</Label>
+              <Input id="occupation" placeholder="e.g. Startup Founder, VP of Engineering" required className="mt-1.5" />
+            </div>
+
+            <div>
+              <Label>Coaching Interest</Label>
+              <Select required>
+                <SelectTrigger className="mt-1.5">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="business">Business Coaching</SelectItem>
+                  <SelectItem value="life">Life Coaching</SelectItem>
+                  <SelectItem value="both">Both</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="challenge">What's your main challenge right now?</Label>
+              <Textarea id="challenge" placeholder="Be specific. What's actually not working?" required className="mt-1.5 min-h-[100px]" />
+            </div>
+
+            <div>
+              <Label htmlFor="goals">What would you want to accomplish in the first 30 days?</Label>
+              <Textarea id="goals" placeholder="Name 1-3 specific, measurable goals" required className="mt-1.5 min-h-[80px]" />
+            </div>
+
+            <div>
+              <Label>Readiness Level</Label>
+              <Select required>
+                <SelectTrigger className="mt-1.5">
+                  <SelectValue placeholder="How ready are you?" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ready">Ready now—let's go</SelectItem>
+                  <SelectItem value="soon">Interested—deciding soon</SelectItem>
+                  <SelectItem value="exploring">Just exploring</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label>Prior Coaching Experience</Label>
+              <Select>
+                <SelectTrigger className="mt-1.5">
+                  <SelectValue placeholder="Have you worked with a coach before?" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No prior coaching</SelectItem>
+                  <SelectItem value="some">Some experience</SelectItem>
+                  <SelectItem value="extensive">Extensive experience</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4">
+              Submit Application
+            </Button>
+
+            <p className="text-xs text-muted-foreground text-center">
+              By applying, you understand that Terrible Coaching is not therapy and is not a 
+              substitute for licensed mental health care.
+            </p>
+          </form>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
+}
