@@ -266,6 +266,56 @@ export type Database = {
         }
         Relationships: []
       }
+      reset_session_engagement: {
+        Row: {
+          client_id: string
+          coach_acknowledged: boolean
+          commitment_submitted: boolean
+          commitment_submitted_at: string | null
+          commitment_text: string | null
+          created_at: string
+          id: string
+          recording_watched: boolean
+          session_id: string
+          updated_at: string
+          watched_at: string | null
+        }
+        Insert: {
+          client_id: string
+          coach_acknowledged?: boolean
+          commitment_submitted?: boolean
+          commitment_submitted_at?: string | null
+          commitment_text?: string | null
+          created_at?: string
+          id?: string
+          recording_watched?: boolean
+          session_id: string
+          updated_at?: string
+          watched_at?: string | null
+        }
+        Update: {
+          client_id?: string
+          coach_acknowledged?: boolean
+          commitment_submitted?: boolean
+          commitment_submitted_at?: string | null
+          commitment_text?: string | null
+          created_at?: string
+          id?: string
+          recording_watched?: boolean
+          session_id?: string
+          updated_at?: string
+          watched_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reset_session_engagement_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "reset_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reset_sessions: {
         Row: {
           completed: boolean
@@ -273,6 +323,9 @@ export type Database = {
           enrolled_clients: string[]
           id: string
           month: string
+          recording_sent_at: string | null
+          recording_uploaded_at: string | null
+          recording_url: string | null
           session_date: string
           session_notes: string | null
           session_recap: string | null
@@ -284,6 +337,9 @@ export type Database = {
           enrolled_clients?: string[]
           id?: string
           month: string
+          recording_sent_at?: string | null
+          recording_uploaded_at?: string | null
+          recording_url?: string | null
           session_date: string
           session_notes?: string | null
           session_recap?: string | null
@@ -295,6 +351,9 @@ export type Database = {
           enrolled_clients?: string[]
           id?: string
           month?: string
+          recording_sent_at?: string | null
+          recording_uploaded_at?: string | null
+          recording_url?: string | null
           session_date?: string
           session_notes?: string | null
           session_recap?: string | null
