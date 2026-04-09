@@ -173,13 +173,16 @@ export default function HomePage() {
       {/* Founder */}
       <section className="py-20 border-t border-border">
         <div className="container">
-          <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-10">
-            <div className="shrink-0">
-              <div className="w-28 h-28 rounded-full border-2 border-border bg-secondary flex items-center justify-center">
-                <span className="text-xs text-muted-foreground font-medium">Founder Photo</span>
-              </div>
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-start gap-10 md:gap-14">
+            <div className="w-full md:w-[380px] shrink-0 relative">
+              <img
+                src={founderImg}
+                alt="T. Allen, Founder of Terrible Coaching"
+                className="w-full rounded-lg object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent rounded-b-lg" />
             </div>
-            <div>
+            <div className="flex-1 pt-2">
               <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-4">
                 Built by someone who got tired of soft coaching.
               </h2>
