@@ -19,7 +19,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="hidden md:flex w-64 flex-col border-r border-border bg-card p-4">
         <Link to="/" className="font-display text-lg font-bold mb-8 px-3">
-          <span className="text-gradient-gold">Terrible</span> Coaching
+          <span className="text-gradient-gold italic">Terrible</span> Coaching
         </Link>
         <nav className="flex-1 space-y-1">
           {links.map((l) => (

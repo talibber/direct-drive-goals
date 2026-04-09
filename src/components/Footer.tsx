@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           <div>
             <h3 className="font-display text-lg font-bold mb-3">
-              <span className="text-gradient-gold">Terrible</span> Coaching
+              <span className="text-gradient-gold italic">Terrible</span> Coaching
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Radically honest coaching for people who are done with fluff and ready for results.

@@ -16,7 +16,7 @@ export function CoachLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background flex">
       <aside className="hidden md:flex w-64 flex-col border-r border-border bg-card p-4">
         <Link to="/" className="font-display text-lg font-bold mb-2 px-3">
-          <span className="text-gradient-gold">Terrible</span> Coaching
+          <span className="text-gradient-gold italic">Terrible</span> Coaching
         </Link>
         <span className="text-xs text-primary font-medium px-3 mb-6">Coach Portal</span>
         <nav className="flex-1 space-y-1">
