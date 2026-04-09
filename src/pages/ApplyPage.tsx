@@ -7,6 +7,25 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
+const supportOptions = [
+  {
+    value: "accountability_only",
+    title: "System + Accountability",
+    subtitle: "I'm self-directed. I need structure, a scorecard, and consequences. I don't need frequent check-ins beyond the weekly system.",
+  },
+  {
+    value: "monthly_coaching",
+    title: "System + Monthly Coaching",
+    subtitle: "I want the full accountability system plus a dedicated monthly coaching call to work through strategy, decisions, and roadblocks.",
+  },
+  {
+    value: "undecided",
+    title: "I'm not sure yet",
+    subtitle: "I'll figure it out once I understand the program better.",
+  },
+] as const;
 
 export default function ApplyPage() {
   const { toast } = useToast();
