@@ -30,9 +30,14 @@ const supportOptions = [
 export default function ApplyPage() {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
+  const [supportLevel, setSupportLevel] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!supportLevel) {
+      toast({ title: "Required field", description: "Please select your preferred level of support.", variant: "destructive" });
+      return;
+    }
     setSubmitted(true);
     toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
   };
