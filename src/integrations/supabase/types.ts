@@ -180,6 +180,54 @@ export type Database = {
         }
         Relationships: []
       }
+      help_radar_items: {
+        Row: {
+          addressed_at: string | null
+          category: string
+          client_id: string
+          coach_note: string | null
+          coach_status: Database["public"]["Enums"]["help_radar_status"]
+          context: string | null
+          created_at: string
+          custom_description: string | null
+          flagged_at: string
+          id: string
+          resolved_at: string | null
+          resolved_by_client: boolean
+          updated_at: string
+        }
+        Insert: {
+          addressed_at?: string | null
+          category: string
+          client_id: string
+          coach_note?: string | null
+          coach_status?: Database["public"]["Enums"]["help_radar_status"]
+          context?: string | null
+          created_at?: string
+          custom_description?: string | null
+          flagged_at?: string
+          id?: string
+          resolved_at?: string | null
+          resolved_by_client?: boolean
+          updated_at?: string
+        }
+        Update: {
+          addressed_at?: string | null
+          category?: string
+          client_id?: string
+          coach_note?: string | null
+          coach_status?: Database["public"]["Enums"]["help_radar_status"]
+          context?: string | null
+          created_at?: string
+          custom_description?: string | null
+          flagged_at?: string
+          id?: string
+          resolved_at?: string | null
+          resolved_by_client?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       missed_goal_charges: {
         Row: {
           amount: number
@@ -381,6 +429,7 @@ export type Database = {
         | "proof_pending"
         | "proof_submitted"
         | "waived"
+      help_radar_status: "seen" | "on_deck" | "addressed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -521,6 +570,7 @@ export const Constants = {
         "proof_submitted",
         "waived",
       ],
+      help_radar_status: ["seen", "on_deck", "addressed"],
     },
   },
 } as const
