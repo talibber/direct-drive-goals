@@ -10,7 +10,7 @@ export function Footer() {
               <span className="text-gradient-gold italic">Terrible</span> Coaching
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Radically honest coaching for people who are done with fluff and ready for results.
+              Radically honest coaching for anyone ready to stop lying to themselves.
             </p>
           </div>
           <div>

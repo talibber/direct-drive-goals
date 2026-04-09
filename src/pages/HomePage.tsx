@@ -195,10 +195,7 @@ export default function HomePage() {
                   I built Terrible Coaching because I realized I can't execute your life for you — and I wouldn't want to. What I can do is help you see what you're already seeing but not trusting.
                 </p>
                 <p>
-                  Most people don't need more information. They have the answer. They just don't have the confidence or the belief in themselves to act on it yet.
-                </p>
-                <p>
-                  This isn't coaching for a specific type of person. It's for anyone who deserves better feedback, without judgment — so they can finally make the decision they've been circling.
+                  I kept watching people — all kinds of people — waste time on advice that sounded good but changed nothing. People who had the answer already but didn't trust themselves enough to act on it.
                 </p>
                 <p>
                   The system creates accountability. The scorecard creates visibility. But the real work is you learning to trust what you already know.
