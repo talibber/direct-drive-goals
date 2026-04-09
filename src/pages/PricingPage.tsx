@@ -30,6 +30,15 @@ export default function PricingPage() {
             </p>
           </div>
 
+          <div className="text-center mb-10">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+              One offer. No tiers. No upsells.
+            </h2>
+            <p className="mt-3 text-base text-muted-foreground max-w-lg mx-auto">
+              We keep it simple because complexity is how coaching products hide their lack of results.
+            </p>
+          </div>
+
           <div className="rounded-xl border-2 border-primary/30 bg-card p-8 md:p-10 shadow-card animate-pulse-glow mx-auto max-w-lg">
             <div className="text-center mb-8">
               <div className="text-xs font-medium uppercase tracking-wider text-primary mb-2">Monthly Subscription</div>
@@ -48,6 +57,18 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
+
+            <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-5 mb-8">
+              <p className="text-base font-display font-bold text-foreground mb-1">
+                Maximum monthly exposure: $225
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                ($99 subscription + up to 3 missed goal stakes at $75 each)
+              </p>
+              <p className="text-sm text-foreground/80 mt-2 font-medium">
+                You'll never be charged more than this in a single month.
+              </p>
+            </div>
 
             <Link to="/apply" className="block">
               <Button variant="hero" size="lg" className="w-full text-base">
