@@ -51,8 +51,8 @@ export default function HomePage() {
                 <span className="text-gradient-gold">Start executing.</span>
               </h1>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Terrible Coaching is radically honest coaching for founders, executives, and investors
-                who are done with fluffy advice and ready for measurable results. Miss a goal? Pay $75.
+                Terrible Coaching is radically honest coaching for anyone who is done lying to themselves
+                and ready to actually move. Miss a goal? Pay $75.
                 That's accountability.
               </p>
               <p className="mt-4 text-sm md:text-base font-semibold text-foreground/80 tracking-wide animate-fade-up" style={{ animationDelay: "0.25s" }}>
