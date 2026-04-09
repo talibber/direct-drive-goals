@@ -21,6 +21,10 @@ export default function CoachDashboard() {
   const [scheduleAlert, setScheduleAlert] = useState<PerfectMonthAlert | null>(null);
   const [rSessions, setRSessions] = useState<ResetSession[]>(initialResetSessions);
   const [recordingInput, setRecordingInput] = useState<Record<string, string>>({});
+  const [radarItems, setRadarItems] = useState<HelpRadarItem[]>(coachHelpRadarItems);
+  const [radarTab, setRadarTab] = useState<"items" | "insights">("items");
+  const [radarNote, setRadarNote] = useState<Record<string, string>>({});
+  const [radarStatus, setRadarStatus] = useState<Record<string, string>>({});
 
   const handleGoalAction = (goalId: string, action: "approved" | "revision_requested" | "rejected", notes?: string) => {
     setPendingGoals((prev) => prev.filter((g) => g.id !== goalId));
