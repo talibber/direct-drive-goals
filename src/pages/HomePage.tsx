@@ -238,6 +238,36 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Mirror Section */}
+      <section className="py-20 md:py-24">
+        <div className="container">
+          <div className="max-w-[740px] mx-auto text-center space-y-6">
+            <p className="text-lg md:text-xl text-muted-foreground leading-[1.7]">
+              I can't want this for you more than you want it for yourself.
+            </p>
+            <p className="text-lg md:text-xl text-muted-foreground leading-[1.7]">
+              There's a real cost to missing goals — not the $75. The cost of another month that passed. Another promise to yourself that didn't get kept. Another version of who you could be, deferred.
+            </p>
+            <p className="text-xl md:text-2xl font-semibold text-primary leading-[1.7]">
+              Terrible Coaching doesn't motivate you.
+              <br />
+              It doesn't fix you. It holds up a mirror.
+            </p>
+            <p className="text-lg md:text-xl text-muted-foreground leading-[1.7]">
+              The scorecard shows you the gap between who you said you'd be and what you actually did. The check-in surfaces what you're avoiding. The accountability stake makes the cost of inaction visible.
+            </p>
+            <p className="text-xl md:text-2xl font-semibold text-primary leading-[1.7]">
+              The answers are already inside you.
+              <br />
+              The promise was already made.
+            </p>
+            <p className="text-xl md:text-2xl font-semibold text-primary leading-[1.7]">
+              We just make sure you can't look away from it.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 border-t border-border">
         <div className="container">
