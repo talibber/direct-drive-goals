@@ -1,13 +1,15 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { StatCard } from "@/components/StatCard";
 import { GoalCard } from "@/components/GoalCard";
-import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth } from "@/lib/mockData";
-import { Activity, Target, Flame, DollarSign, Trophy } from "lucide-react";
+import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession } from "@/lib/mockData";
+import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw } from "lucide-react";
+import { Link } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function ClientDashboard() {
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
   const pm = clientPerfectMonth;
+  const rs = clientResetSession;
 
   return (
     <DashboardLayout>
@@ -26,6 +28,31 @@ export default function ClientDashboard() {
                   : "Next Level Call scheduled."}
               </p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Session Notification */}
+      {rs.enrolled && !rs.completed && (
+        <div className="mb-6 rounded-lg border-2 border-danger/30 bg-danger/5 p-5">
+          <div className="flex items-start justify-between">
+            <div className="flex items-start gap-3">
+              <RotateCcw size={24} className="text-danger mt-0.5" />
+              <div>
+                <p className="font-display font-bold text-foreground">
+                  Goal missed. $75 stake charged.
+                </p>
+                <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                  You've been enrolled in this month's Reset Session. The Reset is a group coaching call where we address common patterns, recalibrate, and set the next commitment. No one is called out. Everyone benefits.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/dashboard/reset-session"
+              className="px-4 py-2 bg-foreground text-background text-sm font-semibold rounded-md hover:bg-foreground/90 transition-colors flex-shrink-0 whitespace-nowrap"
+            >
+              View Session Date
+            </Link>
           </div>
         </div>
       )}
