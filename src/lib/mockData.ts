@@ -264,11 +264,11 @@ export const coachNotes = [
 ];
 
 export const clients = [
-  { id: "1", name: "Marcus Chen", email: "marcus@example.com", type: "Business", status: "active", score: 86, missedGoals: 1, lastCheckIn: "2 days ago", risk: false },
-  { id: "2", name: "Sarah Kim", email: "sarah@example.com", type: "Life", status: "active", score: 72, missedGoals: 0, lastCheckIn: "5 days ago", risk: true },
-  { id: "3", name: "James Wright", email: "james@example.com", type: "Business", status: "active", score: 91, missedGoals: 0, lastCheckIn: "1 day ago", risk: false },
-  { id: "4", name: "Priya Patel", email: "priya@example.com", type: "Life", status: "active", score: 65, missedGoals: 2, lastCheckIn: "8 days ago", risk: true },
-  { id: "5", name: "Alex Rivera", email: "alex@example.com", type: "Business", status: "active", score: 78, missedGoals: 1, lastCheckIn: "3 days ago", risk: false },
+  { id: "1", name: "Marcus Chen", email: "marcus@example.com", type: "Business", status: "active", score: 86, missedGoals: 1, lastCheckIn: "2 days ago", risk: false, perfectMonths: 2 },
+  { id: "2", name: "Sarah Kim", email: "sarah@example.com", type: "Life", status: "active", score: 72, missedGoals: 0, lastCheckIn: "5 days ago", risk: true, perfectMonths: 0 },
+  { id: "3", name: "James Wright", email: "james@example.com", type: "Business", status: "active", score: 91, missedGoals: 0, lastCheckIn: "1 day ago", risk: false, perfectMonths: 4 },
+  { id: "4", name: "Priya Patel", email: "priya@example.com", type: "Life", status: "active", score: 65, missedGoals: 2, lastCheckIn: "8 days ago", risk: true, perfectMonths: 0 },
+  { id: "5", name: "Alex Rivera", email: "alex@example.com", type: "Business", status: "active", score: 78, missedGoals: 1, lastCheckIn: "3 days ago", risk: false, perfectMonths: 1 },
 ];
 
 export const applications = [
@@ -276,3 +276,34 @@ export const applications = [
   { id: "2", name: "Emily Foster", email: "emily@example.com", type: "Life", occupation: "VP of Engineering", challenge: "Work-life balance and burnout", submitted: "Apr 7", status: "pending" },
   { id: "3", name: "Tom Nguyen", email: "tom@example.com", type: "Business", occupation: "Solo Founder", challenge: "Decision paralysis on product direction", submitted: "Apr 5", status: "approved" },
 ];
+
+export interface PerfectMonthAlert {
+  id: string;
+  clientId: string;
+  clientName: string;
+  month: string;
+  triggeredAt: string;
+  callScheduled: boolean;
+  callScheduledAt?: string;
+  callTitle?: string;
+  coachNotes?: string;
+}
+
+export const perfectMonthAlerts: PerfectMonthAlert[] = [
+  {
+    id: "pm-1",
+    clientId: "3",
+    clientName: "James Wright",
+    month: "April 2026",
+    triggeredAt: "Apr 9, 2026",
+    callScheduled: false,
+  },
+];
+
+// Client-side perfect month data
+export const clientPerfectMonth = {
+  active: true,
+  month: "April 2026",
+  callScheduledAt: null as string | null,
+  perfectMonthCount: 2,
+};
