@@ -2,7 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, X } from "lucide-react";
 
 const included = [
   "1-on-1 coaching (life + business)",
@@ -10,7 +10,6 @@ const included = [
   "Up to 3 active goals per month",
   "Direct coach notes and feedback",
   "Performance trend dashboards",
-  "Accountability stake system",
   "Email notifications and reminders",
   "Cancel anytime—no contracts",
 ];
@@ -49,7 +48,7 @@ export default function PricingPage() {
               <p className="text-sm text-muted-foreground mt-2">+ $75 per missed goal (accountability stake)</p>
             </div>
 
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-4">
               {included.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm">
                   <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
@@ -57,6 +56,21 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
+
+            {/* Paired miss consequences */}
+            <div className="ml-1 mb-8 flex gap-3">
+              <div className="w-[3px] rounded-full bg-gradient-gold shrink-0" />
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 text-sm">
+                  <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
+                  <span className="text-foreground">$75 accountability stake per missed goal</span>
+                </li>
+                <li className="flex items-start gap-3 text-sm">
+                  <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
+                  <span className="text-foreground">Missed goal triggers a Pattern Call — not just a charge</span>
+                </li>
+              </ul>
+            </div>
 
             <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-5 mb-8">
               <p className="text-base font-display font-bold text-foreground mb-1">
@@ -77,15 +91,67 @@ export default function PricingPage() {
             </Link>
           </div>
 
-          <div className="mt-12 text-center">
-            <h3 className="font-display font-semibold text-foreground mb-2">The Accountability Stake</h3>
-            <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-              Each active goal carries a $75 stake. If you miss the goal by the due date, the stake 
-              is automatically charged. This isn't a punishment—it's a commitment device. Research shows 
-              that financial stakes dramatically increase follow-through. You can have 1–3 active goals 
-              per month, meaning your maximum monthly stake exposure is $225.
-            </p>
+          {/* Accountability Stake explanation */}
+          <div className="mt-16 max-w-xl mx-auto">
+            <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mb-4 text-center">The Accountability Stake</h3>
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <p className="text-foreground font-medium">Missing a goal isn't just a charge — it's a signal.</p>
+              <p>
+                When you miss a pre-agreed goal, two things happen: a $75 stake is charged to your payment method, and a Pattern Call is automatically scheduled with your coach.
+              </p>
+              <p>
+                The Pattern Call is a focused 30-minute session built around one question: what's actually in the way?
+              </p>
+              <p>
+                Not motivation. Not encouragement. A direct conversation about the pattern behind the miss — and a clear commitment for what changes next.
+              </p>
+              <p className="text-foreground font-medium">
+                The stake creates urgency. The call creates insight. Together, they're why this works.
+              </p>
+            </div>
           </div>
+
+          {/* Two outcomes callout */}
+          <div className="mt-12 max-w-xl mx-auto rounded-xl border border-primary/30 bg-card p-6 md:p-8">
+            <h4 className="font-display text-lg font-bold text-foreground text-center mb-6">Two outcomes. Both useful.</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <p className="text-sm font-display font-semibold text-danger/80 mb-3">Miss a goal</p>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <X size={14} className="text-danger/60 mt-0.5 shrink-0" />
+                    $75 stake charged automatically
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <X size={14} className="text-danger/60 mt-0.5 shrink-0" />
+                    Pattern Call scheduled within 7 days
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <X size={14} className="text-danger/60 mt-0.5 shrink-0" />
+                    Miss logged to your scorecard
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-display font-semibold text-primary mb-3">Hit your goals</p>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm text-foreground/80">
+                    <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                    Stake never charged
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-foreground/80">
+                    <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                    Streak continues
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-foreground/80">
+                    <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                    Score improves
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
       <Footer />
