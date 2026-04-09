@@ -14,7 +14,110 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      goal_approval_history: {
+        Row: {
+          action: Database["public"]["Enums"]["goal_approval_action"]
+          coach_id: string
+          created_at: string
+          goal_id: string
+          id: string
+          notes: string | null
+        }
+        Insert: {
+          action: Database["public"]["Enums"]["goal_approval_action"]
+          coach_id: string
+          created_at?: string
+          goal_id: string
+          id?: string
+          notes?: string | null
+        }
+        Update: {
+          action?: Database["public"]["Enums"]["goal_approval_action"]
+          coach_id?: string
+          created_at?: string
+          goal_id?: string
+          id?: string
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goal_approval_history_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      goals: {
+        Row: {
+          approved_at: string | null
+          category: string
+          coach_approved: boolean
+          coach_id: string | null
+          coach_notes: string | null
+          created_at: string
+          current_value: number
+          description: string | null
+          due_date: string
+          id: string
+          metric_type: string
+          proof_requirement: string | null
+          resubmission_count: number
+          stake: number
+          status: Database["public"]["Enums"]["goal_status"]
+          target: string
+          target_value: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved_at?: string | null
+          category?: string
+          coach_approved?: boolean
+          coach_id?: string | null
+          coach_notes?: string | null
+          created_at?: string
+          current_value?: number
+          description?: string | null
+          due_date: string
+          id?: string
+          metric_type?: string
+          proof_requirement?: string | null
+          resubmission_count?: number
+          stake?: number
+          status?: Database["public"]["Enums"]["goal_status"]
+          target: string
+          target_value?: number
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved_at?: string | null
+          category?: string
+          coach_approved?: boolean
+          coach_id?: string | null
+          coach_notes?: string | null
+          created_at?: string
+          current_value?: number
+          description?: string | null
+          due_date?: string
+          id?: string
+          metric_type?: string
+          proof_requirement?: string | null
+          resubmission_count?: number
+          stake?: number
+          status?: Database["public"]["Enums"]["goal_status"]
+          target?: string
+          target_value?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +126,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      goal_approval_action: "approved" | "revision_requested" | "rejected"
+      goal_status:
+        | "pending_approval"
+        | "revision_requested"
+        | "active"
+        | "at_risk"
+        | "missed"
+        | "completed"
+        | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +261,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      goal_approval_action: ["approved", "revision_requested", "rejected"],
+      goal_status: [
+        "pending_approval",
+        "revision_requested",
+        "active",
+        "at_risk",
+        "missed",
+        "completed",
+        "rejected",
+      ],
+    },
   },
 } as const
