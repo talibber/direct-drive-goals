@@ -1,25 +1,46 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { StatCard } from "@/components/StatCard";
 import { GoalCard } from "@/components/GoalCard";
-import { weeklyCheckIns, goals, coachNotes, billingHistory } from "@/lib/mockData";
-import { Activity, Target, Flame, DollarSign } from "lucide-react";
+import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth } from "@/lib/mockData";
+import { Activity, Target, Flame, DollarSign, Trophy } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function ClientDashboard() {
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
+  const pm = clientPerfectMonth;
 
   return (
     <DashboardLayout>
+      {/* Perfect Month Banner */}
+      {pm.active && (
+        <div className="mb-6 rounded-lg bg-gradient-gold p-5 shadow-card">
+          <div className="flex items-center gap-3">
+            <Trophy size={28} className="text-primary-foreground" />
+            <div>
+              <p className="font-display font-bold text-primary-foreground text-lg">
+                Perfect Month — All goals completed and verified.
+              </p>
+              <p className="text-sm text-primary-foreground/80 mt-0.5">
+                {pm.callScheduledAt
+                  ? `Next Level Call scheduled for ${pm.callScheduledAt}`
+                  : "Next Level Call scheduled."}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mb-8">
         <h1 className="font-display text-2xl md:text-3xl font-bold">Welcome back, Marcus</h1>
         <p className="text-muted-foreground mt-1">Here's your performance snapshot.</p>
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
-        <StatCard label="Performance Score" value={latestScore} change="+5 from last week" trend="up" icon={Activity} />
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-5 mb-8">
+        <StatCard label="Performance Score" value={pm.active ? latestScore + 10 : latestScore} change={pm.active ? "+10 Perfect Month bonus" : "+5 from last week"} trend="up" icon={Activity} />
         <StatCard label="Goal Completion" value="80%" change="8 of 10 goals" trend="up" icon={Target} />
         <StatCard label="Check-In Streak" value="6 wks" change="Personal best!" trend="up" icon={Flame} />
+        <StatCard label="Perfect Months" value={pm.perfectMonthCount} change="Lifetime total" trend="up" icon={Trophy} />
         <StatCard label="Stakes Charged" value="$150" change="2 missed goals" trend="down" icon={DollarSign} />
       </div>
 

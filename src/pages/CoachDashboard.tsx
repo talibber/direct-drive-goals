@@ -3,8 +3,9 @@ import { CoachLayout } from "@/components/CoachLayout";
 import { StatCard } from "@/components/StatCard";
 import { CoachGoalReviewPanel } from "@/components/CoachGoalReviewPanel";
 import { CoachGoalVerifyPanel } from "@/components/CoachGoalVerifyPanel";
-import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, type Goal } from "@/lib/mockData";
-import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck } from "lucide-react";
+import { PerfectMonthSchedulePanel } from "@/components/PerfectMonthSchedulePanel";
+import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, type Goal, type PerfectMonthAlert } from "@/lib/mockData";
+import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CoachDashboard() {
@@ -15,6 +16,8 @@ export default function CoachDashboard() {
   const [proofGoals, setProofGoals] = useState<Goal[]>(initialProofGoals);
   const [reviewGoal, setReviewGoal] = useState<Goal | null>(null);
   const [verifyGoal, setVerifyGoal] = useState<Goal | null>(null);
+  const [pmAlerts, setPmAlerts] = useState<PerfectMonthAlert[]>(initialAlerts);
+  const [scheduleAlert, setScheduleAlert] = useState<PerfectMonthAlert | null>(null);
 
   const handleGoalAction = (goalId: string, action: "approved" | "revision_requested" | "rejected", notes?: string) => {
     setPendingGoals((prev) => prev.filter((g) => g.id !== goalId));
@@ -24,10 +27,51 @@ export default function CoachDashboard() {
     setProofGoals((prev) => prev.filter((g) => g.id !== goalId));
   };
 
+  const handleSchedulePM = (alertId: string, data: { scheduledAt: string; title: string; notes: string }) => {
+    setPmAlerts((prev) =>
+      prev.map((a) =>
+        a.id === alertId
+          ? { ...a, callScheduled: true, callScheduledAt: data.scheduledAt, callTitle: data.title, coachNotes: data.notes }
+          : a
+      )
+    );
+  };
+
+  const unscheduledAlerts = pmAlerts.filter((a) => !a.callScheduled);
+
   return (
     <CoachLayout>
       <h1 className="font-display text-2xl md:text-3xl font-bold mb-2">Coach Dashboard</h1>
       <p className="text-muted-foreground mb-8">Overview of your coaching practice.</p>
+
+      {/* Perfect Month Alerts */}
+      {unscheduledAlerts.length > 0 && (
+        <div className="mb-8 space-y-3">
+          {unscheduledAlerts.map((alert) => (
+            <div key={alert.id} className="rounded-lg bg-gradient-gold p-5 shadow-card">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <Trophy size={24} className="text-primary-foreground" />
+                  <div>
+                    <p className="font-display font-bold text-primary-foreground text-lg">
+                      {alert.clientName} just completed all goals this month.
+                    </p>
+                    <p className="text-sm text-primary-foreground/80 mt-0.5">
+                      Time to talk about the next level.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setScheduleAlert(alert)}
+                  className="px-4 py-2 bg-background text-foreground text-sm font-semibold rounded-md hover:bg-background/90 transition-colors flex-shrink-0"
+                >
+                  Schedule Next Level Call
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
         <StatCard label="Active Clients" value={clients.length} icon={Users} />
@@ -137,7 +181,7 @@ export default function CoachDashboard() {
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Name</th>
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Type</th>
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Score</th>
-                <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Missed Goals</th>
+                <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Perfect Months</th>
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Last Check-In</th>
               </tr>
             </thead>
@@ -151,7 +195,15 @@ export default function CoachDashboard() {
                       {c.score}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-muted-foreground">{c.missedGoals}</td>
+                  <td className="px-5 py-3">
+                    {c.perfectMonths > 0 ? (
+                      <span className="inline-flex items-center gap-1 text-primary font-semibold">
+                        <Trophy size={12} /> {c.perfectMonths}
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground">0</span>
+                    )}
+                  </td>
                   <td className="px-5 py-3 text-muted-foreground">{c.lastCheckIn}</td>
                 </tr>
               ))}
@@ -160,7 +212,7 @@ export default function CoachDashboard() {
         </div>
       </div>
 
-      {/* Review & Verify Panels */}
+      {/* Review & Verify & Schedule Panels */}
       <CoachGoalReviewPanel
         goal={reviewGoal}
         open={!!reviewGoal}
@@ -172,6 +224,12 @@ export default function CoachDashboard() {
         open={!!verifyGoal}
         onClose={() => setVerifyGoal(null)}
         onAction={handleVerifyAction}
+      />
+      <PerfectMonthSchedulePanel
+        alert={scheduleAlert}
+        open={!!scheduleAlert}
+        onClose={() => setScheduleAlert(null)}
+        onSchedule={handleSchedulePM}
       />
     </CoachLayout>
   );
