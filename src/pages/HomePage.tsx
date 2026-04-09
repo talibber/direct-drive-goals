@@ -184,12 +184,23 @@ export default function HomePage() {
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent rounded-b-lg" />
             </div>
             <div className="flex-1 pt-2">
-              <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-4">
-                Built by someone who got tired of soft coaching.
+              <h2 className="font-display text-2xl md:text-3xl font-extrabold text-foreground mb-4">
+                I don't give advice. I give perspective.
               </h2>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                I built Terrible Coaching because I kept watching high-performing people — founders, investors, operators — waste money on coaches who told them what they wanted to hear. You don't need motivation. You need a system, a scorecard, and someone willing to tell you the truth.
-              </p>
+              <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
+                <p>
+                  I built Terrible Coaching because I realized I can't execute your life for you — and I wouldn't want to. What I can do is help you see what you're already seeing but not trusting.
+                </p>
+                <p>
+                  Most people don't need more information. They have the answer. They just don't have the confidence or the belief in themselves to act on it yet.
+                </p>
+                <p>
+                  This isn't coaching for a specific type of person. It's for anyone who deserves better feedback, without judgment — so they can finally make the decision they've been circling.
+                </p>
+                <p>
+                  The system creates accountability. The scorecard creates visibility. But the real work is you learning to trust what you already know.
+                </p>
+              </div>
               <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-foreground/70">
                 T. Allen, Founder
               </p>
