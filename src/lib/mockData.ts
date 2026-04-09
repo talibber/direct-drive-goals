@@ -246,7 +246,7 @@ export const goalApprovalHistory = [
 
 export const goalDecisionHistory = [
   { id: "1", goalTitle: "Run a half marathon", dueDate: "Apr 10", selfAssessment: "completed" as const, coachDecision: "verified" as const, coachNote: "Great job on a strong finish time.", decidedAt: "Apr 10, 2026", stakeCharged: false, clientName: "James Wright" },
-  { id: "2", goalTitle: "Daily journaling for 30 days", dueDate: "Mar 31", selfAssessment: "not_completed" as const, coachDecision: "missed" as const, coachNote: "Only 12 of 30 days completed. Pattern Call scheduled.", decidedAt: "Apr 1, 2026", stakeCharged: true, clientName: "Marcus Chen" },
+  { id: "2", goalTitle: "Daily journaling for 30 days", dueDate: "Mar 31", selfAssessment: "not_completed" as const, coachDecision: "missed" as const, coachNote: "Only 12 of 30 days completed. Enrolled in Reset Session.", decidedAt: "Apr 1, 2026", stakeCharged: true, clientName: "Marcus Chen" },
   { id: "3", goalTitle: "Complete sales playbook", dueDate: "Mar 31", selfAssessment: "completed" as const, coachDecision: "waived" as const, coachNote: "Playbook was 80% done with strong content. Waiving stake given extenuating travel schedule. Must complete remaining 20% this month.", decidedAt: "Apr 1, 2026", stakeCharged: false, clientName: "Alex Rivera" },
 ];
 

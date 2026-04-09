@@ -86,7 +86,7 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
 
   const confirmMiss = () => {
     onSubmit(goal.id, { description, selfAssessment: "not_completed", files });
-    toast.info("Goal marked as not completed. Your $75 accountability stake will be charged and a Pattern Call will be scheduled.");
+    toast.info("Goal marked as not completed. Your $75 accountability stake will be charged and you'll be enrolled in the monthly Reset Session.");
     setShowMissConfirm(false);
     resetAndClose();
   };
@@ -243,7 +243,7 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
             <AlertTriangle size={40} className="mx-auto text-warning" />
             <h3 className="font-display font-semibold text-lg text-foreground">Are you sure?</h3>
             <p className="text-sm text-muted-foreground">
-              Submitting this will trigger your <span className="font-semibold text-foreground">${goal.stake} accountability stake</span> and schedule a Pattern Call with your coach.
+              Submitting this will trigger your <span className="font-semibold text-foreground">${goal.stake} accountability stake</span> and enroll you in the monthly Reset Session.
             </p>
             <div className="flex gap-3 pt-2">
               <Button onClick={() => setShowMissConfirm(false)} variant="outline" className="flex-1">
