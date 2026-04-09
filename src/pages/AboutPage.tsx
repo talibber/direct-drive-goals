@@ -12,22 +12,25 @@ export default function AboutPage() {
           </h1>
           <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
             <p>
-              Most coaching is expensive therapy with a whiteboard.
+              Most coaching is broken because it's built around the coach, not the client.
             </p>
             <p>
-              Vague affirmations. No accountability. Zero measurable outcomes.
+              Advice assumes the coach knows your life better than you do. We don't believe that.
+            </p>
+            <p>
+              Terrible Coaching was built on a different premise: most people already have the answer. They don't need more information. They don't need motivation. They need better feedback — without judgment — so they can finally trust what they already know and act on it.
+            </p>
+            <p>
+              We don't tell you what to do. We give you perspective. We build you a system. We hold you accountable to your own standards — not ours.
+            </p>
+            <p>
+              The scorecard makes your progress visible. The weekly check-in surfaces what you're avoiding. The accountability stake makes the cost of inaction real. And when you miss a goal, we don't penalize you and disappear — we schedule a call and figure out what's actually in the way.
+            </p>
+            <p>
+              This isn't just for founders and executives. It's for anyone who deserves honest feedback and is ready to stop lying to themselves about why they're not moving.
             </p>
             <p className="text-foreground font-semibold">
-              We built the opposite.
-            </p>
-            <p>
-              Terrible Coaching is for people who are already moving — founders, executives, operators — who know they're leaving performance on the table and want someone to call them on it.
-            </p>
-            <p>
-              The model is simple: define your goals, put money on the line, check in weekly, get honest feedback. Hit your goals. Or pay $75 and learn something real about yourself.
-            </p>
-            <p>
-              This is not crisis care. This is not therapy. If you are experiencing a mental health crisis, please contact a licensed professional or call 988.
+              The answers are already inside you. Terrible Coaching is how you learn to trust them.
             </p>
           </div>
           <p className="mt-10 text-xs text-muted-foreground/60 leading-relaxed max-w-xl">
