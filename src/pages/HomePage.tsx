@@ -170,7 +170,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Score preview */}
+      {/* Founder */}
+      <section className="py-20 border-t border-border">
+        <div className="container">
+          <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-10">
+            <div className="shrink-0">
+              <div className="w-28 h-28 rounded-full border-2 border-border bg-secondary flex items-center justify-center">
+                <span className="text-xs text-muted-foreground font-medium">Founder Photo</span>
+              </div>
+            </div>
+            <div>
+              <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-4">
+                Built by someone who got tired of soft coaching.
+              </h2>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                I built Terrible Coaching because I kept watching high-performing people — founders, investors, operators — waste money on coaches who told them what they wanted to hear. You don't need motivation. You need a system, a scorecard, and someone willing to tell you the truth.
+              </p>
+              <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-foreground/70">
+                T. Allen, Founder
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 border-t border-border">
         <div className="container">
           <div className="max-w-4xl mx-auto">
