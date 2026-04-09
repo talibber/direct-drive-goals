@@ -14,6 +14,145 @@ export type Database = {
   }
   public: {
     Tables: {
+      achievements: {
+        Row: {
+          badge_name: string
+          client_id: string
+          earned_at: string
+          id: string
+        }
+        Insert: {
+          badge_name: string
+          client_id: string
+          earned_at?: string
+          id?: string
+        }
+        Update: {
+          badge_name?: string
+          client_id?: string
+          earned_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      client_points: {
+        Row: {
+          client_id: string
+          current_level: number
+          id: string
+          last_updated: string
+          monthly_points: number
+          total_points: number
+        }
+        Insert: {
+          client_id: string
+          current_level?: number
+          id?: string
+          last_updated?: string
+          monthly_points?: number
+          total_points?: number
+        }
+        Update: {
+          client_id?: string
+          current_level?: number
+          id?: string
+          last_updated?: string
+          monthly_points?: number
+          total_points?: number
+        }
+        Relationships: []
+      }
+      community_post_likes: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          post_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          post_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_post_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_posts: {
+        Row: {
+          client_id: string
+          content: string
+          created_at: string
+          id: string
+          is_moderated: boolean
+          likes_count: number
+          post_type: string
+        }
+        Insert: {
+          client_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_moderated?: boolean
+          likes_count?: number
+          post_type?: string
+        }
+        Update: {
+          client_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_moderated?: boolean
+          likes_count?: number
+          post_type?: string
+        }
+        Relationships: []
+      }
+      community_replies: {
+        Row: {
+          client_id: string
+          content: string
+          created_at: string
+          id: string
+          post_id: string
+        }
+        Insert: {
+          client_id: string
+          content: string
+          created_at?: string
+          id?: string
+          post_id: string
+        }
+        Update: {
+          client_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       goal_approval_history: {
         Row: {
           action: Database["public"]["Enums"]["goal_approval_action"]
@@ -314,6 +453,33 @@ export type Database = {
         }
         Relationships: []
       }
+      point_transactions: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          points_earned: number
+          reason: string
+          reference_id: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          points_earned: number
+          reason: string
+          reference_id?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          points_earned?: number
+          reason?: string
+          reference_id?: string | null
+        }
+        Relationships: []
+      }
       reset_session_engagement: {
         Row: {
           client_id: string
@@ -406,6 +572,112 @@ export type Database = {
           session_notes?: string | null
           session_recap?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      team_challenges: {
+        Row: {
+          completed: boolean
+          created_at: string
+          description: string
+          due_date: string
+          id: string
+          target_metric: string
+          target_value: number
+          team_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          description: string
+          due_date: string
+          id?: string
+          target_metric: string
+          target_value?: number
+          team_id: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          description?: string
+          due_date?: string
+          id?: string
+          target_metric?: string
+          target_value?: number
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_challenges_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_members: {
+        Row: {
+          client_id: string
+          id: string
+          is_admin: boolean
+          joined_at: string
+          team_id: string
+        }
+        Insert: {
+          client_id: string
+          id?: string
+          is_admin?: boolean
+          joined_at?: string
+          team_id: string
+        }
+        Update: {
+          client_id?: string
+          id?: string
+          is_admin?: boolean
+          joined_at?: string
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          is_open: boolean
+          max_members: number
+          name: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          is_open?: boolean
+          max_members?: number
+          name: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          is_open?: boolean
+          max_members?: number
+          name?: string
         }
         Relationships: []
       }

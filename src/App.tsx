@@ -17,6 +17,7 @@ import SessionsPage from "./pages/SessionsPage";
 import ProfilePage from "./pages/ProfilePage";
 import ResetSessionPage from "./pages/ResetSessionPage";
 import HelpRadarPage from "./pages/HelpRadarPage";
+import CommunityPage from "./pages/CommunityPage";
 import CoachDashboard from "./pages/CoachDashboard";
 import CoachClientsPage from "./pages/CoachClientsPage";
 import CoachApplicationsPage from "./pages/CoachApplicationsPage";
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/dashboard/profile" element={<ProfilePage />} />
           <Route path="/dashboard/reset-session" element={<ResetSessionPage />} />
           <Route path="/dashboard/help-radar" element={<HelpRadarPage />} />
+          <Route path="/dashboard/community" element={<CommunityPage />} />
 
           {/* Coach */}
           <Route path="/coach" element={<CoachDashboard />} />
