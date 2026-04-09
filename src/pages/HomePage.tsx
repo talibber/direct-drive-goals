@@ -14,11 +14,14 @@ const oldWay = [
 ];
 
 const newWay = [
-  "SMART goals with pass/fail definitions",
+  "SMART goals reviewed and approved by your coach",
   "Weekly scored check-ins with trend data",
   "Brutally honest coach feedback",
+  "Proof-based goal verification — not just your word",
   "$75 accountability stake per missed goal",
-  "Performance score you can't lie to",
+  "Miss a goal — Pattern Call scheduled within 7 days",
+  "Hit every goal — Next Level Call to raise the bar",
+  "Coach can waive stakes based on judgment and context",
 ];
 
 const previewGoals = [
@@ -264,6 +267,48 @@ export default function HomePage() {
             <p className="text-xl md:text-2xl font-semibold text-primary leading-[1.7]">
               We just make sure you can't look away from it.
             </p>
+            <p className="text-xl md:text-2xl font-semibold text-primary leading-[1.7]">
+              And when you hit everything?
+              <br />
+              We show up to make sure you aim higher next time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline */}
+      <section className="py-20 border-t border-border">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <h2 className="font-display text-3xl md:text-4xl font-bold">
+              The full loop. <span className="text-gradient-gold">Nothing hidden.</span>
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Here's exactly what happens from application to results.
+            </p>
+          </div>
+          <div className="max-w-2xl mx-auto relative">
+            {/* Vertical line */}
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-border" />
+
+            {[
+              { num: 1, title: "You Apply", desc: "Tell us who you are and what's not working. We review within 48 hours.", border: "" },
+              { num: 2, title: "Goals Get Set and Approved", desc: "You build 1-3 measurable goals. Your coach reviews every one. Vague goals get sent back. Only approved goals carry a stake.", border: "" },
+              { num: 3, title: "You Check In Every Week", desc: "Energy, focus, stress, habits, wins, failures, and what you're avoiding. No hiding from the data.", border: "" },
+              { num: 4, title: "You Submit Proof", desc: "When a goal is due, you submit proof — description, photo, or document. Your coach reviews and verifies. No coach sign-off, no charge.", border: "" },
+              { num: 5, title: "Miss a Goal", desc: "$75 stake charged. Pattern Call scheduled within 7 days. We figure out what's actually in the way. The coach can also waive the stake when context calls for it — but you'll always know why.", border: "border-l-2 border-l-danger" },
+              { num: 6, title: "Hit Everything", desc: "Perfect Month unlocked. Next Level Call scheduled. We talk about what you're capable of next. Then we raise the bar.", border: "border-l-2 border-l-primary" },
+            ].map((step) => (
+              <div key={step.num} className="relative flex gap-5 mb-8 last:mb-0">
+                <div className="relative z-10 w-12 h-12 rounded-full bg-gradient-gold flex items-center justify-center shrink-0 text-primary-foreground font-display font-bold text-lg shadow-lg">
+                  {step.num}
+                </div>
+                <div className={`flex-1 rounded-lg border border-border bg-card p-5 shadow-card ${step.border} ${step.num === 6 ? "shadow-[0_8px_30px_-8px_hsl(45_100%_51%/0.15)]" : ""}`}>
+                  <h4 className="font-display font-bold text-foreground text-lg">{step.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed mt-1">{step.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
