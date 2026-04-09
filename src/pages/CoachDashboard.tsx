@@ -20,7 +20,7 @@ export default function CoachDashboard() {
     setPendingGoals((prev) => prev.filter((g) => g.id !== goalId));
   };
 
-  const handleVerifyAction = (goalId: string, action: "completed" | "missed", note?: string) => {
+  const handleVerifyAction = (goalId: string, action: "verified" | "waived" | "missed", note?: string) => {
     setProofGoals((prev) => prev.filter((g) => g.id !== goalId));
   };
 

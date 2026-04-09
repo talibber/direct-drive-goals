@@ -23,6 +23,41 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const addFiles = useCallback((incoming: FileList | File[]) => {
+    const MAX_FILES = 3;
+    const MAX_SIZE = 10 * 1024 * 1024;
+    const ACCEPTED = ["image/jpeg", "image/png", "application/pdf", "image/heic"];
+    const arr = Array.from(incoming);
+    const valid: File[] = [];
+    setFiles((prev) => {
+      for (const f of arr) {
+        if (prev.length + valid.length >= MAX_FILES) {
+          toast.error(`Maximum ${MAX_FILES} files allowed`);
+          break;
+        }
+        if (f.size > MAX_SIZE) {
+          toast.error(`${f.name} exceeds 10MB limit`);
+          continue;
+        }
+        if (!ACCEPTED.includes(f.type) && !f.name.toLowerCase().endsWith(".heic")) {
+          toast.error(`${f.name} is not a supported file type`);
+          continue;
+        }
+        valid.push(f);
+      }
+      return [...prev, ...valid];
+    });
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(false);
+      if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+    },
+    [addFiles]
+  );
+
   if (!goal) return null;
 
   const MAX_FILES = 3;
