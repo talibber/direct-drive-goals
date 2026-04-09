@@ -51,8 +51,8 @@ export default function HomePage() {
                 <span className="text-gradient-gold">Start executing.</span>
               </h1>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Terrible Coaching is radically honest coaching for founders, executives, and investors
-                who are done with fluffy advice and ready for measurable results. Miss a goal? Pay $75.
+                Terrible Coaching is radically honest coaching for anyone who is done lying to themselves
+                and ready to actually move. Miss a goal? Pay $75.
                 That's accountability.
               </p>
               <p className="mt-4 text-sm md:text-base font-semibold text-foreground/80 tracking-wide animate-fade-up" style={{ animationDelay: "0.25s" }}>
@@ -195,10 +195,7 @@ export default function HomePage() {
                   I built Terrible Coaching because I realized I can't execute your life for you — and I wouldn't want to. What I can do is help you see what you're already seeing but not trusting.
                 </p>
                 <p>
-                  Most people don't need more information. They have the answer. They just don't have the confidence or the belief in themselves to act on it yet.
-                </p>
-                <p>
-                  This isn't coaching for a specific type of person. It's for anyone who deserves better feedback, without judgment — so they can finally make the decision they've been circling.
+                  I kept watching people — all kinds of people — waste time on advice that sounded good but changed nothing. People who had the answer already but didn't trust themselves enough to act on it.
                 </p>
                 <p>
                   The system creates accountability. The scorecard creates visibility. But the real work is you learning to trust what you already know.

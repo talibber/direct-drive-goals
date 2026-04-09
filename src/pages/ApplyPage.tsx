@@ -87,7 +87,7 @@ export default function ApplyPage() {
 
             <div>
               <Label htmlFor="occupation">Occupation / Role</Label>
-              <Input id="occupation" placeholder="e.g. Startup Founder, VP of Engineering" required className="mt-1.5" />
+              <Input id="occupation" placeholder="e.g. Teacher, Entrepreneur, Parent, Sales Rep, Student, whatever you are" required className="mt-1.5" />
             </div>
 
             <div>
