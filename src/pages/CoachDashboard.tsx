@@ -4,8 +4,8 @@ import { StatCard } from "@/components/StatCard";
 import { CoachGoalReviewPanel } from "@/components/CoachGoalReviewPanel";
 import { CoachGoalVerifyPanel } from "@/components/CoachGoalVerifyPanel";
 import { PerfectMonthSchedulePanel } from "@/components/PerfectMonthSchedulePanel";
-import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, type Goal, type PerfectMonthAlert } from "@/lib/mockData";
-import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy } from "lucide-react";
+import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, resetSessions, type Goal, type PerfectMonthAlert } from "@/lib/mockData";
+import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CoachDashboard() {
@@ -148,6 +148,49 @@ export default function CoachDashboard() {
           </div>
         )}
       </div>
+
+      {/* Reset Session Widget */}
+      {resetSessions.length > 0 && (
+        <div className="mb-8">
+          {resetSessions.filter((s) => !s.completed).map((session) => {
+            const enrolledClientNames = clients.filter((c) => session.enrolledClients.includes(c.id));
+            return (
+              <div key={session.id} className="rounded-lg border border-danger/30 bg-card p-5">
+                <h3 className="font-display font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <RotateCcw size={18} className="text-danger" /> Reset Session — {session.month}
+                </h3>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Next Session</p>
+                      <p className="text-sm font-medium text-foreground">{session.sessionDate}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Enrolled Clients ({enrolledClientNames.length})</p>
+                      <div className="space-y-1">
+                        {enrolledClientNames.map((c) => (
+                          <p key={c.id} className="text-sm text-foreground">{c.name} · Score: {c.score}</p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Common Patterns (Coach Prep — Private)</p>
+                    <textarea
+                      defaultValue={session.sessionNotes || ""}
+                      placeholder="Note common themes without attributing to specific clients..."
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[80px] resize-y"
+                    />
+                    <button className="mt-2 text-xs font-medium text-primary hover:underline">
+                      Send Session Reminder
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* At-risk */}
       {atRisk.length > 0 && (
