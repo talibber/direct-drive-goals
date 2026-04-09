@@ -1,6 +1,7 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { StatCard } from "@/components/StatCard";
 import { GoalCard } from "@/components/GoalCard";
+import { GamificationPanel } from "@/components/GamificationPanel";
 import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession } from "@/lib/mockData";
 import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -69,6 +70,11 @@ export default function ClientDashboard() {
         <StatCard label="Check-In Streak" value="6 wks" change="Personal best!" trend="up" icon={Flame} />
         <StatCard label="Perfect Months" value={pm.perfectMonthCount} change="Lifetime total" trend="up" icon={Trophy} />
         <StatCard label="Stakes Charged" value="$150" change="2 missed goals" trend="down" icon={DollarSign} />
+      </div>
+
+      {/* Level & Badges */}
+      <div className="mb-8">
+        <GamificationPanel />
       </div>
 
       {/* Performance Chart */}
