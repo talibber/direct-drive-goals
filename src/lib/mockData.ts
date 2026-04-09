@@ -317,6 +317,22 @@ export interface ResetSession {
   sessionNotes: string | null;
   sessionRecap: string | null;
   completed: boolean;
+  recordingUrl: string | null;
+  recordingUploadedAt: string | null;
+  recordingSentAt: string | null;
+}
+
+export interface ResetSessionEngagement {
+  id: string;
+  sessionId: string;
+  clientId: string;
+  clientName: string;
+  recordingWatched: boolean;
+  watchedAt: string | null;
+  commitmentSubmitted: boolean;
+  commitmentText: string | null;
+  commitmentSubmittedAt: string | null;
+  coachAcknowledged: boolean;
 }
 
 export const resetSessions: ResetSession[] = [
@@ -328,7 +344,27 @@ export const resetSessions: ResetSession[] = [
     sessionNotes: "Themes: avoidance patterns, scope creep, overcommitting.",
     sessionRecap: null,
     completed: false,
+    recordingUrl: null,
+    recordingUploadedAt: null,
+    recordingSentAt: null,
   },
+  {
+    id: "rs-0",
+    sessionDate: "Mar 28, 2026 at 7:00 PM EST",
+    month: "March 2026",
+    enrolledClients: ["1", "5"],
+    sessionNotes: "Focus on follow-through vs. starting new things.",
+    sessionRecap: "We covered three core patterns: over-promising scope, avoiding hard conversations, and using busyness as a shield. Each participant identified their own version of one of these. Commitments were set.",
+    completed: true,
+    recordingUrl: "https://www.loom.com/share/example-reset-march",
+    recordingUploadedAt: "Mar 29, 2026",
+    recordingSentAt: "Mar 29, 2026",
+  },
+];
+
+export const resetSessionEngagements: ResetSessionEngagement[] = [
+  { id: "rse-1", sessionId: "rs-0", clientId: "1", clientName: "Marcus Chen", recordingWatched: true, watchedAt: "Mar 30, 2026", commitmentSubmitted: true, commitmentText: "I will say no to at least 2 scope requests this month.", commitmentSubmittedAt: "Mar 30, 2026", coachAcknowledged: true },
+  { id: "rse-2", sessionId: "rs-0", clientId: "5", clientName: "Alex Rivera", recordingWatched: true, watchedAt: "Mar 31, 2026", commitmentSubmitted: false, commitmentText: null, commitmentSubmittedAt: null, coachAcknowledged: false },
 ];
 
 export const clientResetSession = {
@@ -339,4 +375,7 @@ export const clientResetSession = {
   completed: false,
   reflection: null as string | null,
   commitment: null as string | null,
+  recordingUrl: null as string | null,
+  recordingSentAt: null as string | null,
+  recordingWatched: false,
 };
