@@ -8,10 +8,15 @@ const included = [
   "1-on-1 coaching (life + business)",
   "Weekly check-in system with performance scoring",
   "Up to 3 active goals per month",
+  "Coach reviews and approves every goal",
+  "Proof-based goal verification",
   "Direct coach notes and feedback",
   "Performance trend dashboards",
-  "Email notifications and reminders",
-  "Cancel anytime—no contracts",
+  "$75 accountability stake per missed goal",
+  "Missed goal triggers a Pattern Call within 7 days",
+  "Coach waiver option — judgment over automation",
+  "Perfect Month triggers a Next Level Call",
+  "Cancel anytime — no contracts",
 ];
 
 export default function PricingPage() {
