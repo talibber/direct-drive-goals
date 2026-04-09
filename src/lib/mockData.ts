@@ -451,3 +451,308 @@ export const clientResetSession = {
   recordingSentAt: null as string | null,
   recordingWatched: false,
 };
+
+// ========== GAMIFICATION & COMMUNITY ==========
+
+export interface ClientPoints {
+  clientId: string;
+  totalPoints: number;
+  monthlyPoints: number;
+  currentLevel: number;
+  levelName: string;
+  nextLevelPoints: number;
+  streak: number;
+}
+
+export const levels = [
+  { level: 1, name: "In The Mirror", minPoints: 0, maxPoints: 199, description: "You showed up. That's the first step." },
+  { level: 2, name: "Getting Honest", minPoints: 200, maxPoints: 499, description: "You're starting to see yourself clearly." },
+  { level: 3, name: "No Excuses", minPoints: 500, maxPoints: 999, description: "You've stopped negotiating with yourself." },
+  { level: 4, name: "Pattern Breaker", minPoints: 1000, maxPoints: 1999, description: "You're rewriting old scripts." },
+  { level: 5, name: "Committed", minPoints: 2000, maxPoints: 3999, description: "Your consistency speaks for itself." },
+  { level: 6, name: "Terrible", minPoints: 4000, maxPoints: Infinity, description: "You've earned the name." },
+];
+
+export const clientPoints: ClientPoints = {
+  clientId: "1",
+  totalPoints: 1245,
+  monthlyPoints: 185,
+  currentLevel: 4,
+  levelName: "Pattern Breaker",
+  nextLevelPoints: 2000,
+  streak: 6,
+};
+
+export interface Achievement {
+  id: string;
+  badgeName: string;
+  earnedAt: string;
+  description: string;
+}
+
+export const clientAchievements: Achievement[] = [
+  { id: "a1", badgeName: "First Goal Approved", earnedAt: "Feb 1, 2026", description: "Had your first goal approved by your coach." },
+  { id: "a2", badgeName: "First Goal Verified", earnedAt: "Feb 28, 2026", description: "Completed and verified your first goal." },
+  { id: "a3", badgeName: "4 Week Streak", earnedAt: "Mar 1, 2026", description: "4 consecutive weekly check-ins." },
+  { id: "a4", badgeName: "Perfect Month", earnedAt: "Mar 31, 2026", description: "Hit every goal in a calendar month." },
+  { id: "a5", badgeName: "Reset Rebound", earnedAt: "Apr 5, 2026", description: "Missed a goal then hit all goals the following month." },
+];
+
+export const pointsBreakdown = [
+  { reason: "Weekly check-in completed", points: 10 },
+  { reason: "Goal approved", points: 5 },
+  { reason: "Goal proof submitted", points: 10 },
+  { reason: "Goal verified complete", points: 25 },
+  { reason: "Perfect Month bonus", points: 100 },
+  { reason: "Help Radar item logged", points: 5 },
+  { reason: "Reset Session commitment", points: 15 },
+  { reason: "Reset Session recording watched", points: 10 },
+  { reason: "4-week streak milestone", points: 25 },
+  { reason: "8-week streak milestone", points: 50 },
+  { reason: "12-week streak milestone", points: 100 },
+];
+
+export interface CommunityPost {
+  id: string;
+  clientId: string;
+  clientName: string;
+  level: number;
+  levelName: string;
+  points: number;
+  content: string;
+  postType: "post" | "win" | "question" | "reflection" | "system";
+  likesCount: number;
+  liked: boolean;
+  createdAt: string;
+  replies: CommunityReply[];
+}
+
+export interface CommunityReply {
+  id: string;
+  clientName: string;
+  level: number;
+  content: string;
+  createdAt: string;
+}
+
+export const communityPosts: CommunityPost[] = [
+  {
+    id: "cp-1",
+    clientId: "system",
+    clientName: "System",
+    level: 0,
+    levelName: "",
+    points: 0,
+    content: "Someone just had a Perfect Month. Every goal. Verified. Done. 🔥",
+    postType: "system",
+    likesCount: 12,
+    liked: false,
+    createdAt: "Apr 9, 2026",
+    replies: [],
+  },
+  {
+    id: "cp-2",
+    clientId: "3",
+    clientName: "James",
+    level: 5,
+    levelName: "Committed",
+    points: 2450,
+    content: "Just closed my biggest deal ever. 6 months of follow-up, 3 rejections, and one coach note that said 'stop being polite and start being direct.' That note changed everything.",
+    postType: "win",
+    likesCount: 8,
+    liked: true,
+    createdAt: "Apr 8, 2026",
+    replies: [
+      { id: "cr-1", clientName: "Marcus", level: 4, content: "This is the energy. Congrats.", createdAt: "Apr 8, 2026" },
+      { id: "cr-2", clientName: "Priya", level: 2, content: "Needed to see this today. Thank you.", createdAt: "Apr 8, 2026" },
+    ],
+  },
+  {
+    id: "cp-3",
+    clientId: "1",
+    clientName: "Marcus",
+    level: 4,
+    levelName: "Pattern Breaker",
+    points: 1245,
+    content: "Question for the group: how do you handle weeks where your energy score drops but you still need to hit a deadline? Do you push through or adjust?",
+    postType: "question",
+    likesCount: 5,
+    liked: false,
+    createdAt: "Apr 7, 2026",
+    replies: [
+      { id: "cr-3", clientName: "Alex", level: 3, content: "I used to push through every time. Now I adjust scope, not timeline. Different results.", createdAt: "Apr 7, 2026" },
+    ],
+  },
+  {
+    id: "cp-4",
+    clientId: "system",
+    clientName: "System",
+    level: 0,
+    levelName: "",
+    points: 0,
+    content: "Someone just hit a 12-week check-in streak. 🔥",
+    postType: "system",
+    likesCount: 15,
+    liked: false,
+    createdAt: "Apr 6, 2026",
+    replies: [],
+  },
+  {
+    id: "cp-5",
+    clientId: "5",
+    clientName: "Alex",
+    level: 3,
+    levelName: "No Excuses",
+    points: 780,
+    content: "Reset Session insight: I realized I'm not afraid of failure — I'm afraid of being seen failing. Different problem, different solution. Working on it.",
+    postType: "reflection",
+    likesCount: 11,
+    liked: true,
+    createdAt: "Apr 4, 2026",
+    replies: [],
+  },
+  {
+    id: "cp-6",
+    clientId: "2",
+    clientName: "Sarah",
+    level: 2,
+    levelName: "Getting Honest",
+    points: 320,
+    content: "Found this podcast on decision fatigue that changed how I structure my mornings. Happy to share if anyone wants the link.",
+    postType: "post",
+    likesCount: 4,
+    liked: false,
+    createdAt: "Apr 3, 2026",
+    replies: [
+      { id: "cr-4", clientName: "James", level: 5, content: "Please share. Always looking for new frameworks.", createdAt: "Apr 3, 2026" },
+    ],
+  },
+];
+
+export interface Team {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  memberCount: number;
+  maxMembers: number;
+  isOpen: boolean;
+  isMember: boolean;
+  members: TeamMember[];
+  challenge?: TeamChallenge;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  level: number;
+  levelName: string;
+  points: number;
+  streak: number;
+  activeGoals: number;
+  badges: string[];
+}
+
+export interface TeamChallenge {
+  id: string;
+  description: string;
+  targetMetric: string;
+  targetValue: number;
+  currentValue: number;
+  dueDate: string;
+  completed: boolean;
+}
+
+export const teams: Team[] = [
+  {
+    id: "t-1",
+    name: "Ship It Squad",
+    description: "Entrepreneurs building and launching products. We hold each other to shipping deadlines.",
+    category: "Entrepreneurs & Founders",
+    memberCount: 5,
+    maxMembers: 8,
+    isOpen: true,
+    isMember: true,
+    members: [
+      { id: "1", name: "Marcus", level: 4, levelName: "Pattern Breaker", points: 1245, streak: 6, activeGoals: 3, badges: ["First Goal Verified", "4 Week Streak", "Reset Rebound"] },
+      { id: "3", name: "James", level: 5, levelName: "Committed", points: 2450, streak: 12, activeGoals: 2, badges: ["Perfect Month", "12 Week Streak", "No Mercy"] },
+      { id: "5", name: "Alex", level: 3, levelName: "No Excuses", points: 780, streak: 4, activeGoals: 2, badges: ["First Goal Approved", "4 Week Streak"] },
+      { id: "6", name: "David", level: 2, levelName: "Getting Honest", points: 310, streak: 3, activeGoals: 3, badges: ["First Goal Approved"] },
+      { id: "7", name: "Tom", level: 1, levelName: "In The Mirror", points: 85, streak: 2, activeGoals: 1, badges: [] },
+    ],
+    challenge: {
+      id: "tc-1",
+      description: "100% check-in completion this month",
+      targetMetric: "check_ins",
+      targetValue: 20,
+      currentValue: 14,
+      dueDate: "Apr 30, 2026",
+      completed: false,
+    },
+  },
+  {
+    id: "t-2",
+    name: "Habit Hackers",
+    description: "Focused on building and maintaining daily habits. Health, routines, and discipline.",
+    category: "Health & Habits",
+    memberCount: 6,
+    maxMembers: 8,
+    isOpen: true,
+    isMember: false,
+    members: [
+      { id: "2", name: "Sarah", level: 2, levelName: "Getting Honest", points: 320, streak: 3, activeGoals: 2, badges: ["First Goal Approved"] },
+      { id: "4", name: "Priya", level: 2, levelName: "Getting Honest", points: 210, streak: 1, activeGoals: 2, badges: [] },
+      { id: "8", name: "Jordan", level: 3, levelName: "No Excuses", points: 650, streak: 5, activeGoals: 3, badges: ["4 Week Streak"] },
+      { id: "9", name: "Casey", level: 4, levelName: "Pattern Breaker", points: 1100, streak: 8, activeGoals: 2, badges: ["Perfect Month", "8 Week Streak"] },
+      { id: "10", name: "Riley", level: 1, levelName: "In The Mirror", points: 120, streak: 2, activeGoals: 1, badges: [] },
+      { id: "11", name: "Morgan", level: 3, levelName: "No Excuses", points: 540, streak: 4, activeGoals: 2, badges: ["First Goal Verified"] },
+    ],
+    challenge: undefined,
+  },
+  {
+    id: "t-3",
+    name: "Revenue Runners",
+    description: "Sales-focused group. Pipeline, closing, and revenue growth accountability.",
+    category: "Sales & Revenue",
+    memberCount: 4,
+    maxMembers: 8,
+    isOpen: true,
+    isMember: false,
+    members: [],
+    challenge: undefined,
+  },
+  {
+    id: "t-4",
+    name: "Parent Mode",
+    description: "Parents figuring out how to show up for their families and themselves.",
+    category: "Parents & Family",
+    memberCount: 3,
+    maxMembers: 6,
+    isOpen: true,
+    isMember: false,
+    members: [],
+    challenge: undefined,
+  },
+];
+
+export interface LeaderboardEntry {
+  rank: number;
+  clientName: string;
+  level: number;
+  levelName: string;
+  monthlyPoints: number;
+  streak: number;
+}
+
+export const leaderboard: LeaderboardEntry[] = [
+  { rank: 1, clientName: "James", level: 5, levelName: "Committed", monthlyPoints: 285, streak: 12 },
+  { rank: 2, clientName: "Casey", level: 4, levelName: "Pattern Breaker", monthlyPoints: 220, streak: 8 },
+  { rank: 3, clientName: "Marcus", level: 4, levelName: "Pattern Breaker", monthlyPoints: 185, streak: 6 },
+  { rank: 4, clientName: "Jordan", level: 3, levelName: "No Excuses", monthlyPoints: 160, streak: 5 },
+  { rank: 5, clientName: "Alex", level: 3, levelName: "No Excuses", monthlyPoints: 145, streak: 4 },
+  { rank: 6, clientName: "Morgan", level: 3, levelName: "No Excuses", monthlyPoints: 130, streak: 4 },
+  { rank: 7, clientName: "Sarah", level: 2, levelName: "Getting Honest", monthlyPoints: 110, streak: 3 },
+  { rank: 8, clientName: "David", level: 2, levelName: "Getting Honest", monthlyPoints: 95, streak: 3 },
+  { rank: 9, clientName: "Priya", level: 2, levelName: "Getting Honest", monthlyPoints: 75, streak: 1 },
+  { rank: 10, clientName: "Tom", level: 1, levelName: "In The Mirror", monthlyPoints: 45, streak: 2 },
+];
