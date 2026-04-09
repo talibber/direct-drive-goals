@@ -306,7 +306,163 @@ export default function CoachDashboard() {
         </div>
       )}
 
-      {/* At-risk */}
+      {/* Help Radar Widget */}
+      {radarItems.length > 0 && (
+        <div className="rounded-lg border border-primary/30 bg-card p-5 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-display font-semibold text-foreground flex items-center gap-2">
+              <Radio size={18} className="text-primary" /> Help Radar
+              <span className="ml-1 text-xs font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">
+                {radarItems.filter((i) => !i.resolvedByClient && i.coachStatus !== "addressed").length}
+              </span>
+            </h3>
+            <div className="flex gap-1 text-xs">
+              <button
+                onClick={() => setRadarTab("items")}
+                className={`px-3 py-1 rounded-md font-medium transition-colors ${radarTab === "items" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                Items
+              </button>
+              <button
+                onClick={() => setRadarTab("insights")}
+                className={`px-3 py-1 rounded-md font-medium transition-colors ${radarTab === "insights" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                Radar Insights
+              </button>
+            </div>
+          </div>
+
+          {radarTab === "items" && (
+            <div className="space-y-3">
+              {radarItems
+                .filter((i) => !i.resolvedByClient)
+                .sort((a, b) => new Date(b.flaggedAt).getTime() - new Date(a.flaggedAt).getTime())
+                .map((item) => (
+                  <div key={item.id} className="border border-border rounded-lg p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 flex-wrap mb-1">
+                          <p className="text-sm font-medium text-foreground">{item.clientName}</p>
+                          <span className="text-xs text-muted-foreground">·</span>
+                          <p className="text-sm text-primary font-medium">{item.category}</p>
+                          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                            item.coachStatus === "addressed" ? "bg-success/10 text-success" :
+                            item.coachStatus === "on_deck" ? "bg-primary/10 text-primary" :
+                            "bg-muted text-muted-foreground"
+                          }`}>
+                            {item.coachStatus === "addressed" ? "Addressed" : item.coachStatus === "on_deck" ? "On Deck" : "Seen"}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-1">Flagged {item.flaggedAt}</p>
+                        {item.context && (
+                          <p className="text-sm text-muted-foreground leading-relaxed">{item.context}</p>
+                        )}
+
+                        {/* Coach response area */}
+                        <div className="mt-3 space-y-2">
+                          <textarea
+                            value={radarNote[item.id] ?? item.coachNote ?? ""}
+                            onChange={(e) => setRadarNote((prev) => ({ ...prev, [item.id]: e.target.value }))}
+                            placeholder="This note goes directly to the client. Be direct."
+                            className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[50px] resize-y"
+                          />
+                          <div className="flex items-center gap-2">
+                            <select
+                              value={radarStatus[item.id] ?? item.coachStatus}
+                              onChange={(e) => setRadarStatus((prev) => ({ ...prev, [item.id]: e.target.value }))}
+                              className="rounded-md border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            >
+                              <option value="seen">Seen</option>
+                              <option value="on_deck">On Deck</option>
+                              <option value="addressed">Addressed</option>
+                            </select>
+                            <button
+                              onClick={() => {
+                                const newStatus = (radarStatus[item.id] ?? item.coachStatus) as HelpRadarItem["coachStatus"];
+                                const newNote = radarNote[item.id] ?? item.coachNote ?? "";
+                                setRadarItems((prev) => prev.map((i) => i.id === item.id ? {
+                                  ...i,
+                                  coachStatus: newStatus,
+                                  coachNote: newNote || null,
+                                  addressedAt: newStatus === "addressed" ? new Date().toISOString() : i.addressedAt,
+                                } : i));
+                                toast.success(newStatus === "addressed" ? "Challenge marked as addressed. Client notified." : "Status updated.");
+                              }}
+                              className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-md hover:bg-primary/90"
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+
+          {radarTab === "insights" && (() => {
+            const active = radarItems.filter((i) => !i.resolvedByClient);
+            const addressed = active.filter((i) => i.coachStatus === "addressed").length;
+            const total = active.length;
+
+            // Top categories
+            const catCounts: Record<string, number> = {};
+            active.forEach((i) => { catCounts[i.category] = (catCounts[i.category] || 0) + 1; });
+            const topCats = Object.entries(catCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+            const maxCount = topCats[0]?.[1] || 1;
+
+            // High need clients (3+ unaddressed)
+            const clientCounts: Record<string, { name: string; count: number }> = {};
+            active.filter((i) => i.coachStatus !== "addressed").forEach((i) => {
+              if (!clientCounts[i.clientId]) clientCounts[i.clientId] = { name: i.clientName || "", count: 0 };
+              clientCounts[i.clientId].count++;
+            });
+            const highNeed = Object.values(clientCounts).filter((c) => c.count >= 3);
+
+            return (
+              <div className="space-y-6">
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Top 5 Flagged Categories This Month</p>
+                  <div className="space-y-2">
+                    {topCats.map(([cat, count]) => (
+                      <div key={cat} className="flex items-center gap-3">
+                        <p className="text-sm text-foreground w-40 shrink-0 truncate">{cat}</p>
+                        <div className="flex-1 h-5 bg-secondary rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-gold rounded-full transition-all" style={{ width: `${(count / maxCount) * 100}%` }} />
+                        </div>
+                        <span className="text-sm font-semibold text-foreground w-6 text-right">{count}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Completion Rate</p>
+                    <p className="text-2xl font-display font-bold text-foreground">
+                      {total > 0 ? Math.round((addressed / total) * 100) : 0}%
+                    </p>
+                    <p className="text-xs text-muted-foreground">{addressed} of {total} addressed</p>
+                  </div>
+                </div>
+
+                {highNeed.length > 0 && (
+                  <div>
+                    <p className="text-xs text-danger uppercase tracking-wider font-semibold mb-2">High Need — Review Soon</p>
+                    <div className="space-y-1">
+                      {highNeed.map((c) => (
+                        <p key={c.name} className="text-sm text-danger font-medium">{c.name} — {c.count} unaddressed challenges</p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+        </div>
+      )}
+
       {atRisk.length > 0 && (
         <div className="rounded-lg border border-warning/30 bg-warning/5 p-5 mb-8">
           <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
