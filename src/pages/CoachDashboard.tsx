@@ -152,10 +152,11 @@ export default function CoachDashboard() {
         )}
       </div>
 
-      {/* Reset Session Widget */}
-      {resetSessions.length > 0 && (
-        <div className="mb-8">
-          {resetSessions.filter((s) => !s.completed).map((session) => {
+      {/* Reset Session Widgets */}
+      {rSessions.length > 0 && (
+        <div className="mb-8 space-y-4">
+          {/* Upcoming sessions */}
+          {rSessions.filter((s) => !s.completed).map((session) => {
             const enrolledClientNames = clients.filter((c) => session.enrolledClients.includes(c.id));
             return (
               <div key={session.id} className="rounded-lg border border-danger/30 bg-card p-5">
@@ -189,6 +190,112 @@ export default function CoachDashboard() {
                     </button>
                   </div>
                 </div>
+              </div>
+            );
+          })}
+
+          {/* Completed sessions with recording workflow */}
+          {rSessions.filter((s) => s.completed).map((session) => {
+            const enrolledClientNames = clients.filter((c) => session.enrolledClients.includes(c.id));
+            const engagements = resetSessionEngagements.filter((e) => e.sessionId === session.id);
+            const hasRecording = !!session.recordingUrl;
+            const recordingSent = !!session.recordingSentAt;
+
+            return (
+              <div key={session.id} className="rounded-lg border border-border bg-card p-5">
+                <h3 className="font-display font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-success" /> Reset Session — {session.month}
+                  <span className="text-xs font-normal text-muted-foreground ml-auto">Completed</span>
+                </h3>
+
+                {/* Recording upload/link */}
+                {!hasRecording && (
+                  <div className="mb-4 p-4 rounded-md border border-dashed border-primary/30 bg-primary/5">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
+                      <Upload size={12} /> Upload or link session recording
+                    </p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={recordingInput[session.id] || ""}
+                        onChange={(e) => setRecordingInput((prev) => ({ ...prev, [session.id]: e.target.value }))}
+                        placeholder="Paste Loom, YouTube, Vimeo link or upload URL..."
+                        className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      />
+                      <button
+                        onClick={() => {
+                          const url = recordingInput[session.id]?.trim();
+                          if (!url) return;
+                          setRSessions((prev) => prev.map((s) => s.id === session.id ? { ...s, recordingUrl: url, recordingUploadedAt: new Date().toISOString() } : s));
+                          toast.success("Recording saved.");
+                        }}
+                        className="px-3 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90"
+                      >
+                        <Link2 size={14} />
+                      </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">Accepts: MP4, MOV, MP3, M4A, or video links (Loom, YouTube, Vimeo)</p>
+                  </div>
+                )}
+
+                {hasRecording && !recordingSent && (
+                  <div className="mb-4 p-4 rounded-md border border-success/30 bg-success/5">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Recording ready</p>
+                        <p className="text-xs text-muted-foreground truncate max-w-md">{session.recordingUrl}</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setRSessions((prev) => prev.map((s) => s.id === session.id ? { ...s, recordingSentAt: new Date().toISOString() } : s));
+                          toast.success(`Recording sent to ${enrolledClientNames.length} enrolled clients.`);
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-primary/90"
+                      >
+                        <Send size={14} /> Send to Enrolled Clients
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {recordingSent && (
+                  <p className="text-xs text-success mb-4 flex items-center gap-1">
+                    <CheckCircle2 size={14} /> Recording sent to enrolled clients on {session.recordingSentAt}
+                  </p>
+                )}
+
+                {/* Commitment Tracking */}
+                {recordingSent && (
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Commitment Tracking</p>
+                    <div className="space-y-2">
+                      {enrolledClientNames.map((c) => {
+                        const eng = engagements.find((e) => e.clientId === c.id);
+                        const noResponse = !eng || (!eng.recordingWatched && !eng.commitmentSubmitted);
+                        return (
+                          <div key={c.id} className={`flex items-center justify-between py-2 px-3 rounded-md ${noResponse ? "bg-danger/5 border border-danger/20" : "bg-secondary/30"}`}>
+                            <div className="flex items-center gap-3">
+                              <p className="text-sm font-medium text-foreground">{c.name}</p>
+                            </div>
+                            <div className="flex items-center gap-3 text-xs">
+                              <span className={`flex items-center gap-1 ${eng?.recordingWatched ? "text-success" : "text-muted-foreground"}`}>
+                                {eng?.recordingWatched ? <Eye size={12} /> : <EyeOff size={12} />}
+                                {eng?.recordingWatched ? "Watched" : "Not watched"}
+                              </span>
+                              <span className={`flex items-center gap-1 ${eng?.commitmentSubmitted ? "text-success" : "text-muted-foreground"}`}>
+                                {eng?.commitmentSubmitted ? <CheckCircle2 size={12} /> : "—"}
+                                {eng?.commitmentSubmitted ? "Committed" : "No commitment"}
+                              </span>
+                              {noResponse && (
+                                <span className="text-danger font-semibold">No response</span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}
