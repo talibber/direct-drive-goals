@@ -2,15 +2,22 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ArrowRight, Target, Flame, TrendingUp, DollarSign, Zap, Shield, CheckCircle } from "lucide-react";
+import { ArrowRight, Target, Flame, X, Check } from "lucide-react";
 
-const features = [
-  { icon: Target, title: "Measurable Goals", desc: "Every goal has a number. No vague intentions. We define exactly what success looks like." },
-  { icon: DollarSign, title: "$75 Accountability Stakes", desc: "Miss a goal, pay the stake. Nothing focuses the mind like having skin in the game." },
-  { icon: TrendingUp, title: "Weekly Performance Scores", desc: "Track your energy, focus, habits, and execution in a single score. See the trend." },
-  { icon: Flame, title: "Radical Honesty", desc: "Your coach will tell you what you need to hear, not what you want to hear." },
-  { icon: Zap, title: "Execution > Strategy", desc: "Most people don't need another framework. They need to actually do the thing." },
-  { icon: Shield, title: "Not Therapy", desc: "This is coaching and consulting for high performers. We focus on thinking and action." },
+const oldWay = [
+  "Vague goals with no measurement",
+  "Weekly calls with no follow-up",
+  "Encouragement when you need correction",
+  "Zero financial skin in the game",
+  "Feeling good instead of moving forward",
+];
+
+const newWay = [
+  "SMART goals with pass/fail definitions",
+  "Weekly scored check-ins with trend data",
+  "Brutally honest coach feedback",
+  "$75 accountability stake per missed goal",
+  "Performance score you can't lie to",
 ];
 
 const previewGoals = [
@@ -126,26 +133,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Anti-fluff */}
+      {/* Comparison */}
       <section className="py-20 border-t border-border">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-14">
             <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Most coaching is <span className="text-danger line-through decoration-2">expensive therapy</span>
+              Most coaching. <span className="text-gradient-gold">This coaching.</span>
             </h2>
-            <p className="mt-4 text-muted-foreground text-lg">
-              We're not here to explore your childhood. We're here to help you think better, 
-              execute faster, and build the life and business you actually want.
-            </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {features.map((f) => (
-              <div key={f.title} className="rounded-lg border border-border bg-card p-6 shadow-card hover:border-primary/20 transition-colors">
-                <f.icon className="text-primary mb-4" size={24} />
-                <h3 className="font-display font-semibold text-foreground mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+            {/* Old way */}
+            <div className="rounded-xl border border-danger/20 bg-danger/[0.03] p-6 md:p-8">
+              <h3 className="font-display text-lg font-bold text-danger/80 mb-6">What you've probably tried</h3>
+              <ul className="space-y-4">
+                {oldWay.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <X size={18} className="text-danger/60 mt-0.5 shrink-0" />
+                    <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* New way */}
+            <div className="rounded-xl border border-primary/20 bg-primary/[0.03] p-6 md:p-8">
+              <h3 className="font-display text-lg font-bold text-primary mb-6">What Terrible Coaching does</h3>
+              <ul className="space-y-4">
+                {newWay.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <Check size={18} className="text-primary mt-0.5 shrink-0" />
+                    <span className="text-sm text-foreground/90 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
