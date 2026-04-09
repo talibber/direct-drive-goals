@@ -142,6 +142,38 @@ export default function ApplyPage() {
               </Select>
             </div>
 
+            <div>
+              <Label>What level of support are you looking for? <span className="text-destructive">*</span></Label>
+              <div className="grid gap-3 mt-3">
+                {supportOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setSupportLevel(option.value)}
+                    className={cn(
+                      "text-left rounded-lg border-2 p-4 transition-all",
+                      supportLevel === option.value
+                        ? "border-amber-500/80 bg-amber-500/5"
+                        : "border-muted hover:border-muted-foreground/30"
+                    )}
+                  >
+                    <p className={cn(
+                      "font-semibold text-sm",
+                      supportLevel === option.value ? "text-amber-400" : "text-foreground"
+                    )}>
+                      {option.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      {option.subtitle}
+                    </p>
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground italic mt-2.5">
+                This helps us match you to the right structure. There's no wrong answer.
+              </p>
+            </div>
+
             <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4">
               Submit Application
             </Button>
