@@ -2,8 +2,9 @@ import { useState } from "react";
 import { CoachLayout } from "@/components/CoachLayout";
 import { StatCard } from "@/components/StatCard";
 import { CoachGoalReviewPanel } from "@/components/CoachGoalReviewPanel";
-import { clients, applications, pendingCoachGoals, type Goal } from "@/lib/mockData";
-import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target } from "lucide-react";
+import { CoachGoalVerifyPanel } from "@/components/CoachGoalVerifyPanel";
+import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, type Goal } from "@/lib/mockData";
+import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CoachDashboard() {
@@ -11,10 +12,16 @@ export default function CoachDashboard() {
   const pendingApps = applications.filter((a) => a.status === "pending");
 
   const [pendingGoals, setPendingGoals] = useState<Goal[]>(pendingCoachGoals);
+  const [proofGoals, setProofGoals] = useState<Goal[]>(initialProofGoals);
   const [reviewGoal, setReviewGoal] = useState<Goal | null>(null);
+  const [verifyGoal, setVerifyGoal] = useState<Goal | null>(null);
 
   const handleGoalAction = (goalId: string, action: "approved" | "revision_requested" | "rejected", notes?: string) => {
     setPendingGoals((prev) => prev.filter((g) => g.id !== goalId));
+  };
+
+  const handleVerifyAction = (goalId: string, action: "completed" | "missed", note?: string) => {
+    setProofGoals((prev) => prev.filter((g) => g.id !== goalId));
   };
 
   return (
@@ -29,36 +36,66 @@ export default function CoachDashboard() {
         <StatCard label="Revenue (MTD)" value="$1,245" change="+12% from last month" trend="up" icon={DollarSign} />
       </div>
 
-      {/* Goals Awaiting Approval */}
-      {pendingGoals.length > 0 && (
-        <div className="rounded-lg border border-primary/30 bg-primary/5 p-5 mb-8">
-          <h3 className="font-display font-semibold text-primary mb-3 flex items-center gap-2">
-            <Target size={18} /> Goals Awaiting Approval
-            <span className="ml-1 text-xs font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">
-              {pendingGoals.length}
-            </span>
-          </h3>
-          <div className="space-y-3">
-            {pendingGoals.map((g) => (
-              <div key={g.id} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
-                <div>
-                  <p className="text-sm font-medium text-foreground">{g.title}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {g.clientName} · {g.category} · Due {g.dueDate}
-                    {g.resubmissionCount > 0 && <span className="text-warning ml-1">(resubmission)</span>}
-                  </p>
+      {/* Priority widgets row */}
+      <div className="grid gap-4 md:grid-cols-2 mb-8">
+        {/* Goals Awaiting Approval */}
+        {pendingGoals.length > 0 && (
+          <div className="rounded-lg border border-primary/30 bg-primary/5 p-5">
+            <h3 className="font-display font-semibold text-primary mb-3 flex items-center gap-2">
+              <Target size={18} /> Goals Awaiting Approval
+              <span className="ml-1 text-xs font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">
+                {pendingGoals.length}
+              </span>
+            </h3>
+            <div className="space-y-3">
+              {pendingGoals.map((g) => (
+                <div key={g.id} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{g.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {g.clientName} · {g.category} · Due {g.dueDate}
+                      {g.resubmissionCount > 0 && <span className="text-warning ml-1">(resubmission)</span>}
+                    </p>
+                  </div>
+                  <button onClick={() => setReviewGoal(g)} className="text-xs font-medium text-primary hover:underline">
+                    Review →
+                  </button>
                 </div>
-                <button
-                  onClick={() => setReviewGoal(g)}
-                  className="text-xs font-medium text-primary hover:underline"
-                >
-                  Review →
-                </button>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {/* Goals to Verify */}
+        {proofGoals.length > 0 && (
+          <div className="rounded-lg border border-success/30 bg-success/5 p-5">
+            <h3 className="font-display font-semibold text-success mb-3 flex items-center gap-2">
+              <FileCheck size={18} /> Goals to Verify
+              <span className="ml-1 text-xs font-bold bg-success text-success-foreground rounded-full w-5 h-5 flex items-center justify-center">
+                {proofGoals.length}
+              </span>
+            </h3>
+            <div className="space-y-3">
+              {proofGoals.map((g) => (
+                <div key={g.id} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{g.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {g.clientName} · Proof submitted {g.proofSubmittedAt}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 truncate max-w-[250px]">
+                      {g.selfCompleted ? "✓ Self-reported complete" : "✗ Self-reported incomplete"}
+                    </p>
+                  </div>
+                  <button onClick={() => setVerifyGoal(g)} className="text-xs font-medium text-success hover:underline">
+                    Verify →
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* At-risk */}
       {atRisk.length > 0 && (
@@ -115,12 +152,18 @@ export default function CoachDashboard() {
         </div>
       </div>
 
-      {/* Goal Review Panel */}
+      {/* Review & Verify Panels */}
       <CoachGoalReviewPanel
         goal={reviewGoal}
         open={!!reviewGoal}
         onClose={() => setReviewGoal(null)}
         onAction={handleGoalAction}
+      />
+      <CoachGoalVerifyPanel
+        goal={verifyGoal}
+        open={!!verifyGoal}
+        onClose={() => setVerifyGoal(null)}
+        onAction={handleVerifyAction}
       />
     </CoachLayout>
   );
