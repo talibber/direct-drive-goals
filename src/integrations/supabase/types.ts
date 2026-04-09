@@ -49,6 +49,53 @@ export type Database = {
           },
         ]
       }
+      goal_proof_submissions: {
+        Row: {
+          client_id: string
+          coach_decision: string | null
+          coach_note: string | null
+          completion_description: string
+          decided_at: string | null
+          file_urls: string[] | null
+          goal_id: string
+          id: string
+          self_assessment: string
+          submitted_at: string
+        }
+        Insert: {
+          client_id: string
+          coach_decision?: string | null
+          coach_note?: string | null
+          completion_description: string
+          decided_at?: string | null
+          file_urls?: string[] | null
+          goal_id: string
+          id?: string
+          self_assessment: string
+          submitted_at?: string
+        }
+        Update: {
+          client_id?: string
+          coach_decision?: string | null
+          coach_note?: string | null
+          completion_description?: string
+          decided_at?: string | null
+          file_urls?: string[] | null
+          goal_id?: string
+          id?: string
+          self_assessment?: string
+          submitted_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goal_proof_submissions_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       goals: {
         Row: {
           approved_at: string | null
@@ -196,6 +243,7 @@ export type Database = {
         | "rejected"
         | "proof_pending"
         | "proof_submitted"
+        | "waived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -334,6 +382,7 @@ export const Constants = {
         "rejected",
         "proof_pending",
         "proof_submitted",
+        "waived",
       ],
     },
   },
