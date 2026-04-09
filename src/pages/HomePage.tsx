@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ArrowRight, Target, Flame, X, Check } from "lucide-react";
+import founderImg from "@/assets/founder.png";
 
 const oldWay = [
   "Vague goals with no measurement",
