@@ -725,6 +725,7 @@ export type Database = {
       onboarding_progress: {
         Row: {
           client_id: string
+          coaching_track: string
           completed_at: string | null
           created_at: string
           id: string
@@ -736,6 +737,7 @@ export type Database = {
         }
         Insert: {
           client_id: string
+          coaching_track?: string
           completed_at?: string | null
           created_at?: string
           id?: string
@@ -747,6 +749,7 @@ export type Database = {
         }
         Update: {
           client_id?: string
+          coaching_track?: string
           completed_at?: string | null
           created_at?: string
           id?: string

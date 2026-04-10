@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,13 @@ const discDescriptions: Record<DiscType, { title: string; summary: string }> = {
   C: { title: "Conscientiousness", summary: "You're analytical, precise, and quality-driven. You value accuracy, thorough preparation, and well-researched decisions." },
 };
 
+const businessDiscFraming: Record<DiscType, string> = {
+  D: "You decide fast and execute. Watch for decisions made without enough data.",
+  I: "You sell ideas well. Watch for avoiding hard conversations with your team or clients.",
+  S: "You build loyalty and consistency. Watch for staying in situations too long out of comfort.",
+  C: "You analyze well. Watch for analysis becoming a reason not to move.",
+};
+
 const executionLabels: Record<string, { low: string; high: string }> = {
   planning: { low: "Action-First", high: "Planner" },
   consistency: { low: "Sprint & Crash", high: "Steady Operator" },
@@ -87,6 +95,8 @@ const executionLabels: Record<string, { low: string; high: string }> = {
 };
 
 export default function OnboardingAssessmentPage() {
+  const [searchParams] = useSearchParams();
+  const isBusinessTrack = searchParams.get("track") === "business";
   const [phase, setPhase] = useState<"intro" | "disc" | "disc-result" | "exec" | "exec-result" | "complete">("intro");
   const [discIndex, setDiscIndex] = useState(0);
   const [discAnswers, setDiscAnswers] = useState<DiscAnswer[]>([]);
@@ -292,6 +302,15 @@ export default function OnboardingAssessmentPage() {
                   );
                 })}
               </div>
+
+              {isBusinessTrack && (
+                <div className="rounded-lg border border-warning/30 bg-warning/5 p-4 max-w-lg mx-auto mb-8">
+                  <p className="text-xs font-bold uppercase tracking-wider text-warning mb-2">Business Lens</p>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    {businessDiscFraming[discResult.type]}
+                  </p>
+                </div>
+              )}
 
               <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 max-w-lg mx-auto mb-8">
                 <p className="text-sm text-foreground/80 leading-relaxed">
