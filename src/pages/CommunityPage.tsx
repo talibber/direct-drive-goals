@@ -1,11 +1,119 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { LevelBadge } from "@/components/LevelBadge";
-import { communityPosts, teams, leaderboard, levels, type CommunityPost, type Team } from "@/lib/mockData";
-import { Flame, MessageSquare, Send, Users, Trophy, Award, Crown, ChevronDown, ChevronUp, Shield } from "lucide-react";
+import { communityPosts, teams, leaderboard, levels, type CommunityPost, type CommunityReply, type Team } from "@/lib/mockData";
+import { Flame, MessageSquare, Send, Users, Trophy, Crown, ChevronDown, ChevronUp, Shield, Camera, X, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+// ========== PHOTO LIGHTBOX ==========
+function PhotoLightbox({ url, open, onClose }: { url: string; open: boolean; onClose: () => void }) {
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-3xl p-1 bg-card border-border">
+        <img src={url} alt="Full size" className="w-full rounded-lg" />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// ========== COMMENT THREAD ==========
+function CommentThread({ replies, onAddComment }: { replies: CommunityReply[]; onAddComment: (text: string, photoUrl?: string) => void }) {
+  const [text, setText] = useState("");
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const handlePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return;
+    const url = URL.createObjectURL(file);
+    setPhotoPreview(url);
+  };
+
+  const handleSend = () => {
+    if (!text.trim() && !photoPreview) return;
+    onAddComment(text.trim(), photoPreview || undefined);
+    setText("");
+    setPhotoPreview(null);
+  };
+
+  return (
+    <div className="mt-3 ml-4 pl-4 border-l-2 border-primary/10 space-y-3">
+      {replies.map((r) => (
+        <div key={r.id}>
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-foreground text-[10px] font-bold">
+              {r.clientName[0]}
+            </div>
+            <span className="text-xs font-medium text-foreground">{r.clientName}</span>
+            <LevelBadge level={r.level} size="sm" showName={false} />
+            <span className="text-[10px] text-muted-foreground">{r.createdAt}</span>
+          </div>
+          {r.content && <p className="text-xs text-muted-foreground leading-relaxed ml-8">{r.content}</p>}
+          {r.photoUrl && (
+            <button onClick={() => setLightboxUrl(r.photoUrl!)} className="ml-8 mt-1.5">
+              <img src={r.photoUrl} alt="" className="w-32 h-24 object-cover rounded-lg border border-border hover:opacity-80 transition-opacity" />
+            </button>
+          )}
+        </div>
+      ))}
+
+      {/* Comment input */}
+      <div className="flex gap-2 items-end">
+        <div className="flex-1 space-y-2">
+          {photoPreview && (
+            <div className="relative inline-block">
+              <img src={photoPreview} alt="Preview" className="w-20 h-16 object-cover rounded-lg border border-border" />
+              <button onClick={() => setPhotoPreview(null)} className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center">
+                <X size={10} />
+              </button>
+            </div>
+          )}
+          <div className="flex items-center gap-1.5">
+            <input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
+              placeholder="Write a reply..."
+              className="flex-1 text-xs bg-secondary/50 border border-border rounded-lg px-3 py-2 placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+            />
+            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/heic" className="hidden" onChange={handlePhoto} />
+            <button onClick={() => fileRef.current?.click()} className="text-muted-foreground hover:text-foreground transition-colors p-1.5">
+              <Camera size={14} />
+            </button>
+            <button onClick={handleSend} disabled={!text.trim() && !photoPreview} className="text-primary disabled:text-muted-foreground transition-colors p-1.5">
+              <Send size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {lightboxUrl && <PhotoLightbox url={lightboxUrl} open={!!lightboxUrl} onClose={() => setLightboxUrl(null)} />}
+    </div>
+  );
+}
+
+// ========== POST PHOTOS GRID ==========
+function PostPhotos({ urls }: { urls: string[] }) {
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
+  if (!urls.length) return null;
+  return (
+    <>
+      <div className={cn("grid gap-2 mb-3", urls.length === 1 && "grid-cols-1", urls.length === 2 && "grid-cols-2", urls.length >= 3 && "grid-cols-3")}>
+        {urls.map((url, i) => (
+          <button key={i} onClick={() => setLightboxUrl(url)} className="overflow-hidden rounded-lg border border-border">
+            <img src={url} alt="" className="w-full h-40 object-cover hover:opacity-80 transition-opacity" />
+          </button>
+        ))}
+      </div>
+      {lightboxUrl && <PhotoLightbox url={lightboxUrl} open={!!lightboxUrl} onClose={() => setLightboxUrl(null)} />}
+    </>
+  );
+}
 
 // ========== FEED TAB ==========
 function FeedTab() {
@@ -13,6 +121,8 @@ function FeedTab() {
   const [newPost, setNewPost] = useState("");
   const [postType, setPostType] = useState<"post" | "win" | "question" | "reflection">("post");
   const [expandedReplies, setExpandedReplies] = useState<Set<string>>(new Set());
+  const [postPhotos, setPostPhotos] = useState<string[]>([]);
+  const postFileRef = useRef<HTMLInputElement>(null);
 
   const handleLike = (postId: string) => {
     setPosts((prev) =>
@@ -30,6 +140,53 @@ function FeedTab() {
       next.has(postId) ? next.delete(postId) : next.add(postId);
       return next;
     });
+  };
+
+  const handlePostPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const remaining = 3 - postPhotos.length;
+    const newUrls: string[] = [];
+    for (let i = 0; i < Math.min(files.length, remaining); i++) {
+      if (files[i].size <= 5 * 1024 * 1024) {
+        newUrls.push(URL.createObjectURL(files[i]));
+      }
+    }
+    setPostPhotos((prev) => [...prev, ...newUrls]);
+    if (postFileRef.current) postFileRef.current.value = "";
+  };
+
+  const handleCreatePost = () => {
+    if (!newPost.trim() && !postPhotos.length) return;
+    const newP: CommunityPost = {
+      id: `cp-new-${Date.now()}`,
+      clientId: "1",
+      clientName: "Marcus",
+      level: 4,
+      levelName: "Pattern Breaker",
+      content: newPost.trim(),
+      postType,
+      likesCount: 0,
+      liked: false,
+      createdAt: "Just now",
+      photoUrls: postPhotos,
+      replies: [],
+    };
+    setPosts((prev) => [newP, ...prev]);
+    setNewPost("");
+    setPostPhotos([]);
+  };
+
+  const addComment = (postId: string, text: string, photoUrl?: string) => {
+    const reply: CommunityReply = {
+      id: `cr-new-${Date.now()}`,
+      clientName: "Marcus",
+      level: 4,
+      content: text,
+      createdAt: "Just now",
+      photoUrl,
+    };
+    setPosts((prev) => prev.map((p) => p.id === postId ? { ...p, replies: [...p.replies, reply] } : p));
   };
 
   const typeLabels = { post: "Post", win: "🏆 Win", question: "❓ Question", reflection: "💭 Reflection" };
@@ -60,8 +217,35 @@ function FeedTab() {
           placeholder="Share a win, ask a question, or post a reflection..."
           className="min-h-[80px] mb-3"
         />
-        <div className="flex justify-end">
-          <Button variant="hero" size="sm" disabled={!newPost.trim()}>
+        {/* Photo previews */}
+        {postPhotos.length > 0 && (
+          <div className="flex gap-2 mb-3">
+            {postPhotos.map((url, i) => (
+              <div key={i} className="relative">
+                <img src={url} alt="" className="w-20 h-16 object-cover rounded-lg border border-border" />
+                <button
+                  onClick={() => setPostPhotos((prev) => prev.filter((_, j) => j !== i))}
+                  className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center"
+                >
+                  <X size={10} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="flex justify-between items-center">
+          <div>
+            <input ref={postFileRef} type="file" accept="image/jpeg,image/png,image/heic" multiple className="hidden" onChange={handlePostPhoto} />
+            <button
+              onClick={() => postFileRef.current?.click()}
+              disabled={postPhotos.length >= 3}
+              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors"
+            >
+              <ImageIcon size={14} />
+              {postPhotos.length > 0 ? `${postPhotos.length}/3 photos` : "Add photos"}
+            </button>
+          </div>
+          <Button variant="hero" size="sm" disabled={!newPost.trim() && !postPhotos.length} onClick={handleCreatePost}>
             <Send size={14} className="mr-1.5" /> Post
           </Button>
         </div>
@@ -109,6 +293,9 @@ function FeedTab() {
           {/* Content */}
           <p className="text-sm text-foreground leading-relaxed mb-3">{post.content}</p>
 
+          {/* Post photos */}
+          <PostPhotos urls={post.photoUrls} />
+
           {/* Actions */}
           <div className="flex items-center gap-4 border-t border-border/50 pt-3">
             <button
@@ -120,35 +307,24 @@ function FeedTab() {
             >
               🔥 {post.likesCount}
             </button>
-            {post.replies.length > 0 && (
-              <button
-                onClick={() => toggleReplies(post.id)}
-                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <MessageSquare size={13} />
-                {post.replies.length} {post.replies.length === 1 ? "reply" : "replies"}
-                {expandedReplies.has(post.id) ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
-              </button>
-            )}
+            <button
+              onClick={() => toggleReplies(post.id)}
+              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <MessageSquare size={13} />
+              {post.replies.length > 0
+                ? `${post.replies.length} ${post.replies.length === 1 ? "reply" : "replies"}`
+                : "Reply"}
+              {expandedReplies.has(post.id) ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+            </button>
           </div>
 
-          {/* Replies */}
-          {expandedReplies.has(post.id) && post.replies.length > 0 && (
-            <div className="mt-3 ml-4 pl-4 border-l-2 border-primary/10 space-y-3">
-              {post.replies.map((r) => (
-                <div key={r.id}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-foreground text-[10px] font-bold">
-                      {r.clientName[0]}
-                    </div>
-                    <span className="text-xs font-medium text-foreground">{r.clientName}</span>
-                    <LevelBadge level={r.level} size="sm" showName={false} />
-                    <span className="text-[10px] text-muted-foreground">{r.createdAt}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed ml-8">{r.content}</p>
-                </div>
-              ))}
-            </div>
+          {/* Comment thread */}
+          {expandedReplies.has(post.id) && (
+            <CommentThread
+              replies={post.replies}
+              onAddComment={(text, photoUrl) => addComment(post.id, text, photoUrl)}
+            />
           )}
         </div>
       ))}
@@ -159,8 +335,6 @@ function FeedTab() {
 // ========== TEAMS TAB ==========
 function TeamsTab() {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-
-  const categories = ["Entrepreneurs & Founders", "Career & Corporate", "Health & Habits", "Creative & Artists", "Parents & Family", "Sales & Revenue", "Students & Early Career", "Investors & Finance", "Real Estate", "General — Open to Everyone"];
 
   if (selectedTeam) {
     return (
@@ -259,7 +433,6 @@ function TeamsTab() {
 
   return (
     <div className="space-y-6">
-      {/* My teams */}
       {teams.filter((t) => t.isMember).length > 0 && (
         <div>
           <h3 className="text-sm font-semibold text-foreground mb-3">Your Teams</h3>
@@ -282,7 +455,6 @@ function TeamsTab() {
         </div>
       )}
 
-      {/* Browse teams */}
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-3">Browse Teams</h3>
         <div className="grid gap-4 md:grid-cols-2">
@@ -314,7 +486,7 @@ function LeaderboardTab() {
       <div className="rounded-lg border border-border bg-card p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-display font-semibold text-foreground">April 2026 Leaderboard</h3>
-          <span className="text-[10px] text-muted-foreground">Resets monthly · Lifetime tracked separately</span>
+          <span className="text-[10px] text-muted-foreground">Resets monthly</span>
         </div>
         <div className="space-y-2">
           {leaderboard.map((entry) => (
@@ -350,8 +522,7 @@ function LeaderboardTab() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="font-display font-bold text-gradient-gold">{entry.monthlyPoints}</span>
-                <span className="text-xs text-muted-foreground ml-1">pts</span>
+                <span className="text-xs font-medium text-muted-foreground">#{entry.rank}</span>
               </div>
             </div>
           ))}
