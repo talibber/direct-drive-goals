@@ -91,15 +91,15 @@ export default function CoachDashboard() {
 
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
         <Link to="/coach/clients">
-          <StatCard label="Active Clients" value={clients.length} icon={Users} className="hover:border-primary/50 transition-colors cursor-pointer" />
+          <StatCard label="Active Clients" value={`${clients.length} (${clients.filter(c => c.type === "Life").length} LT / ${clients.filter(c => c.type === "Business").length} BT)`} icon={Users} className="hover:border-primary/50 transition-colors cursor-pointer" />
         </Link>
         <Link to="/coach/metrics#at-risk">
-          <StatCard label="At-Risk Clients" value={atRisk.length} change="Need attention" trend="down" icon={AlertTriangle} className="hover:border-primary/50 transition-colors cursor-pointer" />
+          <StatCard label="At-Risk Clients" value={`${atRisk.length} (${atRisk.filter(c => c.type === "Life").length} LT / ${atRisk.filter(c => c.type === "Business").length} BT)`} change="Need attention" trend="down" icon={AlertTriangle} className="hover:border-primary/50 transition-colors cursor-pointer" />
         </Link>
         <Link to="/coach/applications">
           <StatCard label="Pending Applications" value={pendingApps.length} icon={ClipboardCheck} className="hover:border-primary/50 transition-colors cursor-pointer" />
         </Link>
-        <StatCard label="Revenue (MTD)" value="$1,245" change="+12% from last month" trend="up" icon={DollarSign} />
+        <StatCard label="Revenue (MTD)" value={`$${clients.filter(c => c.type === "Life").length * 99 + clients.filter(c => c.type === "Business").length * 199}`} change={`LT: $${clients.filter(c => c.type === "Life").length * 99} · BT: $${clients.filter(c => c.type === "Business").length * 199}`} trend="up" icon={DollarSign} />
       </div>
 
       {/* Priority widgets row */}
@@ -535,22 +535,48 @@ export default function CoachDashboard() {
         </div>
       )}
 
+      {/* At-Risk by Track */}
       {atRisk.length > 0 && (
-        <div className="rounded-lg border border-warning/30 bg-warning/5 p-5 mb-8">
-          <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
-            <AlertTriangle size={18} /> Clients Needing Attention
-          </h3>
-          <div className="space-y-3">
-            {atRisk.map((c) => (
-              <div key={c.id} className="flex items-center justify-between">
-                <div>
-                   <p className="text-sm font-medium text-foreground"><Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link></p>
-                  <p className="text-xs text-muted-foreground">Last check-in: {c.lastCheckIn} · Score: {c.score}</p>
-                </div>
-                <Link to="/coach/clients" className="text-xs text-primary hover:underline">View →</Link>
+        <div className="grid gap-4 md:grid-cols-2 mb-8">
+          {/* Life Track At-Risk */}
+          {atRisk.filter(c => c.type === "Life").length > 0 && (
+            <div className="rounded-lg border border-warning/30 bg-warning/5 p-5">
+              <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
+                <AlertTriangle size={18} /> Life Track — Needs Attention
+              </h3>
+              <div className="space-y-3">
+                {atRisk.filter(c => c.type === "Life").map((c) => (
+                  <div key={c.id} className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-foreground"><Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link></p>
+                      <p className="text-xs text-muted-foreground">Last check-in: {c.lastCheckIn} · Score: {c.score}</p>
+                    </div>
+                    <Link to="/coach/messages" className="text-xs text-primary hover:underline">Message →</Link>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {/* Business Track At-Risk */}
+          {atRisk.filter(c => c.type === "Business").length > 0 && (
+            <div className="rounded-lg border border-warning/30 bg-warning/5 p-5">
+              <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
+                <AlertTriangle size={18} /> Business Track — Needs Attention
+              </h3>
+              <div className="space-y-3">
+                {atRisk.filter(c => c.type === "Business").map((c) => (
+                  <div key={c.id} className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-foreground"><Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link></p>
+                      <p className="text-xs text-muted-foreground">Last check-in: {c.lastCheckIn} · Score: {c.score}</p>
+                    </div>
+                    <Link to="/coach/messages" className="text-xs text-primary hover:underline">Message →</Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -564,7 +590,7 @@ export default function CoachDashboard() {
             <thead>
               <tr className="border-b border-border text-left">
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Name</th>
-                <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Type</th>
+                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Track</th>
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Score</th>
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Perfect Months</th>
                 <th className="px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Last Check-In</th>
@@ -576,7 +602,7 @@ export default function CoachDashboard() {
                   <td className="px-5 py-3 font-medium text-foreground">
                     <Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link>
                   </td>
-                  <td className="px-5 py-3 text-muted-foreground">{c.type}</td>
+                  <td className="px-5 py-3"><span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full ${c.type === "Business" ? "bg-primary text-primary-foreground" : "bg-foreground/10 text-foreground"}`}>{c.type === "Business" ? "BT" : "LT"}</span></td>
                   <td className="px-5 py-3">
                     <span className={`font-semibold ${c.score >= 80 ? "text-success" : c.score >= 60 ? "text-warning" : "text-danger"}`}>
                       {c.score}
