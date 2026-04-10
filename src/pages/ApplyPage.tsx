@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSearchParams, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const supportOptions = [
   {
@@ -39,9 +39,27 @@ export default function ApplyPage() {
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [supportLevel, setSupportLevel] = useState<string>("");
   const [coachingInterest, setCoachingInterest] = useState<string>("");
   const [track, setTrack] = useState<"life" | "business">("life");
+
+  // Form fields
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [challenge, setChallenge] = useState("");
+  const [goals30Day, setGoals30Day] = useState("");
+  const [readiness, setReadiness] = useState("");
+  const [priorCoaching, setPriorCoaching] = useState("");
+
+  // Business-specific fields
+  const [businessName, setBusinessName] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [revenueRange, setRevenueRange] = useState("");
+  const [teamSize, setTeamSize] = useState("");
+  const [avoidedDecision, setAvoidedDecision] = useState("");
+  const [decisionOutcome, setDecisionOutcome] = useState("");
 
   useEffect(() => {
     const t = searchParams.get("track");
@@ -54,14 +72,45 @@ export default function ApplyPage() {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!supportLevel) {
       toast({ title: "Required field", description: "Please select your preferred level of support.", variant: "destructive" });
       return;
     }
-    setSubmitted(true);
-    toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
+
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.from("applications").insert({
+        name,
+        email,
+        occupation,
+        coaching_interest: coachingInterest || "life",
+        track,
+        challenge,
+        goals_30_day: goals30Day,
+        readiness,
+        prior_coaching: priorCoaching,
+        support_level: supportLevel,
+        // Business-specific
+        business_name: track === "business" ? businessName || null : null,
+        industry: track === "business" ? industry || null : null,
+        revenue_range: track === "business" ? revenueRange || null : null,
+        team_size: track === "business" ? teamSize || null : null,
+        avoided_decision: track === "business" ? avoidedDecision || null : null,
+        decision_outcome: track === "business" ? decisionOutcome || null : null,
+      });
+
+      if (error) throw error;
+
+      setSubmitted(true);
+      toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
+    } catch (err: any) {
+      console.error("Application submission error:", err);
+      toast({ title: "Error submitting application", description: err.message || "Please try again.", variant: "destructive" });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -160,17 +209,17 @@ export default function ApplyPage() {
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" placeholder="Your name" required className="mt-1.5" />
+                <Input id="name" placeholder="Your name" required className="mt-1.5" value={name} onChange={e => setName(e.target.value)} />
               </div>
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="you@example.com" required className="mt-1.5" />
+                <Input id="email" type="email" placeholder="you@example.com" required className="mt-1.5" value={email} onChange={e => setEmail(e.target.value)} />
               </div>
             </div>
 
             <div>
               <Label htmlFor="occupation">Occupation / Role</Label>
-              <Input id="occupation" placeholder="e.g. Teacher, Entrepreneur, Parent, Sales Rep, Student, whatever you are" required className="mt-1.5" />
+              <Input id="occupation" placeholder="e.g. Teacher, Entrepreneur, Parent, Sales Rep, Student, whatever you are" required className="mt-1.5" value={occupation} onChange={e => setOccupation(e.target.value)} />
             </div>
 
             <div>
@@ -198,12 +247,12 @@ export default function ApplyPage() {
                 
                 <div>
                   <Label htmlFor="businessName">Business Name (optional)</Label>
-                  <Input id="businessName" placeholder="Your company name" className="mt-1.5" />
+                  <Input id="businessName" placeholder="Your company name" className="mt-1.5" value={businessName} onChange={e => setBusinessName(e.target.value)} />
                 </div>
 
                 <div>
                   <Label>Industry</Label>
-                  <Select>
+                  <Select value={industry} onValueChange={setIndustry}>
                     <SelectTrigger className="mt-1.5">
                       <SelectValue placeholder="Select your industry" />
                     </SelectTrigger>
@@ -217,7 +266,7 @@ export default function ApplyPage() {
 
                 <div>
                   <Label>Current Annual Revenue Range</Label>
-                  <Select>
+                  <Select value={revenueRange} onValueChange={setRevenueRange}>
                     <SelectTrigger className="mt-1.5">
                       <SelectValue placeholder="Select range" />
                     </SelectTrigger>
@@ -233,7 +282,7 @@ export default function ApplyPage() {
 
                 <div>
                   <Label>Team Size</Label>
-                  <Select>
+                  <Select value={teamSize} onValueChange={setTeamSize}>
                     <SelectTrigger className="mt-1.5">
                       <SelectValue placeholder="Select team size" />
                     </SelectTrigger>
@@ -253,6 +302,8 @@ export default function ApplyPage() {
                     id="avoidedDecision"
                     placeholder="Be specific. This is the first honest thing you'll do here."
                     className="mt-1.5 min-h-[80px]"
+                    value={avoidedDecision}
+                    onChange={e => setAvoidedDecision(e.target.value)}
                   />
                 </div>
 
@@ -262,6 +313,8 @@ export default function ApplyPage() {
                     id="decisionOutcome"
                     placeholder="Connect the decision to the outcome."
                     className="mt-1.5 min-h-[80px]"
+                    value={decisionOutcome}
+                    onChange={e => setDecisionOutcome(e.target.value)}
                   />
                 </div>
               </div>
@@ -269,17 +322,17 @@ export default function ApplyPage() {
 
             <div>
               <Label htmlFor="challenge">What's your main challenge right now?</Label>
-              <Textarea id="challenge" placeholder="Be specific. What's actually not working?" required className="mt-1.5 min-h-[100px]" />
+              <Textarea id="challenge" placeholder="Be specific. What's actually not working?" required className="mt-1.5 min-h-[100px]" value={challenge} onChange={e => setChallenge(e.target.value)} />
             </div>
 
             <div>
               <Label htmlFor="goals">What would you want to accomplish in the first 30 days?</Label>
-              <Textarea id="goals" placeholder="Name 1-3 specific, measurable goals" required className="mt-1.5 min-h-[80px]" />
+              <Textarea id="goals" placeholder="Name 1-3 specific, measurable goals" required className="mt-1.5 min-h-[80px]" value={goals30Day} onChange={e => setGoals30Day(e.target.value)} />
             </div>
 
             <div>
               <Label>Readiness Level</Label>
-              <Select required>
+              <Select required value={readiness} onValueChange={setReadiness}>
                 <SelectTrigger className="mt-1.5">
                   <SelectValue placeholder="How ready are you?" />
                 </SelectTrigger>
@@ -293,7 +346,7 @@ export default function ApplyPage() {
 
             <div>
               <Label>Prior Coaching Experience</Label>
-              <Select>
+              <Select value={priorCoaching} onValueChange={setPriorCoaching}>
                 <SelectTrigger className="mt-1.5">
                   <SelectValue placeholder="Have you worked with a coach before?" />
                 </SelectTrigger>
@@ -337,8 +390,8 @@ export default function ApplyPage() {
               </p>
             </div>
 
-            <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4">
-              Submit Application
+            <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4" disabled={submitting}>
+              {submitting ? "Submitting..." : "Submit Application"}
             </Button>
 
             <p className="text-xs text-muted-foreground text-center leading-relaxed">
