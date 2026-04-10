@@ -4,6 +4,7 @@ import { StatCard } from "@/components/StatCard";
 import { CoachGoalReviewPanel } from "@/components/CoachGoalReviewPanel";
 import { CoachGoalVerifyPanel } from "@/components/CoachGoalVerifyPanel";
 import { PerfectMonthSchedulePanel } from "@/components/PerfectMonthSchedulePanel";
+import { CoachOnboardingPanel } from "@/components/CoachOnboardingPanel";
 import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, resetSessions as initialResetSessions, resetSessionEngagements, coachHelpRadarItems, missedGoalReports, type Goal, type PerfectMonthAlert, type ResetSession, type HelpRadarItem } from "@/lib/mockData";
 import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy, RotateCcw, Upload, Link2, Send, Eye, EyeOff, CheckCircle2, Radio } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -79,6 +80,9 @@ export default function CoachDashboard() {
           ))}
         </div>
       )}
+
+      {/* New Clients — Onboarding */}
+      <CoachOnboardingPanel />
 
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
         <Link to="/coach/clients">

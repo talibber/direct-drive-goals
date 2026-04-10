@@ -5,6 +5,7 @@ import { GoalCard } from "@/components/GoalCard";
 import { GamificationPanel } from "@/components/GamificationPanel";
 import { MissedGoalReportModal, type MissedGoalReportData } from "@/components/MissedGoalReportModal";
 import { CoachActivityStrip } from "@/components/CoachActivityStrip";
+import { OnboardingChecklist } from "@/components/OnboardingChecklist";
 import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession, clientMissedGoalsPendingReport } from "@/lib/mockData";
 import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -22,6 +23,9 @@ export default function ClientDashboard() {
 
   return (
     <DashboardLayout>
+      {/* Onboarding Checklist */}
+      <OnboardingChecklist />
+
       {/* Perfect Month Banner */}
       {pm.active && (
         <div className="mb-6 rounded-lg bg-gradient-gold p-5 shadow-card">
