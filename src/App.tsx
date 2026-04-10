@@ -29,6 +29,8 @@ import OnboardingAssessmentPage from "./pages/OnboardingAssessmentPage";
 import LibraryPage from "./pages/LibraryPage";
 import OperatorCallPage from "./pages/OperatorCallPage";
 import CoachOperatorCallPage from "./pages/CoachOperatorCallPage";
+import DirectAccessPage from "./pages/DirectAccessPage";
+import CoachDirectAccessPage from "./pages/CoachDirectAccessPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -61,6 +63,7 @@ const App = () => (
           <Route path="/dashboard/messages" element={<ClientMessagesPage />} />
           <Route path="/dashboard/library" element={<LibraryPage />} />
           <Route path="/dashboard/operator-call" element={<OperatorCallPage />} />
+          <Route path="/dashboard/direct-access" element={<DirectAccessPage />} />
           <Route path="/onboarding/assessment" element={<OnboardingAssessmentPage />} />
 
           {/* Coach */}
@@ -70,6 +73,7 @@ const App = () => (
           <Route path="/coach/applications" element={<CoachApplicationsPage />} />
           <Route path="/coach/metrics" element={<CoachMetricsPage />} />
           <Route path="/coach/operator-call" element={<CoachOperatorCallPage />} />
+          <Route path="/coach/direct-access" element={<CoachDirectAccessPage />} />
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
 
           <Route path="*" element={<NotFound />} />

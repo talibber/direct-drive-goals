@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen, Mic } from "lucide-react";
+import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen, Mic, Zap } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const baseLinks = [
@@ -17,13 +17,21 @@ const baseLinks = [
   { to: "/dashboard/profile", label: "Profile", icon: User },
 ];
 
+const directAccessLink = { to: "/dashboard/direct-access", label: "Direct Access", icon: Zap };
 const operatorCallLink = { to: "/dashboard/operator-call", label: "Operator Call", icon: Mic };
 
 export function DashboardLayout({ children, coachingTrack = "life" }: { children: React.ReactNode; coachingTrack?: string }) {
   const location = useLocation();
 
+  // For business track: insert Direct Access before Community, and Operator Call before Library
   const links = coachingTrack === "business"
-    ? [...baseLinks.slice(0, 8), operatorCallLink, ...baseLinks.slice(8)]
+    ? [
+        ...baseLinks.slice(0, 5), // Dashboard through Messages
+        directAccessLink,         // Direct Access (before Community)
+        ...baseLinks.slice(5, 8), // Community, Billing, Sessions
+        operatorCallLink,         // Operator Call (before Reset Session)
+        ...baseLinks.slice(8),    // Reset Session, Library, Profile
+      ]
     : baseLinks;
 
   return (
