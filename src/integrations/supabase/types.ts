@@ -35,6 +35,51 @@ export type Database = {
         }
         Relationships: []
       }
+      assessment_results: {
+        Row: {
+          client_id: string
+          coach_notes: string | null
+          completed_at: string
+          created_at: string
+          disc_scores: Json
+          disc_type: string
+          execution_consistency_score: number
+          execution_motivation_score: number
+          execution_planning_score: number
+          execution_risk_score: number
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          coach_notes?: string | null
+          completed_at?: string
+          created_at?: string
+          disc_scores?: Json
+          disc_type: string
+          execution_consistency_score?: number
+          execution_motivation_score?: number
+          execution_planning_score?: number
+          execution_risk_score?: number
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          coach_notes?: string | null
+          completed_at?: string
+          created_at?: string
+          disc_scores?: Json
+          disc_type?: string
+          execution_consistency_score?: number
+          execution_motivation_score?: number
+          execution_planning_score?: number
+          execution_risk_score?: number
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       client_points: {
         Row: {
           client_id: string
