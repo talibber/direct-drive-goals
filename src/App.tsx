@@ -22,6 +22,7 @@ import CoachDashboard from "./pages/CoachDashboard";
 import CoachClientsPage from "./pages/CoachClientsPage";
 import CoachApplicationsPage from "./pages/CoachApplicationsPage";
 import CoachMetricsPage from "./pages/CoachMetricsPage";
+import CoachClientDetailPage from "./pages/CoachClientDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/coach/clients" element={<CoachClientsPage />} />
           <Route path="/coach/applications" element={<CoachApplicationsPage />} />
           <Route path="/coach/metrics" element={<CoachMetricsPage />} />
+          <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
