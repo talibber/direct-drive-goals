@@ -4,6 +4,7 @@ import { StatCard } from "@/components/StatCard";
 import { GoalCard } from "@/components/GoalCard";
 import { GamificationPanel } from "@/components/GamificationPanel";
 import { MissedGoalReportModal, type MissedGoalReportData } from "@/components/MissedGoalReportModal";
+import { CoachActivityStrip } from "@/components/CoachActivityStrip";
 import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession, clientMissedGoalsPendingReport } from "@/lib/mockData";
 import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -79,7 +80,11 @@ export default function ClientDashboard() {
         <StatCard label="Stakes Charged" value="$150" change="2 missed goals" trend="down" icon={DollarSign} />
       </div>
 
-      {/* Level & Badges */}
+      {/* Coach Activity Strip */}
+      <div className="mb-8">
+        <CoachActivityStrip />
+      </div>
+
       <div className="mb-8">
         <GamificationPanel />
       </div>
