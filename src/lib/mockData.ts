@@ -579,12 +579,12 @@ export interface CommunityPost {
   clientName: string;
   level: number;
   levelName: string;
-  points: number;
   content: string;
   postType: "post" | "win" | "question" | "reflection" | "system";
   likesCount: number;
   liked: boolean;
   createdAt: string;
+  photoUrls: string[];
   replies: CommunityReply[];
 }
 
@@ -594,6 +594,7 @@ export interface CommunityReply {
   level: number;
   content: string;
   createdAt: string;
+  photoUrl?: string;
 }
 
 export const communityPosts: CommunityPost[] = [
