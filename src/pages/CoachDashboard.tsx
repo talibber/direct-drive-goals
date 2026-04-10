@@ -4,7 +4,7 @@ import { StatCard } from "@/components/StatCard";
 import { CoachGoalReviewPanel } from "@/components/CoachGoalReviewPanel";
 import { CoachGoalVerifyPanel } from "@/components/CoachGoalVerifyPanel";
 import { PerfectMonthSchedulePanel } from "@/components/PerfectMonthSchedulePanel";
-import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, resetSessions as initialResetSessions, resetSessionEngagements, coachHelpRadarItems, type Goal, type PerfectMonthAlert, type ResetSession, type HelpRadarItem } from "@/lib/mockData";
+import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, resetSessions as initialResetSessions, resetSessionEngagements, coachHelpRadarItems, missedGoalReports, type Goal, type PerfectMonthAlert, type ResetSession, type HelpRadarItem } from "@/lib/mockData";
 import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy, RotateCcw, Upload, Link2, Send, Eye, EyeOff, CheckCircle2, Radio } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -200,6 +200,63 @@ export default function CoachDashboard() {
                     </button>
                   </div>
                 </div>
+
+                {/* Client Miss Reasons — This Month */}
+                {missedGoalReports.length > 0 && (
+                  <div className="mt-6 border-t border-border pt-5">
+                    <h4 className="text-sm font-semibold text-foreground mb-4">Client Miss Reasons — This Month</h4>
+                    
+                    {/* Root cause breakdown */}
+                    <div className="mb-4">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Root Cause Breakdown</p>
+                      <div className="space-y-1.5">
+                        {(() => {
+                          const counts: Record<string, number> = {};
+                          missedGoalReports.forEach(r => { counts[r.rootCauseCategory] = (counts[r.rootCauseCategory] || 0) + 1; });
+                          return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([cause, count]) => (
+                            <div key={cause} className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">{cause}</span>
+                              <span className="font-semibold text-foreground">{count}</span>
+                            </div>
+                          ));
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Pattern split */}
+                    <div className="mb-4">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Pattern Recognition</p>
+                      <div className="flex gap-4 text-sm">
+                        <span className="text-warning font-medium">{missedGoalReports.filter(r => r.isFamiliarPattern).length} familiar</span>
+                        <span className="text-muted-foreground">{missedGoalReports.filter(r => !r.isFamiliarPattern).length} new</span>
+                      </div>
+                    </div>
+
+                    {/* Anonymous explanations */}
+                    <div className="mb-4">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">What Clients Said (Anonymous)</p>
+                      <div className="space-y-2">
+                        {missedGoalReports.map((r, i) => (
+                          <div key={r.id} className="rounded-md border border-border bg-background p-3">
+                            <p className="text-sm text-foreground leading-relaxed italic">"{r.fullExplanation}"</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Commitments */}
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Commitments (Reset Prep)</p>
+                      <div className="space-y-2">
+                        {missedGoalReports.map(r => (
+                          <div key={r.id} className="rounded-md border border-primary/20 bg-primary/5 p-3">
+                            <p className="text-sm text-foreground leading-relaxed">{r.nextCommitment}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}
