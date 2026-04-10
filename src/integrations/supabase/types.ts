@@ -761,6 +761,127 @@ export type Database = {
         }
         Relationships: []
       }
+      operator_call_questions: {
+        Row: {
+          agenda_order: number | null
+          call_id: string
+          category: string
+          client_id: string
+          coach_note: string | null
+          id: string
+          is_urgent: boolean
+          question_text: string
+          status: Database["public"]["Enums"]["operator_question_status"]
+          submitted_at: string
+          updated_at: string
+        }
+        Insert: {
+          agenda_order?: number | null
+          call_id: string
+          category?: string
+          client_id: string
+          coach_note?: string | null
+          id?: string
+          is_urgent?: boolean
+          question_text: string
+          status?: Database["public"]["Enums"]["operator_question_status"]
+          submitted_at?: string
+          updated_at?: string
+        }
+        Update: {
+          agenda_order?: number | null
+          call_id?: string
+          category?: string
+          client_id?: string
+          coach_note?: string | null
+          id?: string
+          is_urgent?: boolean
+          question_text?: string
+          status?: Database["public"]["Enums"]["operator_question_status"]
+          submitted_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "operator_call_questions_call_id_fkey"
+            columns: ["call_id"]
+            isOneToOne: false
+            referencedRelation: "operator_calls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      operator_call_wins: {
+        Row: {
+          call_id: string
+          client_id: string
+          id: string
+          submitted_at: string
+          win_text: string
+        }
+        Insert: {
+          call_id: string
+          client_id: string
+          id?: string
+          submitted_at?: string
+          win_text: string
+        }
+        Update: {
+          call_id?: string
+          client_id?: string
+          id?: string
+          submitted_at?: string
+          win_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "operator_call_wins_call_id_fkey"
+            columns: ["call_id"]
+            isOneToOne: false
+            referencedRelation: "operator_calls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      operator_calls: {
+        Row: {
+          call_date: string
+          created_at: string
+          guest_name: string | null
+          guest_title: string | null
+          guest_topic: string | null
+          id: string
+          join_link: string | null
+          recap_notes: string | null
+          recording_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          call_date: string
+          created_at?: string
+          guest_name?: string | null
+          guest_title?: string | null
+          guest_topic?: string | null
+          id?: string
+          join_link?: string | null
+          recap_notes?: string | null
+          recording_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          call_date?: string
+          created_at?: string
+          guest_name?: string | null
+          guest_title?: string | null
+          guest_topic?: string | null
+          id?: string
+          join_link?: string | null
+          recap_notes?: string | null
+          recording_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       perfect_month_calls: {
         Row: {
           call_completed_at: string | null
@@ -1127,6 +1248,11 @@ export type Database = {
         | "proof_submitted"
         | "waived"
       help_radar_status: "seen" | "on_deck" | "addressed"
+      operator_question_status:
+        | "under_review"
+        | "on_agenda"
+        | "not_this_month"
+        | "addressed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1268,6 +1394,12 @@ export const Constants = {
         "waived",
       ],
       help_radar_status: ["seen", "on_deck", "addressed"],
+      operator_question_status: [
+        "under_review",
+        "on_agenda",
+        "not_this_month",
+        "addressed",
+      ],
     },
   },
 } as const

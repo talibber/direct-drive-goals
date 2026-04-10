@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen } from "lucide-react";
+import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen, Mic } from "lucide-react";
 import logo from "@/assets/logo.png";
 
-const links = [
+const baseLinks = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/dashboard/goals", label: "Goals", icon: Target },
   { to: "/dashboard/check-in", label: "Check-In", icon: CalendarCheck },
@@ -12,13 +12,19 @@ const links = [
   { to: "/dashboard/community", label: "Community", icon: Users },
   { to: "/dashboard/billing", label: "Billing", icon: CreditCard },
   { to: "/dashboard/sessions", label: "Sessions", icon: FileText },
-  { to: "/dashboard/library", label: "Library", icon: BookOpen },
   { to: "/dashboard/reset-session", label: "Reset Session", icon: RotateCcw },
+  { to: "/dashboard/library", label: "Library", icon: BookOpen },
   { to: "/dashboard/profile", label: "Profile", icon: User },
 ];
 
-export function DashboardLayout({ children }: { children: React.ReactNode }) {
+const operatorCallLink = { to: "/dashboard/operator-call", label: "Operator Call", icon: Mic };
+
+export function DashboardLayout({ children, coachingTrack = "life" }: { children: React.ReactNode; coachingTrack?: string }) {
   const location = useLocation();
+
+  const links = coachingTrack === "business"
+    ? [...baseLinks.slice(0, 8), operatorCallLink, ...baseLinks.slice(8)]
+    : baseLinks;
 
   return (
     <div className="min-h-screen bg-background flex">
