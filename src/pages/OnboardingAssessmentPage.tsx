@@ -80,6 +80,13 @@ const discDescriptions: Record<DiscType, { title: string; summary: string }> = {
   C: { title: "Conscientiousness", summary: "You're analytical, precise, and quality-driven. You value accuracy, thorough preparation, and well-researched decisions." },
 };
 
+const businessDiscFraming: Record<DiscType, string> = {
+  D: "You decide fast and execute. Watch for decisions made without enough data.",
+  I: "You sell ideas well. Watch for avoiding hard conversations with your team or clients.",
+  S: "You build loyalty and consistency. Watch for staying in situations too long out of comfort.",
+  C: "You analyze well. Watch for analysis becoming a reason not to move.",
+};
+
 const executionLabels: Record<string, { low: string; high: string }> = {
   planning: { low: "Action-First", high: "Planner" },
   consistency: { low: "Sprint & Crash", high: "Steady Operator" },
