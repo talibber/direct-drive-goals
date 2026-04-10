@@ -73,6 +73,11 @@ export default function HomePage() {
               <p className="mt-4 text-xs text-muted-foreground animate-fade-up" style={{ animationDelay: "0.4s" }}>
                 $99/month · $75 per missed goal · No contracts · Cancel anytime
               </p>
+              <p className="mt-3 text-[11px] text-muted-foreground/60 animate-fade-up leading-relaxed" style={{ animationDelay: "0.45s" }}>
+                No refunds. No exceptions.<br />
+                By applying you agree to our coaching terms.<br />
+                Cancel anytime after your first 30 days.
+              </p>
             </div>
 
             {/* Right column — Dashboard preview */}

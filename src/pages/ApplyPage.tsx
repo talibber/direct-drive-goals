@@ -69,9 +69,43 @@ export default function ApplyPage() {
           <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">
             Apply for <span className="text-gradient-gold">Terrible Coaching</span>
           </h1>
-          <p className="text-muted-foreground mb-8">
+          <p className="text-muted-foreground mb-6">
             This takes 3 minutes. Be honest—that's the whole point.
           </p>
+
+          {/* Process Timeline */}
+          <div className="flex items-center justify-between mb-10 px-2">
+            {[
+              { step: 1, label: "Submit Application", detail: "today" },
+              { step: 2, label: "Review (48 hrs)", detail: "we read it" },
+              { step: 3, label: "Onboarding Call", detail: "we level set" },
+              { step: 4, label: "Day 1 Begins", detail: "system activates" },
+            ].map((item, i) => (
+              <div key={item.step} className="flex items-center flex-1 last:flex-initial">
+                <div className="flex flex-col items-center text-center">
+                  <div className={cn(
+                    "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2",
+                    item.step === 1
+                      ? "border-primary bg-primary/20 text-primary"
+                      : "border-muted-foreground/30 bg-muted/30 text-muted-foreground/50"
+                  )}>
+                    {item.step}
+                  </div>
+                  <p className={cn(
+                    "text-[11px] font-semibold mt-1.5 leading-tight",
+                    item.step === 1 ? "text-primary" : "text-muted-foreground/50"
+                  )}>{item.label}</p>
+                  <p className={cn(
+                    "text-[10px] mt-0.5",
+                    item.step === 1 ? "text-primary/70" : "text-muted-foreground/30"
+                  )}>{item.detail}</p>
+                </div>
+                {i < 3 && (
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-primary/40 to-muted-foreground/20 mx-2 mt-[-18px]" />
+                )}
+              </div>
+            ))}
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid gap-5 sm:grid-cols-2">
@@ -178,9 +212,11 @@ export default function ApplyPage() {
               Submit Application
             </Button>
 
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">
               By applying, you understand that Terrible Coaching is not therapy and is not a 
-              substitute for licensed mental health care.
+              substitute for licensed mental health care. All sales are final. 
+              No refunds are issued after payment is processed. You may cancel your 
+              subscription after your first 30 days at any time with no further charges.
             </p>
           </form>
         </div>

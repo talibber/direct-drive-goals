@@ -95,6 +95,11 @@ export default function PricingPage() {
                 Apply Now <ArrowRight size={18} />
               </Button>
             </Link>
+            <p className="mt-4 text-[11px] text-muted-foreground/60 text-center leading-relaxed uppercase tracking-wider">
+              No refunds. No exceptions.<br />
+              By applying you agree to our coaching terms.<br />
+              Cancel anytime after your first 30 days.
+            </p>
           </div>
 
           {/* Accountability Stake explanation */}
