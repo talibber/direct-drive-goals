@@ -9,7 +9,7 @@ const navLinks = [
   { to: "/about", label: "About" },
   { to: "/how-it-works", label: "How It Works" },
   { to: "/pricing", label: "Pricing" },
-  { to: "/apply", label: "Apply" },
+  { to: "/apply/select", label: "Apply" },
 ];
 
 export function Navbar() {

@@ -8,6 +8,7 @@ import AboutPage from "./pages/AboutPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import PricingPage from "./pages/PricingPage";
 import ApplyPage from "./pages/ApplyPage";
+import TrackSelectionPage from "./pages/TrackSelectionPage";
 import LoginPage from "./pages/LoginPage";
 import ClientDashboard from "./pages/ClientDashboard";
 import WeeklyCheckInPage from "./pages/WeeklyCheckInPage";
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/apply" element={<ApplyPage />} />
+          <Route path="/apply/select" element={<TrackSelectionPage />} />
           <Route path="/login" element={<LoginPage />} />
 
           {/* Client */}
