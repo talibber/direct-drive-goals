@@ -81,9 +81,15 @@ export default function CoachDashboard() {
       )}
 
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
-        <StatCard label="Active Clients" value={clients.length} icon={Users} />
-        <StatCard label="At-Risk Clients" value={atRisk.length} change="Need attention" trend="down" icon={AlertTriangle} />
-        <StatCard label="Pending Applications" value={pendingApps.length} icon={ClipboardCheck} />
+        <Link to="/coach/clients">
+          <StatCard label="Active Clients" value={clients.length} icon={Users} className="hover:border-primary/50 transition-colors cursor-pointer" />
+        </Link>
+        <Link to="/coach/metrics#at-risk">
+          <StatCard label="At-Risk Clients" value={atRisk.length} change="Need attention" trend="down" icon={AlertTriangle} className="hover:border-primary/50 transition-colors cursor-pointer" />
+        </Link>
+        <Link to="/coach/applications">
+          <StatCard label="Pending Applications" value={pendingApps.length} icon={ClipboardCheck} className="hover:border-primary/50 transition-colors cursor-pointer" />
+        </Link>
         <StatCard label="Revenue (MTD)" value="$1,245" change="+12% from last month" trend="up" icon={DollarSign} />
       </div>
 
@@ -501,7 +507,9 @@ export default function CoachDashboard() {
             <tbody className="divide-y divide-border">
               {clients.map((c) => (
                 <tr key={c.id} className="hover:bg-secondary/50 transition-colors">
-                  <td className="px-5 py-3 font-medium text-foreground">{c.name}</td>
+                  <td className="px-5 py-3 font-medium text-foreground">
+                    <Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link>
+                  </td>
                   <td className="px-5 py-3 text-muted-foreground">{c.type}</td>
                   <td className="px-5 py-3">
                     <span className={`font-semibold ${c.score >= 80 ? "text-success" : c.score >= 60 ? "text-warning" : "text-danger"}`}>
