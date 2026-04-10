@@ -402,7 +402,10 @@ export default function CoachClientDetailPage() {
       {activeTab === "Messages" && (
         <div className="rounded-lg border border-border bg-card p-6 shadow-card">
           <h3 className="font-display font-semibold mb-4">Messages</h3>
-          <p className="text-sm text-muted-foreground">Messaging feature coming soon. This will be the full message thread with {client.name}.</p>
+          <p className="text-sm text-muted-foreground mb-4">View the full conversation thread with {client.name}.</p>
+          <Link to="/coach/messages" className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors">
+            <MessageSquare size={14} /> Open Conversation
+          </Link>
         </div>
       )}
 
