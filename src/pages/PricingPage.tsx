@@ -24,11 +24,11 @@ const businessFeatures = [
   "Initial onboarding call to level set expectations",
   "Monthly Operator Community Call with guest professionals",
   "Direct messenger and voice note access — responses within 24hrs",
-  "Async coach perspective on business decisions in real time",
   "Business content library — mindset, decisions, leadership",
+  "Operator networking thread — connect with peers directly",
   "Separate business cohort Reset Session",
   "Accountability stake system with proof verification",
-  "Performance scorecard and trend tracking",
+  "Performance scorecard and weekly trend data",
   "Cancel anytime after 30 days",
 ];
 
@@ -105,7 +105,7 @@ export default function PricingPage() {
                 <div className="text-center mb-8">
                   <div className="text-xs font-medium uppercase tracking-wider text-primary mb-2">Monthly Subscription</div>
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="font-display text-5xl font-bold text-gradient-gold">$249</span>
+                    <span className="font-display text-5xl font-bold text-gradient-gold">$199</span>
                     <span className="text-muted-foreground">/month</span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-2">+ $75 per missed goal (accountability stake)</p>
@@ -122,10 +122,13 @@ export default function PricingPage() {
 
                 <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-4 mb-6">
                   <p className="text-sm font-display font-bold text-foreground mb-1">
-                    Maximum monthly exposure: $474
+                    Maximum monthly exposure: $424
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    ($249 subscription + up to 3 missed goal stakes at $75 each)
+                    ($199 subscription + up to 3 missed goal stakes at $75 each)
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                    You'll never be charged more than this in a single month.
                   </p>
                 </div>
 
@@ -156,7 +159,7 @@ export default function PricingPage() {
                 <span className="text-foreground font-medium">Business Track</span> is for operators — people actively running a business who need a thinking partner, peer access, and real-time perspective on the decisions that matter.
               </p>
               <p className="text-foreground font-medium">
-                Both use the same accountability system. Both have consequences. Both will show you what you've been avoiding.
+                Life Track builds the person. Business Track sharpens the operator. The accountability system is identical in both. The consequences are real in both. The only difference is who's in the room with you.
               </p>
             </div>
           </div>
