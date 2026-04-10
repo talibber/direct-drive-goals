@@ -62,6 +62,44 @@ export type Database = {
         }
         Relationships: []
       }
+      community_comments: {
+        Row: {
+          client_id: string
+          content: string
+          created_at: string
+          id: string
+          is_moderated: boolean
+          photo_url: string | null
+          post_id: string
+        }
+        Insert: {
+          client_id: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_moderated?: boolean
+          photo_url?: string | null
+          post_id: string
+        }
+        Update: {
+          client_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_moderated?: boolean
+          photo_url?: string | null
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_post_likes: {
         Row: {
           client_id: string
@@ -99,6 +137,7 @@ export type Database = {
           id: string
           is_moderated: boolean
           likes_count: number
+          photo_urls: string[] | null
           post_type: string
         }
         Insert: {
@@ -108,6 +147,7 @@ export type Database = {
           id?: string
           is_moderated?: boolean
           likes_count?: number
+          photo_urls?: string[] | null
           post_type?: string
         }
         Update: {
@@ -117,6 +157,7 @@ export type Database = {
           id?: string
           is_moderated?: boolean
           likes_count?: number
+          photo_urls?: string[] | null
           post_type?: string
         }
         Relationships: []
