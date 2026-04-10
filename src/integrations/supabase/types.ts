@@ -266,6 +266,95 @@ export type Database = {
           },
         ]
       }
+      content_assignments: {
+        Row: {
+          assigned_by: string
+          assigned_note: string | null
+          client_id: string
+          client_reflection: string | null
+          completed: boolean
+          completed_at: string | null
+          content_id: string
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_by: string
+          assigned_note?: string | null
+          client_id: string
+          client_reflection?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          content_id: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_by?: string
+          assigned_note?: string | null
+          client_id?: string
+          client_reflection?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          content_id?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_assignments_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "content_library"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_library: {
+        Row: {
+          body: string
+          category: string
+          content_type: string
+          created_at: string
+          created_by: string
+          id: string
+          is_core: boolean
+          key_takeaway: string | null
+          read_time_minutes: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          category?: string
+          content_type?: string
+          created_at?: string
+          created_by: string
+          id?: string
+          is_core?: boolean
+          key_takeaway?: string | null
+          read_time_minutes?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          category?: string
+          content_type?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_core?: boolean
+          key_takeaway?: string | null
+          read_time_minutes?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           client_id: string
