@@ -54,10 +54,12 @@ const App = () => (
           <Route path="/dashboard/reset-session" element={<ResetSessionPage />} />
           <Route path="/dashboard/help-radar" element={<HelpRadarPage />} />
           <Route path="/dashboard/community" element={<CommunityPage />} />
+          <Route path="/dashboard/messages" element={<ClientMessagesPage />} />
 
           {/* Coach */}
           <Route path="/coach" element={<CoachDashboard />} />
           <Route path="/coach/clients" element={<CoachClientsPage />} />
+          <Route path="/coach/messages" element={<CoachMessagesPage />} />
           <Route path="/coach/applications" element={<CoachApplicationsPage />} />
           <Route path="/coach/metrics" element={<CoachMetricsPage />} />
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
