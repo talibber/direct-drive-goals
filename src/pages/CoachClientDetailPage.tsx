@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { CoachLayout } from "@/components/CoachLayout";
-import { clients, weeklyCheckIns, goals, goalApprovalHistory, goalDecisionHistory, coachHelpRadarItems, resetSessionEngagements, resetSessions, clientAchievements, levels, applications } from "@/lib/mockData";
+import { clients, weeklyCheckIns, goals, goalApprovalHistory, goalDecisionHistory, coachHelpRadarItems, resetSessionEngagements, resetSessions, clientAchievements, levels, applications, missedGoalReports } from "@/lib/mockData";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { ArrowLeft, Trophy, Target, Calendar, Shield, MessageSquare, FileText, Award, TrendingUp, Send } from "lucide-react";
 
@@ -258,21 +258,52 @@ export default function CoachClientDetailPage() {
           <div className="rounded-lg border border-border bg-card p-5 shadow-card">
             <h3 className="font-display font-semibold mb-4">Past Goals</h3>
             <div className="space-y-3">
-              {pastGoals.map(g => (
-                <div key={g.id} className="flex items-center justify-between p-3 rounded-md border border-border bg-background">
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{g.title}</p>
-                    <p className="text-xs text-muted-foreground">{g.category} · Due {g.dueDate}</p>
+              {pastGoals.map(g => {
+                const missReport = g.coachDecision === "missed" ? missedGoalReports.find(r => r.clientId === clientId && r.goalTitle === g.title) : null;
+                return (
+                  <div key={g.id} className="rounded-md border border-border bg-background">
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{g.title}</p>
+                        <p className="text-xs text-muted-foreground">{g.category} · Due {g.dueDate}</p>
+                      </div>
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                        g.coachDecision === "verified" ? "bg-success/10 text-success" :
+                        g.coachDecision === "missed" ? "bg-danger/10 text-danger" :
+                        "bg-muted text-muted-foreground"
+                      }`}>
+                        {g.coachDecision === "verified" ? "Completed" : g.coachDecision === "missed" ? "Missed ($75)" : g.status}
+                      </span>
+                    </div>
+                    {missReport && (
+                      <details className="border-t border-border">
+                        <summary className="px-3 py-2 text-xs font-medium text-primary cursor-pointer hover:text-primary/80">
+                          View Miss Report
+                        </summary>
+                        <div className="px-3 pb-3 space-y-2">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Root Cause</p>
+                            <p className="text-sm text-foreground">{missReport.rootCauseCategory}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">What Happened</p>
+                            <p className="text-sm text-foreground leading-relaxed">{missReport.fullExplanation}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Pattern</p>
+                            <p className="text-sm text-foreground">{missReport.isFamiliarPattern ? `Familiar — ${missReport.patternDescription}` : "New pattern"}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Commitment</p>
+                            <p className="text-sm text-foreground">{missReport.nextCommitment}</p>
+                          </div>
+                          <p className="text-xs text-muted-foreground">Submitted {missReport.submittedAt}</p>
+                        </div>
+                      </details>
+                    )}
                   </div>
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                    g.coachDecision === "verified" ? "bg-success/10 text-success" :
-                    g.coachDecision === "missed" ? "bg-danger/10 text-danger" :
-                    "bg-muted text-muted-foreground"
-                  }`}>
-                    {g.coachDecision === "verified" ? "Completed" : g.coachDecision === "missed" ? "Missed ($75)" : g.status}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

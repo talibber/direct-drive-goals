@@ -476,6 +476,50 @@ export type Database = {
           },
         ]
       }
+      missed_goal_reports: {
+        Row: {
+          client_id: string
+          full_explanation: string
+          goal_id: string
+          id: string
+          is_familiar_pattern: boolean
+          next_commitment: string
+          pattern_description: string | null
+          root_cause_category: string
+          submitted_at: string
+        }
+        Insert: {
+          client_id: string
+          full_explanation: string
+          goal_id: string
+          id?: string
+          is_familiar_pattern?: boolean
+          next_commitment: string
+          pattern_description?: string | null
+          root_cause_category: string
+          submitted_at?: string
+        }
+        Update: {
+          client_id?: string
+          full_explanation?: string
+          goal_id?: string
+          id?: string
+          is_familiar_pattern?: boolean
+          next_commitment?: string
+          pattern_description?: string | null
+          root_cause_category?: string
+          submitted_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "missed_goal_reports_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       perfect_month_calls: {
         Row: {
           call_completed_at: string | null

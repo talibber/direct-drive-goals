@@ -452,6 +452,67 @@ export const clientResetSession = {
   recordingWatched: false,
 };
 
+// ========== MISSED GOAL REPORTS ==========
+
+export interface MissedGoalReport {
+  id: string;
+  clientId: string;
+  clientName: string;
+  goalId: string;
+  goalTitle: string;
+  rootCauseCategory: string;
+  fullExplanation: string;
+  isFamiliarPattern: boolean;
+  patternDescription: string | null;
+  nextCommitment: string;
+  submittedAt: string;
+}
+
+export const missedGoalReports: MissedGoalReport[] = [
+  {
+    id: "mgr-1",
+    clientId: "1",
+    clientName: "Marcus Chen",
+    goalId: "pg1",
+    goalTitle: "Daily journaling for 30 days",
+    rootCauseCategory: "I started strong then lost momentum",
+    fullExplanation: "I did the first two weeks consistently but then had a work crisis with a client escalation. Instead of picking it back up after, I let the gap grow. By week three I told myself it was already ruined so why bother. Classic self-sabotage pattern.",
+    isFamiliarPattern: true,
+    patternDescription: "This shows up in fitness too. I start programs strong then quit after any interruption. Also happened with my reading habit last year.",
+    nextCommitment: "I will journal for 10 minutes every morning before checking email. If I miss a day, I will do a 5-minute version that night instead of skipping entirely.",
+    submittedAt: "Mar 31, 2026",
+  },
+  {
+    id: "mgr-2",
+    clientId: "4",
+    clientName: "Priya Patel",
+    goalId: "pg-priya-1",
+    goalTitle: "Launch personal website",
+    rootCauseCategory: "I avoided it on purpose",
+    fullExplanation: "I kept telling myself I needed more content before launching but the truth is I was afraid of putting myself out there. Every time I sat down to finalize the design I found something else to do. I reorganized my desk twice instead of hitting publish.",
+    isFamiliarPattern: true,
+    patternDescription: "Perfectionism and fear of visibility. Same reason I delayed my newsletter for 6 months and why I haven't posted on LinkedIn in over a year.",
+    nextCommitment: "I will ship the website as-is within the first week of next month. No more edits. I'll ask my accountability partner to check that it's live by April 7.",
+    submittedAt: "Mar 31, 2026",
+  },
+  {
+    id: "mgr-3",
+    clientId: "2",
+    clientName: "Sarah Kim",
+    goalId: "pg-sarah-1",
+    goalTitle: "Complete sales playbook",
+    rootCauseCategory: "I didn't prioritize it",
+    fullExplanation: "Client work kept taking over. I told myself the playbook could wait but the reality is I kept choosing urgent over important. I never blocked time for it and every day it got pushed to tomorrow.",
+    isFamiliarPattern: false,
+    patternDescription: null,
+    nextCommitment: "I will block 90 minutes every Tuesday and Thursday morning specifically for the playbook. I'll treat it like a client meeting that can't be moved.",
+    submittedAt: "Mar 30, 2026",
+  },
+];
+
+// Client-side: goals that need a miss report before stake is charged
+export const clientMissedGoalsPendingReport: { id: string; title: string; target: string }[] = [];
+
 // ========== GAMIFICATION & COMMUNITY ==========
 
 export interface ClientPoints {
