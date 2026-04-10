@@ -756,3 +756,76 @@ export const leaderboard: LeaderboardEntry[] = [
   { rank: 9, clientName: "Priya", level: 2, levelName: "Getting Honest", monthlyPoints: 75, streak: 1 },
   { rank: 10, clientName: "Tom", level: 1, levelName: "In The Mirror", monthlyPoints: 45, streak: 2 },
 ];
+
+// ========== MESSAGING ==========
+
+export interface Conversation {
+  id: string;
+  coachId: string;
+  clientId: string;
+  clientName: string;
+  clientEmail: string;
+  clientScore: number;
+  activeGoals: number;
+  nextDeadline: string;
+  lastCheckIn: string;
+  lastMessageAt: string;
+  lastMessagePreview: string;
+  lastMessageSender: "coach" | "client";
+  unreadCount: number;
+}
+
+export interface Message {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  senderRole: "coach" | "client";
+  content: string;
+  attachmentUrls: string[];
+  sentAt: string;
+  readAt: string | null;
+}
+
+export const conversations: Conversation[] = [
+  { id: "conv-1", coachId: "coach-1", clientId: "1", clientName: "Marcus Chen", clientEmail: "marcus@example.com", clientScore: 86, activeGoals: 3, nextDeadline: "Apr 30", lastCheckIn: "2 days ago", lastMessageAt: "Apr 10, 2026 9:14 AM", lastMessagePreview: "Got it. I'll send the updated contract by Thursday.", lastMessageSender: "client", unreadCount: 2 },
+  { id: "conv-2", coachId: "coach-1", clientId: "2", clientName: "Sarah Kim", clientEmail: "sarah@example.com", clientScore: 72, activeGoals: 2, nextDeadline: "Apr 12", lastCheckIn: "5 days ago", lastMessageAt: "Apr 9, 2026 3:45 PM", lastMessagePreview: "I need to talk about adjusting my goal timeline.", lastMessageSender: "client", unreadCount: 1 },
+  { id: "conv-3", coachId: "coach-1", clientId: "3", clientName: "James Wright", clientEmail: "james@example.com", clientScore: 91, activeGoals: 2, nextDeadline: "Apr 30", lastCheckIn: "1 day ago", lastMessageAt: "Apr 8, 2026 11:20 AM", lastMessagePreview: "Perfect Month call is on the calendar. See you then.", lastMessageSender: "coach", unreadCount: 0 },
+  { id: "conv-4", coachId: "coach-1", clientId: "4", clientName: "Priya Patel", clientEmail: "priya@example.com", clientScore: 65, activeGoals: 2, nextDeadline: "Apr 14", lastCheckIn: "8 days ago", lastMessageAt: "Apr 7, 2026 2:10 PM", lastMessagePreview: "I've been struggling with the morning routine. Can we talk?", lastMessageSender: "client", unreadCount: 3 },
+  { id: "conv-5", coachId: "coach-1", clientId: "5", clientName: "Alex Rivera", clientEmail: "alex@example.com", clientScore: 78, activeGoals: 2, nextDeadline: "Apr 30", lastCheckIn: "3 days ago", lastMessageAt: "Apr 6, 2026 5:30 PM", lastMessagePreview: "Newsletter is live! 142 subscribers.", lastMessageSender: "client", unreadCount: 0 },
+];
+
+export const mockMessages: Record<string, Message[]> = {
+  "conv-1": [
+    { id: "m1", conversationId: "conv-1", senderId: "coach-1", senderRole: "coach", content: "Marcus, your enterprise pipeline looks strong. How are the contract negotiations going with the second prospect?", attachmentUrls: [], sentAt: "Apr 9, 2026 10:00 AM", readAt: "Apr 9, 2026 10:15 AM" },
+    { id: "m2", conversationId: "conv-1", senderId: "1", senderRole: "client", content: "Good. Legal is reviewing the terms. I should have a signed copy by end of week.", attachmentUrls: [], sentAt: "Apr 9, 2026 10:22 AM", readAt: "Apr 9, 2026 10:30 AM" },
+    { id: "m3", conversationId: "conv-1", senderId: "coach-1", senderRole: "coach", content: "Don't let it slip. Follow up tomorrow morning, not Friday. What's the blocker on the third deal?", attachmentUrls: [], sentAt: "Apr 9, 2026 10:35 AM", readAt: "Apr 9, 2026 11:00 AM" },
+    { id: "m4", conversationId: "conv-1", senderId: "1", senderRole: "client", content: "Pricing. They want a 15% discount and I'm not sure if I should hold firm.", attachmentUrls: [], sentAt: "Apr 9, 2026 2:00 PM", readAt: "Apr 9, 2026 2:10 PM" },
+    { id: "m5", conversationId: "conv-1", senderId: "coach-1", senderRole: "coach", content: "Hold firm. You're not selling a commodity. If they want the discount, what are they giving up? Never negotiate against yourself.", attachmentUrls: [], sentAt: "Apr 9, 2026 2:15 PM", readAt: "Apr 9, 2026 2:30 PM" },
+    { id: "m6", conversationId: "conv-1", senderId: "1", senderRole: "client", content: "You're right. I'll send the updated contract with original pricing by Thursday.", attachmentUrls: [], sentAt: "Apr 10, 2026 9:14 AM", readAt: null },
+    { id: "m7", conversationId: "conv-1", senderId: "1", senderRole: "client", content: "Got it. I'll send the updated contract by Thursday.", attachmentUrls: [], sentAt: "Apr 10, 2026 9:14 AM", readAt: null },
+  ],
+  "conv-2": [
+    { id: "m8", conversationId: "conv-2", senderId: "coach-1", senderRole: "coach", content: "Sarah, you haven't checked in this week. What's going on?", attachmentUrls: [], sentAt: "Apr 8, 2026 9:00 AM", readAt: "Apr 8, 2026 12:00 PM" },
+    { id: "m9", conversationId: "conv-2", senderId: "2", senderRole: "client", content: "Sorry — work has been overwhelming. I'll do it tonight.", attachmentUrls: [], sentAt: "Apr 8, 2026 12:15 PM", readAt: "Apr 8, 2026 12:20 PM" },
+    { id: "m10", conversationId: "conv-2", senderId: "coach-1", senderRole: "coach", content: "Tonight doesn't work if you said that last week too. What's actually blocking you? Be honest.", attachmentUrls: [], sentAt: "Apr 8, 2026 12:25 PM", readAt: "Apr 8, 2026 1:00 PM" },
+    { id: "m11", conversationId: "conv-2", senderId: "2", senderRole: "client", content: "I need to talk about adjusting my goal timeline.", attachmentUrls: [], sentAt: "Apr 9, 2026 3:45 PM", readAt: null },
+  ],
+  "conv-3": [
+    { id: "m12", conversationId: "conv-3", senderId: "coach-1", senderRole: "coach", content: "James, congrats on the Perfect Month. Seriously earned. Let's set up the Next Level Call.", attachmentUrls: [], sentAt: "Apr 7, 2026 10:00 AM", readAt: "Apr 7, 2026 10:05 AM" },
+    { id: "m13", conversationId: "conv-3", senderId: "3", senderRole: "client", content: "Thanks! How about Wednesday at 2pm?", attachmentUrls: [], sentAt: "Apr 7, 2026 10:30 AM", readAt: "Apr 7, 2026 10:35 AM" },
+    { id: "m14", conversationId: "conv-3", senderId: "coach-1", senderRole: "coach", content: "Perfect Month call is on the calendar. See you then.", attachmentUrls: [], sentAt: "Apr 8, 2026 11:20 AM", readAt: "Apr 8, 2026 11:25 AM" },
+  ],
+  "conv-4": [
+    { id: "m15", conversationId: "conv-4", senderId: "4", senderRole: "client", content: "I keep missing my check-ins and I don't know why.", attachmentUrls: [], sentAt: "Apr 5, 2026 9:00 AM", readAt: "Apr 5, 2026 9:30 AM" },
+    { id: "m16", conversationId: "conv-4", senderId: "coach-1", senderRole: "coach", content: "You do know why. You're avoiding the mirror. What are you afraid the numbers will show you?", attachmentUrls: [], sentAt: "Apr 5, 2026 9:45 AM", readAt: "Apr 5, 2026 10:00 AM" },
+    { id: "m17", conversationId: "conv-4", senderId: "4", senderRole: "client", content: "That I'm not making progress.", attachmentUrls: [], sentAt: "Apr 5, 2026 10:10 AM", readAt: "Apr 5, 2026 10:15 AM" },
+    { id: "m18", conversationId: "conv-4", senderId: "coach-1", senderRole: "coach", content: "And not checking in changes that how? The data is what it is whether you look at it or not. Check in tonight. No excuses.", attachmentUrls: [], sentAt: "Apr 5, 2026 10:20 AM", readAt: "Apr 6, 2026 8:00 AM" },
+    { id: "m19", conversationId: "conv-4", senderId: "4", senderRole: "client", content: "I've been struggling with the morning routine. Can we talk?", attachmentUrls: [], sentAt: "Apr 7, 2026 2:10 PM", readAt: null },
+    { id: "m20", conversationId: "conv-4", senderId: "4", senderRole: "client", content: "Also the website deadline is coming up and I'm behind.", attachmentUrls: [], sentAt: "Apr 7, 2026 2:12 PM", readAt: null },
+    { id: "m21", conversationId: "conv-4", senderId: "4", senderRole: "client", content: "I think I need to drop one of my goals this month.", attachmentUrls: [], sentAt: "Apr 7, 2026 2:15 PM", readAt: null },
+  ],
+  "conv-5": [
+    { id: "m22", conversationId: "conv-5", senderId: "5", senderRole: "client", content: "Newsletter is live! 142 subscribers on day one.", attachmentUrls: [], sentAt: "Apr 6, 2026 5:30 PM", readAt: "Apr 6, 2026 5:45 PM" },
+    { id: "m23", conversationId: "conv-5", senderId: "coach-1", senderRole: "coach", content: "Strong start. Now the hard part — doing it again next week. What's the topic?", attachmentUrls: [], sentAt: "Apr 6, 2026 6:00 PM", readAt: "Apr 6, 2026 6:15 PM" },
+  ],
+};
