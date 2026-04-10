@@ -6,8 +6,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { ArrowLeft, Trophy, Target, Calendar, Shield, MessageSquare, FileText, Award, TrendingUp, Send } from "lucide-react";
 import { CoachAssessmentPanel } from "@/components/CoachAssessmentPanel";
 
-const tabs = ["Overview", "Goals", "Check-Ins", "Assessment", "Application", "Messages", "Sessions"] as const;
-type Tab = typeof tabs[number];
+const allTabs = ["Overview", "Goals", "Check-Ins", "Assessment", "Application", "Messages", "Sessions", "Direct Access"] as const;
+type Tab = typeof allTabs[number];
 
 export default function CoachClientDetailPage() {
   const { clientId } = useParams();
@@ -23,6 +23,8 @@ export default function CoachClientDetailPage() {
     );
   }
 
+  const isBusiness = client.type === "Business";
+  const tabs = isBusiness ? allTabs : allTabs.filter(t => t !== "Direct Access");
   const clientRadarItems = coachHelpRadarItems.filter(i => i.clientId === clientId);
   const clientEngagements = resetSessionEngagements.filter(e => e.clientId === clientId);
   const clientLevel = levels.find(l => l.level === 4) || levels[0]; // Mock level
@@ -74,13 +76,20 @@ export default function CoachClientDetailPage() {
         </Link>
         <div className="flex-1">
           <h1 className="font-display text-2xl font-bold">{client.name}</h1>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground mt-0.5">
+          <div className="flex items-center gap-3 text-sm text-muted-foreground mt-0.5 flex-wrap">
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+              isBusiness ? "bg-primary text-primary-foreground" : "bg-foreground/10 text-foreground"
+            }`}>
+              {isBusiness ? "Business Track" : "Life Track"}
+            </span>
             <span>{client.email}</span>
             <span>·</span>
-            <span className="text-primary font-medium">Level {clientLevel.level} — {clientLevel.name}</span>
-            <span>·</span>
-            <span>{totalPoints} pts</span>
-            <span>·</span>
+            {!isBusiness && <>
+              <span className="text-primary font-medium">Level {clientLevel.level} — {clientLevel.name}</span>
+              <span>·</span>
+              <span>{totalPoints} pts</span>
+              <span>·</span>
+            </>}
             <span>{streak}w streak</span>
           </div>
         </div>
@@ -167,17 +176,19 @@ export default function CoachClientDetailPage() {
             </ResponsiveContainer>
           </div>
 
-          {/* Badges */}
-          <div className="rounded-lg border border-border bg-card p-5 shadow-card">
-            <h3 className="font-display font-semibold mb-3">Badges Earned</h3>
-            <div className="flex flex-wrap gap-2">
-              {clientAchievements.map(a => (
-                <span key={a.id} className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                  <Award size={12} /> {a.badgeName}
-                </span>
-              ))}
+          {/* Badges — Life Track only */}
+          {!isBusiness && (
+            <div className="rounded-lg border border-border bg-card p-5 shadow-card">
+              <h3 className="font-display font-semibold mb-3">Badges Earned</h3>
+              <div className="flex flex-wrap gap-2">
+                {clientAchievements.map(a => (
+                  <span key={a.id} className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                    <Award size={12} /> {a.badgeName}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Stake History */}
           {stakeHistory.length > 0 && (
