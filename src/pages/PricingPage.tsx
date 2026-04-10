@@ -80,7 +80,7 @@ export default function PricingPage() {
                   </p>
                 </div>
 
-                <Link to="/apply" className="block">
+                <Link to="/apply?track=life" className="block">
                   <Button variant="hero" size="lg" className="w-full text-base">
                     Apply Now <ArrowRight size={18} />
                   </Button>
