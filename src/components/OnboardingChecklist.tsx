@@ -12,8 +12,9 @@ export interface OnboardingStep {
   completedAt?: string;
 }
 
-// Mock data — in production pulled from onboarding_progress table
-const mockSteps: OnboardingStep[] = [
+export type CoachingTrack = "life" | "business";
+
+const lifeSteps: OnboardingStep[] = [
   {
     id: "s0",
     day: 0,
@@ -63,18 +64,79 @@ const mockSteps: OnboardingStep[] = [
   },
 ];
 
-export function OnboardingChecklist() {
-  const steps = mockSteps;
+const businessSteps: OnboardingStep[] = [
+  {
+    id: "b0",
+    day: 0,
+    title: "Welcome to Business Track.",
+    description: "",
+    status: "complete",
+    completedAt: "Apr 3, 2026",
+  },
+  {
+    id: "b1",
+    day: 1,
+    title: "Complete your assessments",
+    description: "8 minutes. Same assessments, framed through a business lens.",
+    link: "/onboarding/assessment?track=business",
+    status: "active",
+  },
+  {
+    id: "b2",
+    day: 1,
+    title: "Schedule your initial call",
+    description: "45 minutes. We review your business, your current challenges, and calibrate the system to where you actually are.",
+    status: "locked",
+  },
+  {
+    id: "b3",
+    day: 3,
+    title: "Set your first business goals",
+    description: "What are the 1-3 things that, if you actually did them this month, would move your business forward in a way you'd feel?",
+    link: "/dashboard/goals",
+    status: "locked",
+  },
+  {
+    id: "b4",
+    day: 5,
+    title: "Complete your first check-in",
+    description: "Business track check-in unlocks.",
+    link: "/dashboard/check-in",
+    status: "locked",
+  },
+  {
+    id: "b5",
+    day: 7,
+    title: "Your first coach voice note",
+    description: "Your coach has reviewed your assessment and initial call notes and has something to say.",
+    status: "locked",
+  },
+];
+
+interface OnboardingChecklistProps {
+  track?: CoachingTrack;
+}
+
+export function OnboardingChecklist({ track = "life" }: OnboardingChecklistProps) {
+  const steps = track === "business" ? businessSteps : lifeSteps;
   const allComplete = steps.every(s => s.status === "complete");
   if (allComplete) return null;
+
+  const title = track === "business"
+    ? "Your Business Track starts here."
+    : "Your first 7 days.";
+
+  const subtitle = track === "business"
+    ? "Seven days to get the system calibrated to your business. Move fast — your stake is active after your first goal is approved."
+    : "Complete these in order. The system gets better the more honest you are from the start.";
 
   return (
     <div className="rounded-xl border-2 border-primary/30 bg-card p-6 md:p-8 shadow-card mb-8">
       <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-1">
-        Your first 7 days.
+        {title}
       </h2>
       <p className="text-sm text-muted-foreground mb-6">
-        Complete these in order. The system gets better the more honest you are from the start.
+        {subtitle}
       </p>
 
       <div className="space-y-0">
@@ -84,7 +146,6 @@ export function OnboardingChecklist() {
             <div key={step.id} className="flex gap-4">
               {/* Timeline column */}
               <div className="flex flex-col items-center">
-                {/* Circle */}
                 <div className={cn(
                   "w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border-2 flex-shrink-0 relative",
                   step.status === "complete"
@@ -104,7 +165,6 @@ export function OnboardingChecklist() {
                     <span className="absolute inset-0 rounded-full border-2 border-warning animate-ping opacity-30" />
                   )}
                 </div>
-                {/* Connector line */}
                 {!isLast && (
                   <div className={cn(
                     "w-0.5 flex-1 min-h-[24px]",
