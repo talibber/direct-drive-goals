@@ -633,6 +633,42 @@ export type Database = {
           },
         ]
       }
+      onboarding_progress: {
+        Row: {
+          client_id: string
+          completed_at: string | null
+          created_at: string
+          id: string
+          reminder_sent: boolean
+          step_name: string
+          step_order: number
+          unlocked_at: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          reminder_sent?: boolean
+          step_name: string
+          step_order?: number
+          unlocked_at?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          reminder_sent?: boolean
+          step_name?: string
+          step_order?: number
+          unlocked_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       perfect_month_calls: {
         Row: {
           call_completed_at: string | null
