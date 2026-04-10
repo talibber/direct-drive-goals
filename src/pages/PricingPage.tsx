@@ -2,9 +2,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Check, ArrowRight, X } from "lucide-react";
+import { Check, ArrowRight, X, Sparkles } from "lucide-react";
 
-const included = [
+const lifeFeatures = [
   "1-on-1 coaching (life + business)",
   "Weekly check-in system with performance scoring",
   "Up to 3 active goals per month",
@@ -13,11 +13,23 @@ const included = [
   "Direct coach notes and feedback",
   "Help Radar — flag challenges outside your goals and get direct coach perspective",
   "Performance trend dashboards",
-  "$75 accountability stake per missed goal",
-  "Missed goal enrolls you in the monthly Reset Session — group coaching, no call-outs, real patterns addressed",
   "Coach waiver option — judgment over automation",
   "Perfect Month triggers a Next Level Call",
   "Cancel anytime — no contracts",
+];
+
+const businessFeatures = [
+  "Business-focused goal setting with coach approval",
+  "Weekly check-in with business mindset questions",
+  "Initial onboarding call to level set expectations",
+  "Monthly Operator Community Call with guest professionals",
+  "Direct messenger and voice note access — responses within 24hrs",
+  "Async coach perspective on business decisions in real time",
+  "Business content library — mindset, decisions, leadership",
+  "Separate business cohort Reset Session",
+  "Accountability stake system with proof verification",
+  "Performance scorecard and trend tracking",
+  "Cancel anytime after 30 days",
 ];
 
 export default function PricingPage() {
@@ -25,81 +37,128 @@ export default function PricingPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <section className="pt-32 pb-20 md:pt-40">
-        <div className="container max-w-3xl">
+        <div className="container max-w-5xl">
           <div className="text-center mb-12">
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-              Simple <span className="text-gradient-gold">Pricing</span>
+              Choose Your <span className="text-gradient-gold">Track</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              One plan. One price. Accountability included.
+              Two tracks. Same accountability system. Pick the one that fits.
             </p>
           </div>
 
-          <div className="text-center mb-10">
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
-              One offer. No tiers. No upsells.
-            </h2>
-            <p className="mt-3 text-base text-muted-foreground max-w-lg mx-auto">
-              We keep it simple because complexity is how coaching products hide their lack of results.
-            </p>
-          </div>
+          {/* Two cards side by side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {/* LIFE TRACK */}
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-3 text-center">Life Track</p>
+              <div className="rounded-xl border-2 border-primary/30 bg-card p-8 shadow-card h-full flex flex-col">
+                <div className="text-center mb-8">
+                  <div className="text-xs font-medium uppercase tracking-wider text-primary mb-2">Monthly Subscription</div>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="font-display text-5xl font-bold text-gradient-gold">$99</span>
+                    <span className="text-muted-foreground">/month</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">+ $75 per missed goal (accountability stake)</p>
+                </div>
 
-          <div className="rounded-xl border-2 border-primary/30 bg-card p-8 md:p-10 shadow-card animate-pulse-glow mx-auto max-w-lg">
-            <div className="text-center mb-8">
-              <div className="text-xs font-medium uppercase tracking-wider text-primary mb-2">Monthly Subscription</div>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display text-5xl md:text-6xl font-bold text-gradient-gold">$99</span>
-                <span className="text-muted-foreground">/month</span>
+                <ul className="space-y-3 mb-6 flex-1">
+                  {lifeFeatures.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm">
+                      <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
+                      <span className="text-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-4 mb-6">
+                  <p className="text-sm font-display font-bold text-foreground mb-1">
+                    Maximum monthly exposure: $324
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    ($99 subscription + up to 3 missed goal stakes at $75 each)
+                  </p>
+                </div>
+
+                <Link to="/apply" className="block">
+                  <Button variant="hero" size="lg" className="w-full text-base">
+                    Apply Now <ArrowRight size={18} />
+                  </Button>
+                </Link>
+                <p className="mt-4 text-[11px] text-muted-foreground/60 text-center leading-relaxed uppercase tracking-wider">
+                  No refunds. No exceptions.<br />
+                  By applying you agree to our coaching terms.<br />
+                  Cancel anytime after your first 30 days.
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">+ $75 per missed goal (accountability stake)</p>
             </div>
 
-            <ul className="space-y-3 mb-4">
-              {included.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm">
-                  <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
-                  <span className="text-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
+            {/* BUSINESS TRACK */}
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-3 text-center">Business Track</p>
+              <div className="rounded-xl border-2 border-primary/30 bg-card p-8 shadow-card h-full flex flex-col relative">
+                {/* Badge */}
+                <div className="absolute -top-3 right-6 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full flex items-center gap-1">
+                  <Sparkles size={12} /> New
+                </div>
 
-            {/* Paired miss consequences */}
-            <div className="ml-1 mb-8 flex gap-3">
-              <div className="w-[3px] rounded-full bg-gradient-gold shrink-0" />
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm">
-                  <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
-                  <span className="text-foreground">$75 accountability stake per missed goal</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm">
-                  <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
-                  <span className="text-foreground">Missed goal enrolls you in the monthly Reset Session — not just a charge</span>
-                </li>
-              </ul>
+                <div className="text-center mb-8">
+                  <div className="text-xs font-medium uppercase tracking-wider text-primary mb-2">Monthly Subscription</div>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="font-display text-5xl font-bold text-gradient-gold">$249</span>
+                    <span className="text-muted-foreground">/month</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">+ $75 per missed goal (accountability stake)</p>
+                </div>
+
+                <ul className="space-y-3 mb-6 flex-1">
+                  {businessFeatures.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm">
+                      <Check className="text-primary flex-shrink-0 mt-0.5" size={16} />
+                      <span className="text-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-4 mb-6">
+                  <p className="text-sm font-display font-bold text-foreground mb-1">
+                    Maximum monthly exposure: $474
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    ($249 subscription + up to 3 missed goal stakes at $75 each)
+                  </p>
+                </div>
+
+                <Link to="/apply?track=business" className="block">
+                  <Button variant="hero" size="lg" className="w-full text-base">
+                    Apply for Business Track <ArrowRight size={18} />
+                  </Button>
+                </Link>
+                <p className="mt-4 text-[11px] text-muted-foreground/60 text-center leading-relaxed uppercase tracking-wider">
+                  No refunds. No exceptions.<br />
+                  By applying you agree to our coaching terms.<br />
+                  Cancel anytime after your first 30 days.
+                </p>
+              </div>
             </div>
+          </div>
 
-            <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-5 mb-8">
-              <p className="text-base font-display font-bold text-foreground mb-1">
-                Maximum monthly exposure: $225
+          {/* Comparison callout */}
+          <div className="mt-12 rounded-xl border-2 border-primary/30 bg-card p-8 md:p-10">
+            <h3 className="font-display text-xl md:text-2xl font-bold text-foreground text-center mb-6">
+              Not sure which track is right for you?
+            </h3>
+            <div className="space-y-4 text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              <p>
+                <span className="text-foreground font-medium">Life Track</span> is for anyone ready to build better habits, make clearer decisions, and keep the promises they make to themselves.
               </p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                ($99 subscription + up to 3 missed goal stakes at $75 each)
+              <p>
+                <span className="text-foreground font-medium">Business Track</span> is for operators — people actively running a business who need a thinking partner, peer access, and real-time perspective on the decisions that matter.
               </p>
-              <p className="text-sm text-foreground/80 mt-2 font-medium">
-                You'll never be charged more than this in a single month.
+              <p className="text-foreground font-medium">
+                Both use the same accountability system. Both have consequences. Both will show you what you've been avoiding.
               </p>
             </div>
-
-            <Link to="/apply" className="block">
-              <Button variant="hero" size="lg" className="w-full text-base">
-                Apply Now <ArrowRight size={18} />
-              </Button>
-            </Link>
-            <p className="mt-4 text-[11px] text-muted-foreground/60 text-center leading-relaxed uppercase tracking-wider">
-              No refunds. No exceptions.<br />
-              By applying you agree to our coaching terms.<br />
-              Cancel anytime after your first 30 days.
-            </p>
           </div>
 
           {/* Accountability Stake explanation */}
