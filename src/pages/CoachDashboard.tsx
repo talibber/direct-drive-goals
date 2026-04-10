@@ -5,8 +5,10 @@ import { CoachGoalReviewPanel } from "@/components/CoachGoalReviewPanel";
 import { CoachGoalVerifyPanel } from "@/components/CoachGoalVerifyPanel";
 import { PerfectMonthSchedulePanel } from "@/components/PerfectMonthSchedulePanel";
 import { CoachOnboardingPanel } from "@/components/CoachOnboardingPanel";
+import { CoachStaleActivityAlert } from "@/components/CoachStaleActivityAlert";
 import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, resetSessions as initialResetSessions, resetSessionEngagements, coachHelpRadarItems, missedGoalReports, type Goal, type PerfectMonthAlert, type ResetSession, type HelpRadarItem } from "@/lib/mockData";
-import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy, RotateCcw, Upload, Link2, Send, Eye, EyeOff, CheckCircle2, Radio } from "lucide-react";
+import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy, RotateCcw, Upload, Link2, Send, Eye, EyeOff, CheckCircle2, Radio, BookOpen } from "lucide-react";
+import { CoachLibraryPanel } from "@/components/CoachLibraryPanel";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -80,6 +82,9 @@ export default function CoachDashboard() {
           ))}
         </div>
       )}
+
+      {/* Stale Coach Activity Alert */}
+      <CoachStaleActivityAlert />
 
       {/* New Clients — Onboarding */}
       <CoachOnboardingPanel />
@@ -592,6 +597,14 @@ export default function CoachDashboard() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Content Library */}
+      <div className="rounded-lg border border-border bg-card p-5 shadow-card mb-8">
+        <h3 className="font-display font-semibold mb-4 flex items-center gap-2">
+          <BookOpen size={18} className="text-primary" /> Content Library
+        </h3>
+        <CoachLibraryPanel />
       </div>
 
       {/* Review & Verify & Schedule Panels */}

@@ -26,6 +26,7 @@ import CoachClientDetailPage from "./pages/CoachClientDetailPage";
 import CoachMessagesPage from "./pages/CoachMessagesPage";
 import ClientMessagesPage from "./pages/ClientMessagesPage";
 import OnboardingAssessmentPage from "./pages/OnboardingAssessmentPage";
+import LibraryPage from "./pages/LibraryPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/dashboard/help-radar" element={<HelpRadarPage />} />
           <Route path="/dashboard/community" element={<CommunityPage />} />
           <Route path="/dashboard/messages" element={<ClientMessagesPage />} />
+          <Route path="/dashboard/library" element={<LibraryPage />} />
           <Route path="/onboarding/assessment" element={<OnboardingAssessmentPage />} />
 
           {/* Coach */}
