@@ -4,8 +4,9 @@ import { CoachLayout } from "@/components/CoachLayout";
 import { clients, weeklyCheckIns, goals, goalApprovalHistory, goalDecisionHistory, coachHelpRadarItems, resetSessionEngagements, resetSessions, clientAchievements, levels, applications, missedGoalReports } from "@/lib/mockData";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { ArrowLeft, Trophy, Target, Calendar, Shield, MessageSquare, FileText, Award, TrendingUp, Send } from "lucide-react";
+import { CoachAssessmentPanel } from "@/components/CoachAssessmentPanel";
 
-const tabs = ["Overview", "Goals", "Check-Ins", "Application", "Messages", "Sessions"] as const;
+const tabs = ["Overview", "Goals", "Check-Ins", "Assessment", "Application", "Messages", "Sessions"] as const;
 type Tab = typeof tabs[number];
 
 export default function CoachClientDetailPage() {
