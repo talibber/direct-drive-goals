@@ -401,6 +401,33 @@ export default function CoachClientDetailPage() {
                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Habits Completion</p>
                       <p className="text-sm font-medium text-foreground">{ci.habits}%</p>
                     </div>
+
+                    {/* Business Mindset Data — mock: show for Business Track clients */}
+                    {client.type === "Business" && (
+                      <div className="mt-4 rounded-lg border-l-[4px] border-l-primary border border-primary/20 bg-primary/[0.03] p-4 space-y-4">
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-primary">Business Mindset Data</h4>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Revenue-Generating Actions</p>
+                          <p className="text-sm font-semibold text-foreground mt-0.5">12</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Decision Made</p>
+                          <p className="text-sm text-foreground mt-0.5 leading-relaxed">Decided to drop the lowest-margin client and reallocate team bandwidth to the enterprise pipeline.</p>
+                        </div>
+                        <div className="rounded-md bg-warning/5 border border-warning/20 p-3">
+                          <p className="text-xs font-bold text-warning uppercase tracking-wider mb-1">⚠ Decision Avoided</p>
+                          <p className="text-sm text-foreground leading-relaxed">Haven't had the pricing conversation with the anchor client. Keeps getting pushed.</p>
+                        </div>
+                        <div className="rounded-md bg-danger/5 border border-danger/20 p-3">
+                          <p className="text-xs font-bold text-danger uppercase tracking-wider mb-1">⚠ Fear / Uncertainty Cost</p>
+                          <p className="text-sm text-foreground leading-relaxed">Delayed the product launch by another week because I wasn't sure about the positioning. That's two weeks now.</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Business Commitment (Next Week)</p>
+                          <p className="text-sm text-foreground mt-0.5 leading-relaxed">Have the pricing conversation with anchor client by Wednesday. No more delays.</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </details>
               ))}

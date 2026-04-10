@@ -1,5 +1,6 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -16,15 +17,32 @@ const ratingFields = [
   { key: "sleep", label: "Sleep Quality", borderColor: "border-l-purple-500" },
 ];
 
+// TODO: In production, derive from client profile data
+const MOCK_COACHING_TRACK: "life" | "business" = "business";
+
 export default function WeeklyCheckInPage() {
   const { toast } = useToast();
+  const coachingTrack = MOCK_COACHING_TRACK;
+  const isBusiness = coachingTrack === "business";
+
   const [ratings, setRatings] = useState<Record<string, number>>({
     energy: 5, stress: 5, focus: 5, confidence: 5, sleep: 5,
   });
+  const [revenueActions, setRevenueActions] = useState<string>("");
+  const [decisionMade, setDecisionMade] = useState("");
+  const [decisionAvoided, setDecisionAvoided] = useState("");
+  const [fearCost, setFearCost] = useState("");
+  const [businessCommitment, setBusinessCommitment] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isBusiness) {
+      if (!revenueActions || !decisionMade.trim() || !decisionAvoided.trim() || !fearCost.trim() || !businessCommitment.trim()) {
+        toast({ title: "Required fields", description: "All business mindset fields are required.", variant: "destructive" });
+        return;
+      }
+    }
     setSubmitted(true);
     toast({ title: "Check-in submitted", description: "Your weekly data has been recorded." });
   };
@@ -74,6 +92,88 @@ export default function WeeklyCheckInPage() {
               ))}
             </div>
           </div>
+
+          {/* Business Track Section */}
+          {isBusiness && (
+            <div className="rounded-lg border-2 border-primary/30 border-l-[4px] border-l-primary bg-card p-6 shadow-card space-y-5">
+              <div>
+                <h3 className="font-display font-semibold text-foreground mb-0.5">Your business this week</h3>
+                <p className="text-xs text-muted-foreground">Required for Business Track clients.</p>
+              </div>
+
+              <div>
+                <Label htmlFor="revenue-actions">
+                  How many revenue-generating actions did you take this week? <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="revenue-actions"
+                  type="number"
+                  min={0}
+                  value={revenueActions}
+                  onChange={(e) => setRevenueActions(e.target.value)}
+                  placeholder="Calls made, proposals sent, deals closed, follow-ups done — count the actions not the results"
+                  className="mt-1.5"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="decision-made">
+                  What was the most significant business decision you made this week? <span className="text-destructive">*</span>
+                </Label>
+                <Textarea
+                  id="decision-made"
+                  value={decisionMade}
+                  onChange={(e) => setDecisionMade(e.target.value)}
+                  placeholder="Be specific. What did you decide and why?"
+                  className="mt-1.5 min-h-[80px]"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="decision-avoided">
+                  What business decision are you avoiding right now? <span className="text-destructive">*</span>
+                </Label>
+                <Textarea
+                  id="decision-avoided"
+                  value={decisionAvoided}
+                  onChange={(e) => setDecisionAvoided(e.target.value)}
+                  placeholder="The one you keep pushing to next week. What is it really?"
+                  className="mt-1.5 min-h-[80px]"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="fear-cost">
+                  What did fear or uncertainty cost your business this week? <span className="text-destructive">*</span>
+                </Label>
+                <Textarea
+                  id="fear-cost"
+                  value={fearCost}
+                  onChange={(e) => setFearCost(e.target.value)}
+                  placeholder="Lost deal, delayed launch, conversation you didn't have — what did avoidance cost you?"
+                  className="mt-1.5 min-h-[80px]"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="biz-commitment">
+                  What is the one business commitment for next week? <span className="text-destructive">*</span>
+                </Label>
+                <Textarea
+                  id="biz-commitment"
+                  value={businessCommitment}
+                  onChange={(e) => setBusinessCommitment(e.target.value)}
+                  placeholder="Specific. Measurable. Not a task — a decision or action that moves something forward."
+                  className="mt-1.5 min-h-[80px]"
+                  required
+                />
+              </div>
+            </div>
+          )}
 
           {/* Habit completion */}
           <div className="rounded-lg border border-border bg-card p-6 shadow-card">
