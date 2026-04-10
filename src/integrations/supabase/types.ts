@@ -1031,6 +1031,81 @@ export type Database = {
         }
         Relationships: []
       }
+      weekly_checkins: {
+        Row: {
+          avoiding: string | null
+          business_commitment: string | null
+          client_id: string
+          coaching_track: string
+          commitment: string | null
+          confidence: number
+          created_at: string
+          decision_avoided: string | null
+          decision_made: string | null
+          energy: number
+          failures: string | null
+          fear_cost: string | null
+          focus: number
+          habit_completion: number | null
+          id: string
+          revenue_actions_count: number | null
+          sleep: number
+          story: string | null
+          stress: number
+          updated_at: string
+          week_of: string
+          wins: string | null
+        }
+        Insert: {
+          avoiding?: string | null
+          business_commitment?: string | null
+          client_id: string
+          coaching_track?: string
+          commitment?: string | null
+          confidence?: number
+          created_at?: string
+          decision_avoided?: string | null
+          decision_made?: string | null
+          energy?: number
+          failures?: string | null
+          fear_cost?: string | null
+          focus?: number
+          habit_completion?: number | null
+          id?: string
+          revenue_actions_count?: number | null
+          sleep?: number
+          story?: string | null
+          stress?: number
+          updated_at?: string
+          week_of?: string
+          wins?: string | null
+        }
+        Update: {
+          avoiding?: string | null
+          business_commitment?: string | null
+          client_id?: string
+          coaching_track?: string
+          commitment?: string | null
+          confidence?: number
+          created_at?: string
+          decision_avoided?: string | null
+          decision_made?: string | null
+          energy?: number
+          failures?: string | null
+          fear_cost?: string | null
+          focus?: number
+          habit_completion?: number | null
+          id?: string
+          revenue_actions_count?: number | null
+          sleep?: number
+          story?: string | null
+          stress?: number
+          updated_at?: string
+          week_of?: string
+          wins?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
