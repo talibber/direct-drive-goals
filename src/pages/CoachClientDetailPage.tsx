@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { CoachLayout } from "@/components/CoachLayout";
 import { clients, weeklyCheckIns, goals, goalApprovalHistory, goalDecisionHistory, coachHelpRadarItems, resetSessionEngagements, resetSessions, clientAchievements, levels, applications } from "@/lib/mockData";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { ArrowLeft, Trophy, Target, Calendar, Shield, MessageSquare, FileText, Award, TrendingUp } from "lucide-react";
+import { ArrowLeft, Trophy, Target, Calendar, Shield, MessageSquare, FileText, Award, TrendingUp, Send } from "lucide-react";
 
 const tabs = ["Overview", "Goals", "Check-Ins", "Application", "Messages", "Sessions"] as const;
 type Tab = typeof tabs[number];
@@ -84,6 +84,12 @@ export default function CoachClientDetailPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            to="/coach/messages"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          >
+            <Send size={12} /> Send Message
+          </Link>
           <span className={`text-sm font-bold px-3 py-1 rounded-full ${
             client.score >= 80 ? "bg-success/10 text-success" :
             client.score >= 60 ? "bg-warning/10 text-warning" :
