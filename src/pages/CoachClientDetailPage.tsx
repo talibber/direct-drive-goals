@@ -409,6 +409,10 @@ export default function CoachClientDetailPage() {
         </div>
       )}
 
+      {activeTab === "Assessment" && (
+        <CoachAssessmentPanel clientId={clientId} />
+      )}
+
       {activeTab === "Application" && (
         <div className="rounded-lg border border-border bg-card p-6 shadow-card max-w-2xl">
           <h3 className="font-display font-semibold mb-6">Application — Read Only</h3>
