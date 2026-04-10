@@ -134,7 +134,7 @@ export default function ApplyPage() {
 
             <div>
               <Label>Coaching Interest</Label>
-              <Select required>
+              <Select required value={coachingInterest} onValueChange={setCoachingInterest}>
                 <SelectTrigger className="mt-1.5">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
