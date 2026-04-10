@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useSearchParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const supportOptions = [
@@ -29,8 +30,15 @@ const supportOptions = [
 
 export default function ApplyPage() {
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [supportLevel, setSupportLevel] = useState<string>("");
+  const [coachingInterest, setCoachingInterest] = useState<string>("");
+
+  useEffect(() => {
+    const track = searchParams.get("track");
+    if (track === "business") setCoachingInterest("business");
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,7 +134,7 @@ export default function ApplyPage() {
 
             <div>
               <Label>Coaching Interest</Label>
-              <Select required>
+              <Select required value={coachingInterest} onValueChange={setCoachingInterest}>
                 <SelectTrigger className="mt-1.5">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
