@@ -23,6 +23,9 @@ export default function ClientDashboard() {
 
   return (
     <DashboardLayout>
+      {/* Onboarding Checklist */}
+      <OnboardingChecklist />
+
       {/* Perfect Month Banner */}
       {pm.active && (
         <div className="mb-6 rounded-lg bg-gradient-gold p-5 shadow-card">
