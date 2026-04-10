@@ -379,6 +379,57 @@ export type Database = {
         }
         Relationships: []
       }
+      direct_access_messages: {
+        Row: {
+          category: string
+          client_id: string
+          coach_id: string
+          context_text: string | null
+          created_at: string
+          id: string
+          message_type: string
+          question_text: string | null
+          read_at: string | null
+          responded_at: string | null
+          response_text: string | null
+          response_voice_url: string | null
+          sent_at: string
+          voice_url: string | null
+        }
+        Insert: {
+          category?: string
+          client_id: string
+          coach_id: string
+          context_text?: string | null
+          created_at?: string
+          id?: string
+          message_type?: string
+          question_text?: string | null
+          read_at?: string | null
+          responded_at?: string | null
+          response_text?: string | null
+          response_voice_url?: string | null
+          sent_at?: string
+          voice_url?: string | null
+        }
+        Update: {
+          category?: string
+          client_id?: string
+          coach_id?: string
+          context_text?: string | null
+          created_at?: string
+          id?: string
+          message_type?: string
+          question_text?: string | null
+          read_at?: string | null
+          responded_at?: string | null
+          response_text?: string | null
+          response_voice_url?: string | null
+          sent_at?: string
+          voice_url?: string | null
+        }
+        Relationships: []
+      }
       goal_approval_history: {
         Row: {
           action: Database["public"]["Enums"]["goal_approval_action"]
