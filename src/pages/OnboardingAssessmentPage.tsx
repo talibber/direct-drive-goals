@@ -95,6 +95,8 @@ const executionLabels: Record<string, { low: string; high: string }> = {
 };
 
 export default function OnboardingAssessmentPage() {
+  const [searchParams] = useSearchParams();
+  const isBusinessTrack = searchParams.get("track") === "business";
   const [phase, setPhase] = useState<"intro" | "disc" | "disc-result" | "exec" | "exec-result" | "complete">("intro");
   const [discIndex, setDiscIndex] = useState(0);
   const [discAnswers, setDiscAnswers] = useState<DiscAnswer[]>([]);
