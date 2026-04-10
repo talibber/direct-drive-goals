@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { CoachLayout } from "@/components/CoachLayout";
-import { clients, weeklyCheckIns, goals, goalApprovalHistory, goalDecisionHistory, coachHelpRadarItems, resetSessionEngagements, resetSessions, clientAchievements, levels, applications } from "@/lib/mockData";
+import { clients, weeklyCheckIns, goals, goalApprovalHistory, goalDecisionHistory, coachHelpRadarItems, resetSessionEngagements, resetSessions, clientAchievements, levels, applications, missedGoalReports } from "@/lib/mockData";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { ArrowLeft, Trophy, Target, Calendar, Shield, MessageSquare, FileText, Award, TrendingUp, Send } from "lucide-react";
 
