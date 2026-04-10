@@ -29,6 +29,8 @@ import OnboardingAssessmentPage from "./pages/OnboardingAssessmentPage";
 import LibraryPage from "./pages/LibraryPage";
 import OperatorCallPage from "./pages/OperatorCallPage";
 import CoachOperatorCallPage from "./pages/CoachOperatorCallPage";
+import DirectAccessPage from "./pages/DirectAccessPage";
+import CoachDirectAccessPage from "./pages/CoachDirectAccessPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
