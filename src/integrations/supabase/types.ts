@@ -107,6 +107,33 @@ export type Database = {
         }
         Relationships: []
       }
+      coach_activity: {
+        Row: {
+          activity_description: string
+          activity_type: string
+          client_id: string
+          coach_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          activity_description: string
+          activity_type: string
+          client_id: string
+          coach_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          activity_description?: string
+          activity_type?: string
+          client_id?: string
+          coach_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
       community_comments: {
         Row: {
           client_id: string
