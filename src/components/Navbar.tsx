@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -18,9 +19,8 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="font-display text-xl font-bold tracking-tight">
-          <span className="text-gradient-gold italic">Terrible</span>{" "}
-          <span className="text-foreground">Coaching</span>
+        <Link to="/">
+          <img src={logo} alt="Terrible Coaching" className="h-auto w-[100px] md:w-[120px]" />
         </Link>
 
         {/* Desktop */}

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 
 export function Footer() {
   return (
@@ -6,11 +7,9 @@ export function Footer() {
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <h3 className="font-display text-lg font-bold mb-3">
-              <span className="text-gradient-gold italic">Terrible</span> Coaching
-            </h3>
+            <img src={logo} alt="Terrible Coaching" className="h-auto w-[100px] mb-3" />
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Radically honest coaching for anyone ready to stop lying to themselves.
+              The mirror doesn't lie.
             </p>
           </div>
           <div>
