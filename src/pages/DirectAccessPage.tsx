@@ -29,7 +29,7 @@ interface MockMessage {
 const mockMessages: MockMessage[] = [
   {
     id: "m1",
-    message_type: "text",
+    voice_url: null,
     question_text: "I have a client who wants to renegotiate our retainer down 30%. They're my second largest account. Do I hold the line or negotiate?",
     context_text: "They've been with me 8 months. Good relationship but they're cutting costs across the board.",
     category: "Decision",
