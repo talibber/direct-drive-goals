@@ -303,6 +303,15 @@ export default function OnboardingAssessmentPage() {
                 })}
               </div>
 
+              {isBusinessTrack && (
+                <div className="rounded-lg border border-warning/30 bg-warning/5 p-4 max-w-lg mx-auto mb-8">
+                  <p className="text-xs font-bold uppercase tracking-wider text-warning mb-2">Business Lens</p>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    {businessDiscFraming[discResult.type]}
+                  </p>
+                </div>
+              )}
+
               <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 max-w-lg mx-auto mb-8">
                 <p className="text-sm text-foreground/80 leading-relaxed">
                   This shows how you're wired — not what you're limited to. Your coach will use this to communicate more effectively with you, not to make assumptions about you.
