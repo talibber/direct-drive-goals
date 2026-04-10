@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare } from "lucide-react";
+import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen } from "lucide-react";
 
 const links = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -11,6 +11,7 @@ const links = [
   { to: "/dashboard/community", label: "Community", icon: Users },
   { to: "/dashboard/billing", label: "Billing", icon: CreditCard },
   { to: "/dashboard/sessions", label: "Sessions", icon: FileText },
+  { to: "/dashboard/library", label: "Library", icon: BookOpen },
   { to: "/dashboard/reset-session", label: "Reset Session", icon: RotateCcw },
   { to: "/dashboard/profile", label: "Profile", icon: User },
 ];
