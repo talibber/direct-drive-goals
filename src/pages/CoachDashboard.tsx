@@ -599,6 +599,14 @@ export default function CoachDashboard() {
         </div>
       </div>
 
+      {/* Content Library */}
+      <div className="rounded-lg border border-border bg-card p-5 shadow-card mb-8">
+        <h3 className="font-display font-semibold mb-4 flex items-center gap-2">
+          <BookOpen size={18} className="text-primary" /> Content Library
+        </h3>
+        <CoachLibraryPanel />
+      </div>
+
       {/* Review & Verify & Schedule Panels */}
       <CoachGoalReviewPanel
         goal={reviewGoal}
