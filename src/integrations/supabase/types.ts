@@ -153,6 +153,30 @@ export type Database = {
           },
         ]
       }
+      conversations: {
+        Row: {
+          client_id: string
+          coach_id: string
+          created_at: string
+          id: string
+          last_message_at: string
+        }
+        Insert: {
+          client_id: string
+          coach_id: string
+          created_at?: string
+          id?: string
+          last_message_at?: string
+        }
+        Update: {
+          client_id?: string
+          coach_id?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string
+        }
+        Relationships: []
+      }
       goal_approval_history: {
         Row: {
           action: Database["public"]["Enums"]["goal_approval_action"]
@@ -366,6 +390,47 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      messages: {
+        Row: {
+          attachment_urls: string[] | null
+          content: string
+          conversation_id: string
+          id: string
+          read_at: string | null
+          sender_id: string
+          sender_role: string
+          sent_at: string
+        }
+        Insert: {
+          attachment_urls?: string[] | null
+          content: string
+          conversation_id: string
+          id?: string
+          read_at?: string | null
+          sender_id: string
+          sender_role?: string
+          sent_at?: string
+        }
+        Update: {
+          attachment_urls?: string[] | null
+          content?: string
+          conversation_id?: string
+          id?: string
+          read_at?: string | null
+          sender_id?: string
+          sender_role?: string
+          sent_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       missed_goal_charges: {
         Row: {
