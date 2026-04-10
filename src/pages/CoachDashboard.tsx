@@ -478,7 +478,7 @@ export default function CoachDashboard() {
             {atRisk.map((c) => (
               <div key={c.id} className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-foreground">{c.name}</p>
+                   <p className="text-sm font-medium text-foreground"><Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link></p>
                   <p className="text-xs text-muted-foreground">Last check-in: {c.lastCheckIn} · Score: {c.score}</p>
                 </div>
                 <Link to="/coach/clients" className="text-xs text-primary hover:underline">View →</Link>

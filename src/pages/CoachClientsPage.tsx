@@ -13,7 +13,9 @@ export default function CoachClientsPage() {
           <div key={c.id} className="rounded-lg border border-border bg-card p-5 shadow-card">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <h3 className="font-display font-semibold text-foreground">{c.name}</h3>
+                <h3 className="font-display font-semibold text-foreground">
+                  <Link to={`/coach/clients/${c.id}`} className="hover:text-primary transition-colors">{c.name}</Link>
+                </h3>
                 <p className="text-xs text-muted-foreground">{c.email}</p>
               </div>
               {c.risk && (
