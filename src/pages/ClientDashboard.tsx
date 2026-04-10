@@ -24,7 +24,8 @@ export default function ClientDashboard() {
   return (
     <DashboardLayout>
       {/* Onboarding Checklist */}
-      <OnboardingChecklist />
+      {/* Onboarding Checklist — pass track="business" for Business Track clients */}
+      <OnboardingChecklist track="life" />
 
       {/* Perfect Month Banner */}
       {pm.active && (
