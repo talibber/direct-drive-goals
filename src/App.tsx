@@ -23,6 +23,8 @@ import CoachClientsPage from "./pages/CoachClientsPage";
 import CoachApplicationsPage from "./pages/CoachApplicationsPage";
 import CoachMetricsPage from "./pages/CoachMetricsPage";
 import CoachClientDetailPage from "./pages/CoachClientDetailPage";
+import CoachMessagesPage from "./pages/CoachMessagesPage";
+import ClientMessagesPage from "./pages/ClientMessagesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

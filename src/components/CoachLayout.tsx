@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, ClipboardCheck, BarChart3, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut } from "lucide-react";
 
 const links = [
   { to: "/coach", label: "Overview", icon: LayoutDashboard },
   { to: "/coach/clients", label: "Clients", icon: Users },
+  { to: "/coach/messages", label: "Messages", icon: MessageSquare },
   { to: "/coach/applications", label: "Applications", icon: ClipboardCheck },
   { to: "/coach/metrics", label: "Metrics", icon: BarChart3 },
 ];
