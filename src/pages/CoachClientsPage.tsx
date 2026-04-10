@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CoachLayout } from "@/components/CoachLayout";
 import { clients } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
