@@ -35,6 +35,81 @@ export type Database = {
         }
         Relationships: []
       }
+      applications: {
+        Row: {
+          avoided_decision: string | null
+          business_name: string | null
+          challenge: string | null
+          coaching_interest: string
+          created_at: string
+          decision_outcome: string | null
+          email: string
+          goals_30_day: string | null
+          id: string
+          industry: string | null
+          name: string
+          occupation: string | null
+          prior_coaching: string | null
+          readiness: string | null
+          revenue_range: string | null
+          reviewed_at: string | null
+          reviewer_notes: string | null
+          status: string
+          support_level: string | null
+          team_size: string | null
+          track: string
+          updated_at: string
+        }
+        Insert: {
+          avoided_decision?: string | null
+          business_name?: string | null
+          challenge?: string | null
+          coaching_interest?: string
+          created_at?: string
+          decision_outcome?: string | null
+          email: string
+          goals_30_day?: string | null
+          id?: string
+          industry?: string | null
+          name: string
+          occupation?: string | null
+          prior_coaching?: string | null
+          readiness?: string | null
+          revenue_range?: string | null
+          reviewed_at?: string | null
+          reviewer_notes?: string | null
+          status?: string
+          support_level?: string | null
+          team_size?: string | null
+          track?: string
+          updated_at?: string
+        }
+        Update: {
+          avoided_decision?: string | null
+          business_name?: string | null
+          challenge?: string | null
+          coaching_interest?: string
+          created_at?: string
+          decision_outcome?: string | null
+          email?: string
+          goals_30_day?: string | null
+          id?: string
+          industry?: string | null
+          name?: string
+          occupation?: string | null
+          prior_coaching?: string | null
+          readiness?: string | null
+          revenue_range?: string | null
+          reviewed_at?: string | null
+          reviewer_notes?: string | null
+          status?: string
+          support_level?: string | null
+          team_size?: string | null
+          track?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       assessment_results: {
         Row: {
           client_id: string
