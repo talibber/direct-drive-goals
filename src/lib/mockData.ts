@@ -272,9 +272,10 @@ export const clients = [
 ];
 
 export const applications = [
-  { id: "1", name: "David Park", email: "david@example.com", type: "Business", occupation: "Startup Founder", challenge: "Scaling from $1M to $5M ARR", submitted: "Apr 8", status: "pending" },
-  { id: "2", name: "Emily Foster", email: "emily@example.com", type: "Life", occupation: "VP of Engineering", challenge: "Work-life balance and burnout", submitted: "Apr 7", status: "pending" },
-  { id: "3", name: "Tom Nguyen", email: "tom@example.com", type: "Business", occupation: "Solo Founder", challenge: "Decision paralysis on product direction", submitted: "Apr 5", status: "approved" },
+  { id: "1", name: "David Park", email: "david@example.com", type: "Business", occupation: "Startup Founder", challenge: "Scaling from $1M to $5M ARR", submitted: "Apr 8", status: "pending", track: "business" as const, businessName: "ParkTech Inc.", industry: "SaaS / Technology", revenueRange: "$100K–$500K", teamSize: "6-15", avoidedDecision: "Whether to pivot the product or double down on current market", decisionOutcome: "If I pivot we could capture a $50M market. If I stay we keep grinding in a shrinking one." },
+  { id: "2", name: "Emily Foster", email: "emily@example.com", type: "Life", occupation: "VP of Engineering", challenge: "Work-life balance and burnout", submitted: "Apr 7", status: "pending", track: "life" as const },
+  { id: "3", name: "Tom Nguyen", email: "tom@example.com", type: "Business", occupation: "Solo Founder", challenge: "Decision paralysis on product direction", submitted: "Apr 5", status: "approved", track: "business" as const, businessName: "Nguyen Labs", industry: "E-commerce / Retail", revenueRange: "Under $100K", teamSize: "solo", avoidedDecision: "Hiring my first employee", decisionOutcome: "I could finally stop doing everything myself and focus on growth." },
+  { id: "4", name: "Rachel Adams", email: "rachel@example.com", type: "Life", occupation: "Teacher", challenge: "Can't stick with any routine longer than 2 weeks", submitted: "Apr 4", status: "rejected", track: "life" as const },
 ];
 
 export interface PerfectMonthAlert {

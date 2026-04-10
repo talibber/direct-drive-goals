@@ -51,15 +51,15 @@ export default function HomePage() {
                 <span className="text-gradient-gold">Start executing.</span>
               </h1>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Terrible Coaching is radically honest coaching for anyone who is done lying to themselves
-                and ready to actually move. Miss a goal? Pay $75.
+                Terrible Coaching is radically honest coaching for anyone ready to stop 
+                lying to themselves and actually move — whether that's your life or your business. Miss a goal? Pay $75.
                 That's accountability.
               </p>
               <p className="mt-4 text-sm md:text-base font-semibold text-foreground/80 tracking-wide animate-fade-up" style={{ animationDelay: "0.25s" }}>
                 Weekly check-ins. Real consequences. No fluff.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-                <Link to="/apply">
+                <Link to="/apply/select">
                   <Button variant="hero" size="lg" className="text-base px-8">
                     Apply Now <ArrowRight size={18} />
                   </Button>
@@ -71,7 +71,7 @@ export default function HomePage() {
                 </Link>
               </div>
               <p className="mt-4 text-xs text-muted-foreground animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                $99/month · $75 per missed goal · No contracts · Cancel anytime
+                Life Track $99/mo · Business Track $199/mo · $75 per missed goal · Cancel anytime
               </p>
               <p className="mt-3 text-[11px] text-muted-foreground/60 animate-fade-up leading-relaxed" style={{ animationDelay: "0.45s" }}>
                 No refunds. No exceptions.<br />
@@ -294,7 +294,7 @@ export default function HomePage() {
             <div className="absolute left-6 top-0 bottom-0 w-px bg-border" />
 
             {[
-              { num: 1, title: "You Apply", desc: "Tell us who you are and what's not working. We review within 48 hours.", border: "" },
+              { num: 1, title: "You Apply", desc: "Tell us who you are and what's not working. Choose Life Track or Business Track — the system is the same, the focus is different. We review within 48 hours.", border: "" },
               { num: 2, title: "Goals Get Set and Approved", desc: "You build 1-3 measurable goals. Your coach reviews every one. Vague goals get sent back. Only approved goals carry a stake.", border: "" },
               { num: 3, title: "You Check In Every Week", desc: "Energy, focus, stress, habits, wins, failures, and what you're avoiding. No hiding from the data.", border: "", note: "Between check-ins, use Help Radar to flag anything outside your goals — marketing, sales, mindset, decisions. Your coach sees it all." },
               { num: 4, title: "You Submit Proof", desc: "When a goal is due, you submit proof — description, photo, or document. Your coach reviews and verifies. No coach sign-off, no charge.", border: "" },
@@ -327,7 +327,7 @@ export default function HomePage() {
               Apply for Terrible Coaching. We'll review your application and, if you're a fit, 
               invite you to subscribe. No sales calls. No BS.
             </p>
-            <Link to="/apply">
+            <Link to="/apply/select">
               <Button variant="hero" size="lg" className="text-base px-10">
                 Apply Now <ArrowRight size={18} />
               </Button>
