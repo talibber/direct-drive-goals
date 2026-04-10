@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const links = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -23,8 +24,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
       <aside className="hidden md:flex w-64 flex-col border-r border-border bg-card p-4">
-        <Link to="/" className="font-display text-lg font-bold mb-8 px-3">
-          <span className="text-gradient-gold italic">Terrible</span> Coaching
+        <Link to="/" className="mb-8 px-3 block">
+          <img src={logo} alt="Terrible Coaching" className="h-auto w-[140px]" />
         </Link>
         <nav className="flex-1 space-y-1">
           {links.map((l) => (
