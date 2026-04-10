@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { StatCard } from "@/components/StatCard";
 import { GoalCard } from "@/components/GoalCard";
 import { GamificationPanel } from "@/components/GamificationPanel";
-import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession } from "@/lib/mockData";
+import { MissedGoalReportModal, type MissedGoalReportData } from "@/components/MissedGoalReportModal";
+import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession, clientMissedGoalsPendingReport } from "@/lib/mockData";
 import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
@@ -11,6 +13,11 @@ export default function ClientDashboard() {
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
   const pm = clientPerfectMonth;
   const rs = clientResetSession;
+  const [pendingReports, setPendingReports] = useState(clientMissedGoalsPendingReport);
+
+  const handleMissReport = (data: MissedGoalReportData) => {
+    setPendingReports(prev => prev.filter(g => g.id !== data.goalId));
+  };
 
   return (
     <DashboardLayout>
@@ -147,6 +154,17 @@ export default function ClientDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Missed Goal Report Modal */}
+      {pendingReports.length > 0 && (
+        <MissedGoalReportModal
+          open={true}
+          goalTitle={pendingReports[0].title}
+          goalTarget={pendingReports[0].target}
+          goalId={pendingReports[0].id}
+          onSubmit={handleMissReport}
+        />
+      )}
     </DashboardLayout>
   );
 }
