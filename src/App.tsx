@@ -27,6 +27,8 @@ import CoachMessagesPage from "./pages/CoachMessagesPage";
 import ClientMessagesPage from "./pages/ClientMessagesPage";
 import OnboardingAssessmentPage from "./pages/OnboardingAssessmentPage";
 import LibraryPage from "./pages/LibraryPage";
+import OperatorCallPage from "./pages/OperatorCallPage";
+import CoachOperatorCallPage from "./pages/CoachOperatorCallPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +60,7 @@ const App = () => (
           <Route path="/dashboard/community" element={<CommunityPage />} />
           <Route path="/dashboard/messages" element={<ClientMessagesPage />} />
           <Route path="/dashboard/library" element={<LibraryPage />} />
+          <Route path="/dashboard/operator-call" element={<OperatorCallPage />} />
           <Route path="/onboarding/assessment" element={<OnboardingAssessmentPage />} />
 
           {/* Coach */}
@@ -66,6 +69,7 @@ const App = () => (
           <Route path="/coach/messages" element={<CoachMessagesPage />} />
           <Route path="/coach/applications" element={<CoachApplicationsPage />} />
           <Route path="/coach/metrics" element={<CoachMetricsPage />} />
+          <Route path="/coach/operator-call" element={<CoachOperatorCallPage />} />
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
 
           <Route path="*" element={<NotFound />} />
