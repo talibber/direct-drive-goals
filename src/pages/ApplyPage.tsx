@@ -30,8 +30,15 @@ const supportOptions = [
 
 export default function ApplyPage() {
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [supportLevel, setSupportLevel] = useState<string>("");
+  const [coachingInterest, setCoachingInterest] = useState<string>("");
+
+  useEffect(() => {
+    const track = searchParams.get("track");
+    if (track === "business") setCoachingInterest("business");
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
