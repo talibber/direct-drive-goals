@@ -125,9 +125,9 @@ export default function CoachMetricsPage() {
                   {item.daysUntilDue}d
                 </span>
                 <span className="text-xs text-muted-foreground hidden md:inline">Last: {item.lastCheckIn}</span>
-                <button className="flex items-center gap-1 text-xs font-medium text-primary hover:underline">
+                <Link to="/coach/messages" className="flex items-center gap-1 text-xs font-medium text-primary hover:underline">
                   <MessageSquare size={12} /> Message
-                </button>
+                </Link>
               </div>
             </div>
           ))}
