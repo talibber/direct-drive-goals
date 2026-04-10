@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function ClientDashboard() {
+  // In real implementation, coachingTrack comes from user profile
+  const coachingTrack = "business"; // mock — change to "life" to see Life Track view
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
   const pm = clientPerfectMonth;
   const rs = clientResetSession;
@@ -22,10 +24,9 @@ export default function ClientDashboard() {
   };
 
   return (
-    <DashboardLayout>
+    <DashboardLayout coachingTrack={coachingTrack}>
       {/* Onboarding Checklist */}
-      {/* Onboarding Checklist — pass track="business" for Business Track clients */}
-      <OnboardingChecklist track="life" />
+      <OnboardingChecklist track={coachingTrack} />
 
       {/* Perfect Month Banner */}
       {pm.active && (
@@ -90,9 +91,12 @@ export default function ClientDashboard() {
         <CoachActivityStrip />
       </div>
 
-      <div className="mb-8">
-        <GamificationPanel />
-      </div>
+      {/* Gamification — Life Track only */}
+      {coachingTrack !== "business" && (
+        <div className="mb-8">
+          <GamificationPanel />
+        </div>
+      )}
 
       {/* Performance Chart */}
       <div className="rounded-lg border border-border bg-card p-5 shadow-card mb-8">

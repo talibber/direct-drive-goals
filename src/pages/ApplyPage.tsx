@@ -7,8 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
 
 const supportOptions = [
   {
@@ -28,16 +29,29 @@ const supportOptions = [
   },
 ] as const;
 
+const industryOptions = [
+  "SaaS / Technology", "E-commerce / Retail", "Professional Services", "Healthcare", "Real Estate",
+  "Finance / Fintech", "Marketing / Advertising", "Construction / Trades", "Education", "Food & Beverage",
+  "Manufacturing", "Media / Content", "Legal", "Non-Profit", "Other",
+];
+
 export default function ApplyPage() {
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [supportLevel, setSupportLevel] = useState<string>("");
   const [coachingInterest, setCoachingInterest] = useState<string>("");
+  const [track, setTrack] = useState<"life" | "business">("life");
 
   useEffect(() => {
-    const track = searchParams.get("track");
-    if (track === "business") setCoachingInterest("business");
+    const t = searchParams.get("track");
+    if (t === "business") {
+      setTrack("business");
+      setCoachingInterest("business");
+    } else if (t === "life") {
+      setTrack("life");
+      setCoachingInterest("life");
+    }
   }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -80,6 +94,33 @@ export default function ApplyPage() {
           <p className="text-muted-foreground mb-6">
             This takes 3 minutes. Be honest—that's the whole point.
           </p>
+
+          {/* Track Badge */}
+          <div className="mb-6 flex items-center justify-between rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
+            <div className="flex items-center gap-3">
+              <span className={cn(
+                "text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full",
+                track === "business"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-foreground/10 text-foreground"
+              )}>
+                {track === "business" ? "Business Track" : "Life Track"}
+              </span>
+              <span className="text-sm text-muted-foreground">
+                {track === "business" ? "$199/month" : "$99/month"}
+              </span>
+            </div>
+            <Link
+              to={`/apply?track=${track === "business" ? "life" : "business"}`}
+              onClick={() => {
+                setTrack(track === "business" ? "life" : "business");
+                setCoachingInterest(track === "business" ? "life" : "business");
+              }}
+              className="text-xs text-primary hover:underline font-medium"
+            >
+              Switch to {track === "business" ? "Life" : "Business"} Track
+            </Link>
+          </div>
 
           {/* Process Timeline */}
           <div className="flex items-center justify-between mb-10 px-2">
@@ -134,7 +175,11 @@ export default function ApplyPage() {
 
             <div>
               <Label>Coaching Interest</Label>
-              <Select required value={coachingInterest} onValueChange={setCoachingInterest}>
+              <Select required value={coachingInterest} onValueChange={(v) => {
+                setCoachingInterest(v);
+                if (v === "business") setTrack("business");
+                else if (v === "life") setTrack("life");
+              }}>
                 <SelectTrigger className="mt-1.5">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -145,6 +190,82 @@ export default function ApplyPage() {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Business-specific fields */}
+            {track === "business" && (
+              <div className="space-y-5 rounded-lg border-2 border-primary/20 bg-primary/[0.02] p-5">
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">Business Track Details</p>
+                
+                <div>
+                  <Label htmlFor="businessName">Business Name (optional)</Label>
+                  <Input id="businessName" placeholder="Your company name" className="mt-1.5" />
+                </div>
+
+                <div>
+                  <Label>Industry</Label>
+                  <Select>
+                    <SelectTrigger className="mt-1.5">
+                      <SelectValue placeholder="Select your industry" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {industryOptions.map(i => (
+                        <SelectItem key={i} value={i}>{i}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label>Current Annual Revenue Range</Label>
+                  <Select>
+                    <SelectTrigger className="mt-1.5">
+                      <SelectValue placeholder="Select range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pre-revenue">Pre-revenue</SelectItem>
+                      <SelectItem value="under-100k">Under $100K</SelectItem>
+                      <SelectItem value="100k-500k">$100K–$500K</SelectItem>
+                      <SelectItem value="500k-1m">$500K–$1M</SelectItem>
+                      <SelectItem value="over-1m">Over $1M</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label>Team Size</Label>
+                  <Select>
+                    <SelectTrigger className="mt-1.5">
+                      <SelectValue placeholder="Select team size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="solo">Solo</SelectItem>
+                      <SelectItem value="2-5">2–5</SelectItem>
+                      <SelectItem value="6-15">6–15</SelectItem>
+                      <SelectItem value="16-50">16–50</SelectItem>
+                      <SelectItem value="50+">50+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="avoidedDecision">Biggest business decision you're currently avoiding</Label>
+                  <Textarea
+                    id="avoidedDecision"
+                    placeholder="Be specific. This is the first honest thing you'll do here."
+                    className="mt-1.5 min-h-[80px]"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="decisionOutcome">What would change in your business if you made that decision?</Label>
+                  <Textarea
+                    id="decisionOutcome"
+                    placeholder="Connect the decision to the outcome."
+                    className="mt-1.5 min-h-[80px]"
+                  />
+                </div>
+              </div>
+            )}
 
             <div>
               <Label htmlFor="challenge">What's your main challenge right now?</Label>

@@ -43,8 +43,13 @@ export function Footer() {
             </p>
           </div>
         </div>
-        <div className="mt-8 border-t border-border pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Terrible Coaching. All rights reserved.
+        <div className="mt-8 border-t border-border pt-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Terrible Coaching. All rights reserved.
+          </p>
+          <p className="text-[11px] text-muted-foreground/50 mt-1">
+            Life Track — $99/month | Business Track — $199/month
+          </p>
         </div>
       </div>
     </footer>
