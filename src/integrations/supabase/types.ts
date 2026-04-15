@@ -14,6 +14,92 @@ export type Database = {
   }
   public: {
     Tables: {
+      achievement_group_sessions: {
+        Row: {
+          coach_notes: string | null
+          completed: boolean
+          created_at: string
+          enrolled_clients: string[]
+          id: string
+          month: string
+          recording_url: string | null
+          session_date: string
+          updated_at: string
+        }
+        Insert: {
+          coach_notes?: string | null
+          completed?: boolean
+          created_at?: string
+          enrolled_clients?: string[]
+          id?: string
+          month: string
+          recording_url?: string | null
+          session_date: string
+          updated_at?: string
+        }
+        Update: {
+          coach_notes?: string | null
+          completed?: boolean
+          created_at?: string
+          enrolled_clients?: string[]
+          id?: string
+          month?: string
+          recording_url?: string | null
+          session_date?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      achievement_group_submissions: {
+        Row: {
+          client_id: string
+          commitment_submitted_at: string | null
+          created_at: string
+          id: string
+          next_bar: string
+          next_commitment: string | null
+          proud_goal: string
+          session_id: string
+          submitted_at: string
+          updated_at: string
+          what_made_difference: string
+        }
+        Insert: {
+          client_id: string
+          commitment_submitted_at?: string | null
+          created_at?: string
+          id?: string
+          next_bar: string
+          next_commitment?: string | null
+          proud_goal: string
+          session_id: string
+          submitted_at?: string
+          updated_at?: string
+          what_made_difference: string
+        }
+        Update: {
+          client_id?: string
+          commitment_submitted_at?: string | null
+          created_at?: string
+          id?: string
+          next_bar?: string
+          next_commitment?: string | null
+          proud_goal?: string
+          session_id?: string
+          submitted_at?: string
+          updated_at?: string
+          what_made_difference?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "achievement_group_submissions_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "achievement_group_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       achievements: {
         Row: {
           badge_name: string
