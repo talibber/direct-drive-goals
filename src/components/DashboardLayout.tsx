@@ -13,7 +13,7 @@ const baseLinks = [
   { to: "/dashboard/billing", label: "Billing", icon: CreditCard },
   { to: "/dashboard/sessions", label: "Sessions", icon: FileText },
   { to: "/dashboard/reset-session", label: "Reset Session", icon: RotateCcw },
-  { to: "/dashboard/library", label: "Library", icon: BookOpen },
+  { to: "/dashboard/library", label: "Coaching Content", icon: BookOpen },
   { to: "/dashboard/profile", label: "Profile", icon: User },
 ];
 
