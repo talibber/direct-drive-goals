@@ -1169,6 +1169,125 @@ export type Database = {
         }
         Relationships: []
       }
+      qa_published: {
+        Row: {
+          anonymized_question: string
+          answer_format: string
+          answer_media_url: string | null
+          answer_text: string | null
+          category: string
+          created_at: string
+          id: string
+          publish_date: string
+          published_by: string
+          source_question_ids: string[] | null
+          track_visibility: string
+          updated_at: string
+          week_of: string
+        }
+        Insert: {
+          anonymized_question: string
+          answer_format?: string
+          answer_media_url?: string | null
+          answer_text?: string | null
+          category?: string
+          created_at?: string
+          id?: string
+          publish_date?: string
+          published_by: string
+          source_question_ids?: string[] | null
+          track_visibility?: string
+          updated_at?: string
+          week_of: string
+        }
+        Update: {
+          anonymized_question?: string
+          answer_format?: string
+          answer_media_url?: string | null
+          answer_text?: string | null
+          category?: string
+          created_at?: string
+          id?: string
+          publish_date?: string
+          published_by?: string
+          source_question_ids?: string[] | null
+          track_visibility?: string
+          updated_at?: string
+          week_of?: string
+        }
+        Relationships: []
+      }
+      qa_questions: {
+        Row: {
+          category: string
+          client_id: string
+          created_at: string
+          id: string
+          question_text: string
+          status: string
+          track: string
+          updated_at: string
+          week_of: string
+        }
+        Insert: {
+          category?: string
+          client_id: string
+          created_at?: string
+          id?: string
+          question_text: string
+          status?: string
+          track?: string
+          updated_at?: string
+          week_of?: string
+        }
+        Update: {
+          category?: string
+          client_id?: string
+          created_at?: string
+          id?: string
+          question_text?: string
+          status?: string
+          track?: string
+          updated_at?: string
+          week_of?: string
+        }
+        Relationships: []
+      }
+      qa_reactions: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          is_mine: boolean
+          qa_id: string
+          resonated: boolean
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          is_mine?: boolean
+          qa_id: string
+          resonated?: boolean
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          is_mine?: boolean
+          qa_id?: string
+          resonated?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_reactions_qa_id_fkey"
+            columns: ["qa_id"]
+            isOneToOne: false
+            referencedRelation: "qa_published"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reset_session_engagement: {
         Row: {
           client_id: string
