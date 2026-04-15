@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen, Mic, Zap } from "lucide-react";
+import { LayoutDashboard, Target, CalendarCheck, CreditCard, FileText, User, LogOut, RotateCcw, Radio, Users, MessageSquare, BookOpen, Mic, Zap, Trophy } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const baseLinks = [
@@ -19,12 +19,13 @@ const baseLinks = [
 
 const directAccessLink = { to: "/dashboard/direct-access", label: "Direct Access", icon: Zap };
 const operatorCallLink = { to: "/dashboard/operator-call", label: "Operator Call", icon: Mic };
+const achievementGroupLink = { to: "/dashboard/achievement-group", label: "Achievement Group", icon: Trophy };
 
-export function DashboardLayout({ children, coachingTrack = "life" }: { children: React.ReactNode; coachingTrack?: string }) {
+export function DashboardLayout({ children, coachingTrack = "life", hasPerfectMonth = false }: { children: React.ReactNode; coachingTrack?: string; hasPerfectMonth?: boolean }) {
   const location = useLocation();
 
-  // For business track: insert Direct Access before Community, and Operator Call before Library
-  const links = coachingTrack === "business"
+  // Build links based on track, inserting track-specific items
+  let links = coachingTrack === "business"
     ? [
         ...baseLinks.slice(0, 5), // Dashboard through Messages
         directAccessLink,         // Direct Access (before Community)
@@ -32,7 +33,15 @@ export function DashboardLayout({ children, coachingTrack = "life" }: { children
         operatorCallLink,         // Operator Call (before Reset Session)
         ...baseLinks.slice(8),    // Reset Session, Library, Profile
       ]
-    : baseLinks;
+    : [...baseLinks];
+
+  // Insert Achievement Group after Reset Session if client has earned a Perfect Month
+  if (hasPerfectMonth) {
+    const resetIdx = links.findIndex(l => l.to === "/dashboard/reset-session");
+    if (resetIdx !== -1) {
+      links = [...links.slice(0, resetIdx + 1), achievementGroupLink, ...links.slice(resetIdx + 1)];
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background flex">
