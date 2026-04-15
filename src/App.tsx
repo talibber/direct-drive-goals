@@ -34,6 +34,7 @@ import DirectAccessPage from "./pages/DirectAccessPage";
 import CoachDirectAccessPage from "./pages/CoachDirectAccessPage";
 import AchievementGroupPage from "./pages/AchievementGroupPage";
 import CoachAchievementGroupPage from "./pages/CoachAchievementGroupPage";
+import CoachWeeklyQAPage from "./pages/CoachWeeklyQAPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -81,6 +82,7 @@ const App = () => (
           <Route path="/coach/direct-access" element={<CoachDirectAccessPage />} />
           <Route path="/coach/achievement-group" element={<CoachAchievementGroupPage />} />
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
+          <Route path="/coach/weekly-qa" element={<CoachWeeklyQAPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
