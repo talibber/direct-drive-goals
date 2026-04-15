@@ -37,10 +37,12 @@ export type Database = {
       }
       applications: {
         Row: {
+          accountability_style: string | null
           avoided_decision: string | null
           business_name: string | null
           challenge: string | null
           coaching_interest: string
+          community_motivation: string | null
           created_at: string
           decision_outcome: string | null
           email: string
@@ -61,10 +63,12 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          accountability_style?: string | null
           avoided_decision?: string | null
           business_name?: string | null
           challenge?: string | null
           coaching_interest?: string
+          community_motivation?: string | null
           created_at?: string
           decision_outcome?: string | null
           email: string
@@ -85,10 +89,12 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          accountability_style?: string | null
           avoided_decision?: string | null
           business_name?: string | null
           challenge?: string | null
           coaching_interest?: string
+          community_motivation?: string | null
           created_at?: string
           decision_outcome?: string | null
           email?: string

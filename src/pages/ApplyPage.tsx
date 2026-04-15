@@ -11,28 +11,53 @@ import { useSearchParams, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 
+const industryOptions = [
+  "SaaS / Technology", "E-commerce / Retail", "Professional Services", "Healthcare", "Real Estate",
+  "Finance / Fintech", "Marketing / Advertising", "Construction / Trades", "Education", "Food & Beverage",
+  "Manufacturing", "Media / Content", "Legal", "Non-Profit", "Other",
+];
+
+const communityMotivationOptions = [
+  {
+    value: "accountability",
+    title: "Accountability I can't create alone",
+    desc: "I need people who will notice when I go quiet and call me on it.",
+  },
+  {
+    value: "understanding",
+    title: "People who understand what I'm going through",
+    desc: "I want to be around people who are working as hard as I am on things that actually matter.",
+  },
+  {
+    value: "both",
+    title: "Both — I need the structure and the right room equally",
+    desc: "",
+  },
+];
+
+const accountabilityStyleOptions = [
+  { value: "restart", label: "I restart immediately and don't dwell on it" },
+  { value: "understand", label: "I need to understand why before I can move forward" },
+  { value: "external", label: "I need external pressure to get back on track" },
+  { value: "avoid", label: "I tend to avoid it and hope no one notices" },
+];
+
 const supportOptions = [
   {
     value: "accountability_only",
     title: "System + Accountability",
-    subtitle: "I'm self-directed. I need structure, a scorecard, and consequences. I don't need frequent check-ins beyond the weekly system.",
+    subtitle: "I'm self-directed. I need structure, a scorecard, and consequences.",
   },
   {
     value: "monthly_coaching",
     title: "System + Monthly Coaching",
-    subtitle: "I want the full accountability system plus a dedicated monthly coaching call to work through strategy, decisions, and roadblocks.",
+    subtitle: "I want the full accountability system plus a dedicated monthly coaching call.",
   },
   {
     value: "undecided",
     title: "I'm not sure yet",
     subtitle: "I'll figure it out once I understand the program better.",
   },
-] as const;
-
-const industryOptions = [
-  "SaaS / Technology", "E-commerce / Retail", "Professional Services", "Healthcare", "Real Estate",
-  "Finance / Fintech", "Marketing / Advertising", "Construction / Trades", "Education", "Food & Beverage",
-  "Manufacturing", "Media / Content", "Legal", "Non-Profit", "Other",
 ];
 
 export default function ApplyPage() {
@@ -40,11 +65,11 @@ export default function ApplyPage() {
   const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [supportLevel, setSupportLevel] = useState<string>("");
-  const [coachingInterest, setCoachingInterest] = useState<string>("");
-  const [track, setTrack] = useState<"life" | "business">("life");
+  const [supportLevel, setSupportLevel] = useState("");
+  const [coachingInterest, setCoachingInterest] = useState("");
+  const [track, setTrack] = useState<"life" | "business" | "direct">("life");
 
-  // Form fields
+  // Common fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [occupation, setOccupation] = useState("");
@@ -52,8 +77,10 @@ export default function ApplyPage() {
   const [goals30Day, setGoals30Day] = useState("");
   const [readiness, setReadiness] = useState("");
   const [priorCoaching, setPriorCoaching] = useState("");
+  const [communityMotivation, setCommunityMotivation] = useState("");
+  const [accountabilityStyle, setAccountabilityStyle] = useState("");
 
-  // Business-specific fields
+  // Business-specific
   const [businessName, setBusinessName] = useState("");
   const [industry, setIndustry] = useState("");
   const [revenueRange, setRevenueRange] = useState("");
@@ -63,14 +90,15 @@ export default function ApplyPage() {
 
   useEffect(() => {
     const t = searchParams.get("track");
-    if (t === "business") {
-      setTrack("business");
-      setCoachingInterest("business");
-    } else if (t === "life") {
-      setTrack("life");
-      setCoachingInterest("life");
-    }
+    if (t === "business") { setTrack("business"); setCoachingInterest("business"); }
+    else if (t === "direct") { setTrack("direct"); setCoachingInterest("business"); }
+    else { setTrack("life"); setCoachingInterest("life"); }
   }, [searchParams]);
+
+  const isBusiness = track === "business" || track === "direct";
+
+  const trackLabel = track === "direct" ? "Direct" : track === "business" ? "Business Track" : "Life Track";
+  const trackPrice = track === "direct" ? "$1,000/month" : track === "business" ? "$199/month" : "$99/month";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,23 +114,23 @@ export default function ApplyPage() {
         email,
         occupation,
         coaching_interest: coachingInterest || "life",
-        track,
+        track: track === "direct" ? "direct" : track,
         challenge,
         goals_30_day: goals30Day,
         readiness,
         prior_coaching: priorCoaching,
         support_level: supportLevel,
-        // Business-specific
-        business_name: track === "business" ? businessName || null : null,
-        industry: track === "business" ? industry || null : null,
-        revenue_range: track === "business" ? revenueRange || null : null,
-        team_size: track === "business" ? teamSize || null : null,
-        avoided_decision: track === "business" ? avoidedDecision || null : null,
-        decision_outcome: track === "business" ? decisionOutcome || null : null,
-      });
+        community_motivation: communityMotivation || null,
+        accountability_style: accountabilityStyle || null,
+        business_name: isBusiness ? businessName || null : null,
+        industry: isBusiness ? industry || null : null,
+        revenue_range: isBusiness ? revenueRange || null : null,
+        team_size: isBusiness ? teamSize || null : null,
+        avoided_decision: isBusiness ? avoidedDecision || null : null,
+        decision_outcome: isBusiness ? decisionOutcome || null : null,
+      } as any);
 
       if (error) throw error;
-
       setSubmitted(true);
       toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
     } catch (err: any) {
@@ -119,12 +147,25 @@ export default function ApplyPage() {
         <Navbar />
         <section className="pt-32 pb-20 md:pt-40">
           <div className="container max-w-lg text-center">
-            <div className="text-5xl mb-4">🔥</div>
             <h1 className="font-display text-3xl font-bold mb-4">Application Received</h1>
-            <p className="text-muted-foreground">
-              We'll review your application within 48 hours. If you're a fit, you'll receive 
-              an email with next steps. No sales calls. No BS.
+            <p className="text-muted-foreground mb-6">
+              We'll review your application within 48 hours. If you're a fit, you'll receive an email with next steps. No sales calls. No BS.
             </p>
+            <div className="text-left max-w-sm mx-auto space-y-2">
+              {[
+                "We review within 48 hours",
+                "You complete your personality assessment",
+                "Your coaching call is scheduled",
+                "Your 30-60-90 goals are built from that call",
+                "You're matched to your pod",
+                "Day 1 begins",
+              ].map((step, i) => (
+                <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                  <span className="text-primary font-display font-bold text-xs mt-0.5">{i + 1}.</span>
+                  {step}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
         <Footer />
@@ -141,71 +182,34 @@ export default function ApplyPage() {
             Apply for <span className="text-gradient-gold">Terrible Coaching</span>
           </h1>
           <p className="text-muted-foreground mb-6">
-            This takes 3 minutes. Be honest—that's the whole point.
+            This takes 3 minutes. Be honest — that's the whole point.
           </p>
 
           {/* Track Badge */}
-          <div className="mb-6 flex items-center justify-between rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
+          <div className="mb-8 flex items-center justify-between rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
             <div className="flex items-center gap-3">
               <span className={cn(
                 "text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full",
-                track === "business"
+                track === "direct"
+                  ? "bg-primary text-primary-foreground"
+                  : track === "business"
                   ? "bg-primary text-primary-foreground"
                   : "bg-foreground/10 text-foreground"
               )}>
-                {track === "business" ? "Business Track" : "Life Track"}
+                {trackLabel}
               </span>
-              <span className="text-sm text-muted-foreground">
-                {track === "business" ? "$199/month" : "$99/month"}
-              </span>
+              <span className="text-sm text-muted-foreground">{trackPrice}</span>
             </div>
             <Link
-              to={`/apply?track=${track === "business" ? "life" : "business"}`}
-              onClick={() => {
-                setTrack(track === "business" ? "life" : "business");
-                setCoachingInterest(track === "business" ? "life" : "business");
-              }}
+              to="/apply/select"
               className="text-xs text-primary hover:underline font-medium"
             >
-              Switch to {track === "business" ? "Life" : "Business"} Track
+              Change track
             </Link>
           </div>
 
-          {/* Process Timeline */}
-          <div className="flex items-center justify-between mb-10 px-2">
-            {[
-              { step: 1, label: "Submit Application", detail: "today" },
-              { step: 2, label: "Review (48 hrs)", detail: "we read it" },
-              { step: 3, label: "Onboarding Call", detail: "we level set" },
-              { step: 4, label: "Day 1 Begins", detail: "system activates" },
-            ].map((item, i) => (
-              <div key={item.step} className="flex items-center flex-1 last:flex-initial">
-                <div className="flex flex-col items-center text-center">
-                  <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2",
-                    item.step === 1
-                      ? "border-primary bg-primary/20 text-primary"
-                      : "border-muted-foreground/30 bg-muted/30 text-muted-foreground/50"
-                  )}>
-                    {item.step}
-                  </div>
-                  <p className={cn(
-                    "text-[11px] font-semibold mt-1.5 leading-tight",
-                    item.step === 1 ? "text-primary" : "text-muted-foreground/50"
-                  )}>{item.label}</p>
-                  <p className={cn(
-                    "text-[10px] mt-0.5",
-                    item.step === 1 ? "text-primary/70" : "text-muted-foreground/30"
-                  )}>{item.detail}</p>
-                </div>
-                {i < 3 && (
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-primary/40 to-muted-foreground/20 mx-2 mt-[-18px]" />
-                )}
-              </div>
-            ))}
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name & Email */}
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <Label htmlFor="name">Full Name</Label>
@@ -219,7 +223,7 @@ export default function ApplyPage() {
 
             <div>
               <Label htmlFor="occupation">Occupation / Role</Label>
-              <Input id="occupation" placeholder="e.g. Teacher, Entrepreneur, Parent, Sales Rep, Student, whatever you are" required className="mt-1.5" value={occupation} onChange={e => setOccupation(e.target.value)} />
+              <Input id="occupation" placeholder="e.g. Teacher, Entrepreneur, Sales Rep" required className="mt-1.5" value={occupation} onChange={e => setOccupation(e.target.value)} />
             </div>
 
             <div>
@@ -240,11 +244,69 @@ export default function ApplyPage() {
               </Select>
             </div>
 
+            {/* Community Motivation — ALL TRACKS */}
+            <div>
+              <Label>What are you most hoping to get from the Terrible Coaching community? <span className="text-destructive">*</span></Label>
+              <div className="grid gap-3 mt-3">
+                {communityMotivationOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setCommunityMotivation(opt.value)}
+                    className={cn(
+                      "text-left rounded-lg border-2 p-4 transition-all",
+                      communityMotivation === opt.value
+                        ? "border-primary/80 bg-primary/5"
+                        : "border-border hover:border-muted-foreground/30"
+                    )}
+                  >
+                    <p className={cn(
+                      "font-semibold text-sm",
+                      communityMotivation === opt.value ? "text-primary" : "text-foreground"
+                    )}>{opt.title}</p>
+                    {opt.desc && (
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{opt.desc}</p>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Accountability Style — ALL TRACKS */}
+            <div>
+              <Label>How do you typically respond when you fall behind on a commitment? <span className="text-destructive">*</span></Label>
+              <div className="grid gap-3 mt-3">
+                {accountabilityStyleOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setAccountabilityStyle(opt.value)}
+                    className={cn(
+                      "text-left rounded-lg border-2 p-4 transition-all",
+                      accountabilityStyle === opt.value
+                        ? "border-primary/80 bg-primary/5"
+                        : "border-border hover:border-muted-foreground/30"
+                    )}
+                  >
+                    <p className={cn(
+                      "font-medium text-sm",
+                      accountabilityStyle === opt.value ? "text-primary" : "text-foreground"
+                    )}>{opt.label}</p>
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground italic mt-2">
+                Used alongside your personality assessment for pod matching. No wrong answer.
+              </p>
+            </div>
+
             {/* Business-specific fields */}
-            {track === "business" && (
+            {isBusiness && (
               <div className="space-y-5 rounded-lg border-2 border-primary/20 bg-primary/[0.02] p-5">
-                <p className="text-xs font-bold uppercase tracking-wider text-primary">Business Track Details</p>
-                
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                  {track === "direct" ? "Direct Track Details" : "Business Track Details"}
+                </p>
+
                 <div>
                   <Label htmlFor="businessName">Business Name (optional)</Label>
                   <Input id="businessName" placeholder="Your company name" className="mt-1.5" value={businessName} onChange={e => setBusinessName(e.target.value)} />
@@ -273,8 +335,8 @@ export default function ApplyPage() {
                     <SelectContent>
                       <SelectItem value="pre-revenue">Pre-revenue</SelectItem>
                       <SelectItem value="under-100k">Under $100K</SelectItem>
-                      <SelectItem value="100k-500k">$100K–$500K</SelectItem>
-                      <SelectItem value="500k-1m">$500K–$1M</SelectItem>
+                      <SelectItem value="100k-500k">$100K-$500K</SelectItem>
+                      <SelectItem value="500k-1m">$500K-$1M</SelectItem>
                       <SelectItem value="over-1m">Over $1M</SelectItem>
                     </SelectContent>
                   </Select>
@@ -288,9 +350,9 @@ export default function ApplyPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="solo">Solo</SelectItem>
-                      <SelectItem value="2-5">2–5</SelectItem>
-                      <SelectItem value="6-15">6–15</SelectItem>
-                      <SelectItem value="16-50">16–50</SelectItem>
+                      <SelectItem value="2-5">2-5</SelectItem>
+                      <SelectItem value="6-15">6-15</SelectItem>
+                      <SelectItem value="16-50">16-50</SelectItem>
                       <SelectItem value="50+">50+</SelectItem>
                     </SelectContent>
                   </Select>
@@ -337,8 +399,8 @@ export default function ApplyPage() {
                   <SelectValue placeholder="How ready are you?" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ready">Ready now—let's go</SelectItem>
-                  <SelectItem value="soon">Interested—deciding soon</SelectItem>
+                  <SelectItem value="ready">Ready now — let's go</SelectItem>
+                  <SelectItem value="soon">Interested — deciding soon</SelectItem>
                   <SelectItem value="exploring">Just exploring</SelectItem>
                 </SelectContent>
               </Select>
@@ -369,35 +431,48 @@ export default function ApplyPage() {
                     className={cn(
                       "text-left rounded-lg border-2 p-4 transition-all",
                       supportLevel === option.value
-                        ? "border-amber-500/80 bg-amber-500/5"
-                        : "border-muted hover:border-muted-foreground/30"
+                        ? "border-primary/80 bg-primary/5"
+                        : "border-border hover:border-muted-foreground/30"
                     )}
                   >
                     <p className={cn(
                       "font-semibold text-sm",
-                      supportLevel === option.value ? "text-amber-400" : "text-foreground"
-                    )}>
-                      {option.title}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                      {option.subtitle}
-                    </p>
+                      supportLevel === option.value ? "text-primary" : "text-foreground"
+                    )}>{option.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{option.subtitle}</p>
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-muted-foreground italic mt-2.5">
-                This helps us match you to the right structure. There's no wrong answer.
-              </p>
             </div>
 
             <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4" disabled={submitting}>
               {submitting ? "Submitting..." : "Submit Application"}
             </Button>
 
+            {/* Post-submit flow */}
+            <div className="rounded-lg border border-border bg-card/50 p-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">After you apply:</p>
+              <div className="space-y-2">
+                {[
+                  "We review within 48 hours",
+                  "You complete your personality assessment",
+                  "Your coaching call is scheduled",
+                  "Your 30-60-90 goals are built from that call",
+                  "You're matched to your pod",
+                  "Day 1 begins",
+                ].map((step, i) => (
+                  <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <span className="text-primary/60 font-display font-bold text-xs mt-0.5">{i + 1}.</span>
+                    {step}
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              By applying, you understand that Terrible Coaching is not therapy and is not a 
-              substitute for licensed mental health care. All sales are final. 
-              No refunds are issued after payment is processed. You may cancel your 
+              By applying, you understand that Terrible Coaching is not therapy and is not a
+              substitute for licensed mental health care. All sales are final.
+              No refunds are issued after payment is processed. You may cancel your
               subscription after your first 30 days at any time with no further charges.
             </p>
           </form>
