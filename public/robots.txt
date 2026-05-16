@@ -10,5 +10,23 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
+Disallow: /dashboard
+Disallow: /coach
+Disallow: /admin
+Disallow: /onboarding
+
+Sitemap: https://direct-drive-goals.lovable.app/sitemap.xml
