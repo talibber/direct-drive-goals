@@ -45,7 +45,7 @@ const initialQuestions: MockQuestion[] = [
 ];
 
 const mockWins = [
-  { id: "w1", clientName: "Marcus Rivera", win_text: "Closed a $12k/month retainer with a SaaS company — largest deal to date." },
+  { id: "w1", clientName: "Marcus Rivera", win_text: "Closed a $12k/month retainer with a SaaS company - largest deal to date." },
   { id: "w2", clientName: "Daniella Osei", win_text: "Hired a VA and freed up 15 hours/week. Revenue didn't drop." },
 ];
 
@@ -53,7 +53,7 @@ export default function CoachOperatorCallPage() {
   const [questions, setQuestions] = useState(initialQuestions);
   const [guestName, setGuestName] = useState("Sarah Chen");
   const [guestTitle, setGuestTitle] = useState("Fractional CFO & Founder Advisor");
-  const [guestTopic, setGuestTopic] = useState("When to raise vs. bootstrap — reading your numbers honestly");
+  const [guestTopic, setGuestTopic] = useState("When to raise vs. bootstrap - reading your numbers honestly");
   const [recapNotes, setRecapNotes] = useState("");
 
   const sortedQuestions = [...questions].sort((a, b) => {
@@ -75,7 +75,7 @@ export default function CoachOperatorCallPage() {
       )
     );
     if (newStatus === "on_agenda") {
-      toast.success("Question added to agenda — client will be notified.");
+      toast.success("Question added to agenda - client will be notified.");
     }
   };
 

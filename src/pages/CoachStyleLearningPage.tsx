@@ -56,7 +56,7 @@ export default function CoachStyleLearningPage() {
         {metrics.map(([label, val]) => (
           <Card key={label} className="p-4">
             <p className="text-xs uppercase text-muted-foreground">{label}</p>
-            <p className="font-display text-2xl mt-1">{val == null ? "—" : (val * 100).toFixed(0) + "%"}</p>
+            <p className="font-display text-2xl mt-1">{val == null ? "-" : (val * 100).toFixed(0) + "%"}</p>
           </Card>
         ))}
       </div>

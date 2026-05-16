@@ -13,7 +13,7 @@ const pages: Record<string, LegalPage> = {
     body: (
       <>
         <p>By using Terrible Coaching, you agree to these terms. Terrible Coaching is a coaching, accountability, and execution program. It is not therapy, counseling, medical care, crisis care, diagnosis, or treatment.</p>
-        <p>Membership grants access to the system, your matched pod, your coach within the limits of your track, and program content. Misuse of the platform — including harassment of other members, dishonest reporting, or abuse of staff — may result in removal without refund.</p>
+        <p>Membership grants access to the system, your matched pod, your coach within the limits of your track, and program content. Misuse of the platform - including harassment of other members, dishonest reporting, or abuse of staff - may result in removal without refund.</p>
         <p>You are responsible for the decisions you make as a result of coaching. Outcomes are not guaranteed. The program provides structure, feedback, accountability, and community.</p>
       </>
     ),
@@ -44,7 +44,7 @@ const pages: Record<string, LegalPage> = {
       <>
         <p><strong>Recurring monthly billing.</strong> Your selected track renews monthly until you cancel. You may cancel before your next billing cycle to avoid future subscription charges.</p>
         <p><strong>Refunds.</strong> Payments are non-refundable after your initial coaching call has been completed. Cancellation stops future billing but does not refund completed services.</p>
-        <p><strong>$75 Commitment Breach Fee.</strong> This fee may apply when you miss a required check-in, fail to submit required evidence, ghost the system, or break a controllable commitment you agreed to. Missing an outcome target is different from breaching a controllable commitment — honest failure gets reviewed, avoidance gets reset.</p>
+        <p><strong>$75 Commitment Breach Fee.</strong> This fee may apply when you miss a required check-in, fail to submit required evidence, ghost the system, or break a controllable commitment you agreed to. Missing an outcome target is different from breaching a controllable commitment - honest failure gets reviewed, avoidance gets reset.</p>
         <p><strong>Waivers.</strong> The coach may waive the fee at their discretion when life genuinely happens. Repeated breaches without legitimate reason may result in removal from the program.</p>
         <p><strong>Reset Call enrollment.</strong> When a Commitment Breach Fee applies, you may be automatically enrolled in the monthly Reset Call.</p>
       </>
@@ -54,12 +54,12 @@ const pages: Record<string, LegalPage> = {
     title: "Community Guidelines",
     body: (
       <>
-        <p>This community is built on honesty, accountability, and respect. You agreed to be told the truth — extend the same to your pod.</p>
+        <p>This community is built on honesty, accountability, and respect. You agreed to be told the truth - extend the same to your pod.</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>No harassment, slurs, or personal attacks.</li>
           <li>No selling, pitching, or recruiting members for outside services without permission.</li>
           <li>Do not share another member's private evidence, notes, or messages outside the platform.</li>
-          <li>Bad-faith participation — fabricated evidence, ghosting your pod, gaming the system — is grounds for removal without refund.</li>
+          <li>Bad-faith participation - fabricated evidence, ghosting your pod, gaming the system - is grounds for removal without refund.</li>
         </ul>
         <p>The standard you keep is the standard the room keeps.</p>
       </>

@@ -27,7 +27,7 @@ export function CoachStaleActivityAlert() {
               <Link to={`/coach/clients/${c.id}`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                 {c.name}
               </Link>
-              <p className="text-xs text-muted-foreground">Last: {c.lastAction} — {c.lastActivityDaysAgo} days ago</p>
+              <p className="text-xs text-muted-foreground">Last: {c.lastAction} - {c.lastActivityDaysAgo} days ago</p>
             </div>
             <span className="text-xs font-medium text-warning">Review pending</span>
           </div>

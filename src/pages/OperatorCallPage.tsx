@@ -38,17 +38,17 @@ const statusLabels: Record<string, string> = {
 
 // Mock data
 const nextCall = {
-  date: "April 25, 2026 — 12:00 PM EST",
+  date: "April 25, 2026 - 12:00 PM EST",
   guestName: "Sarah Chen",
   guestTitle: "Fractional CFO & Founder Advisor",
-  guestTopic: "When to raise vs. bootstrap — reading your numbers honestly",
+  guestTopic: "When to raise vs. bootstrap - reading your numbers honestly",
   joinLink: "#",
 };
 
 const mockQuestions = [
   { id: "q1", question_text: "How do I price a retainer when the client keeps expanding scope?", category: "Sales & Revenue", status: "on_agenda", submitted_at: "2026-04-10" },
   { id: "q2", question_text: "Should I bring on a part-time ops person or outsource fulfillment?", category: "Operations", status: "under_review", submitted_at: "2026-04-12" },
-  { id: "q3", question_text: "My biggest client is 60% of revenue — how do I de-risk?", category: "Finance & Capital", status: "addressed", submitted_at: "2026-03-08" },
+  { id: "q3", question_text: "My biggest client is 60% of revenue - how do I de-risk?", category: "Finance & Capital", status: "addressed", submitted_at: "2026-03-08" },
 ];
 
 const mockRecording = {
@@ -115,7 +115,7 @@ export default function OperatorCallPage() {
                 <div>
                   <p className="font-medium text-foreground">{nextCall.date}</p>
                   <p className="text-sm text-muted-foreground mt-1">
-                    10 min wins — 30 min operator questions — 15 min guest professional — 5 min commitments
+                    10 min wins - 30 min operator questions - 15 min guest professional - 5 min commitments
                   </p>
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function OperatorCallPage() {
                   <Textarea
                     value={questionText}
                     onChange={(e) => setQuestionText(e.target.value)}
-                    placeholder="Be specific about your situation — minimum 100 characters"
+                    placeholder="Be specific about your situation - minimum 100 characters"
                     className="min-h-[120px]"
                   />
                   <p className="text-xs text-muted-foreground mt-1">{questionText.length}/100 minimum characters</p>
@@ -207,7 +207,7 @@ export default function OperatorCallPage() {
                   <Switch checked={isUrgent} onCheckedChange={setIsUrgent} id="urgent" />
                   <Label htmlFor="urgent" className="flex items-center gap-2">
                     <AlertCircle size={14} className="text-destructive" />
-                    This is urgent — I need this addressed this month
+                    This is urgent - I need this addressed this month
                   </Label>
                 </div>
 

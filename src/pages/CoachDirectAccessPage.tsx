@@ -79,7 +79,7 @@ export default function CoachDirectAccessPage() {
       toast.error("Add a text or voice response.");
       return;
     }
-    toast.success("Response sent — client will be notified.");
+    toast.success("Response sent - client will be notified.");
     setResponses((prev) => ({ ...prev, [id]: "" }));
     setRecordedFor((prev) => { const n = new Set(prev); n.delete(id); return n; });
   };

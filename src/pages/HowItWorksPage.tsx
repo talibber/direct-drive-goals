@@ -7,7 +7,7 @@ const steps = [
   { icon: ClipboardCheck, title: "1. Apply", desc: "Fill out our application. Tell us who you are, what you're working on, and what's not working. Tell us whether you're applying for Life Track or Operator Track. The system is the same. The focus is different. We'll review within 48 hours." },
   { icon: Target, title: "2. Set Goals", desc: "If accepted, you'll define 1–3 measurable, time-bound goals for your first month. Each goal gets a $75 commitment breach fee." },
   { icon: CalendarCheck, title: "3. Weekly Check-Ins", desc: "Every week, you complete a check-in: energy, focus, stress, habits, wins, failures, and what you're avoiding. No hiding." },
-  { icon: MessageSquare, title: "4. Coach Feedback", desc: "Your coach reviews your data, writes direct notes, and adjusts your plan. No fluffy encouragement—just what you need to hear." },
+  { icon: MessageSquare, title: "4. Coach Feedback", desc: "Your coach reviews your data, writes direct notes, and adjusts your plan. No fluffy encouragement-just what you need to hear." },
   { icon: TrendingUp, title: "5. Score & Track", desc: "Your weekly performance score combines goal progress, habit adherence, well-being metrics, and coach assessment. Watch the trend." },
   { icon: DollarSign, title: "6. Pay the Stakes", desc: "Miss a goal? The $75 stake is charged. No negotiation. This is the mechanism that makes the system work." },
 ];
@@ -16,7 +16,7 @@ export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-background">
       <PageHead
-        title="How Terrible Coaching Works — Six Steps to Real Accountability"
+        title="How Terrible Coaching Works - Six Steps to Real Accountability"
         description="Apply, set measurable goals, complete weekly check-ins, get direct coach feedback, and pay the $75 stake when you miss. Here's exactly how the system works."
         path="/how-it-works"
       />

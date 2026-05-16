@@ -122,10 +122,10 @@ export default function CoachApplicationsPage() {
                       {a.status}
                     </span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{a.email} · {a.occupation || "—"}</p>
+                  <p className="text-sm text-muted-foreground">{a.email} · {a.occupation || "-"}</p>
                   <p className="text-sm text-muted-foreground mt-1">
                     <span className="text-foreground font-medium">Interest:</span> {a.coaching_interest} · 
-                    <span className="text-foreground font-medium"> Challenge:</span> {a.challenge || "—"}
+                    <span className="text-foreground font-medium"> Challenge:</span> {a.challenge || "-"}
                   </p>
                   {a.goals_30_day && (
                     <p className="text-sm text-muted-foreground mt-1">

@@ -24,7 +24,7 @@ export function CoachGoalReviewPanel({ goal, open, onClose, onAction }: CoachGoa
 
   const handleApprove = () => {
     onAction(goal.id, "approved");
-    toast.success(`Goal "${goal.title}" approved. Client notified — stake is now active.`);
+    toast.success(`Goal "${goal.title}" approved. Client notified - stake is now active.`);
     onClose();
   };
 
@@ -77,7 +77,7 @@ export function CoachGoalReviewPanel({ goal, open, onClose, onAction }: CoachGoa
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Metric</p>
-                <p className="text-sm text-foreground">{goal.metricType} — {goal.targetValue}</p>
+                <p className="text-sm text-foreground">{goal.metricType} - {goal.targetValue}</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>

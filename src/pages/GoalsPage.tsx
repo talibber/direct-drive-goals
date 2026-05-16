@@ -79,7 +79,7 @@ export default function GoalsPage() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <h2 className="font-display font-semibold text-foreground">Proof Pending — Action Required</h2>
+            <h2 className="font-display font-semibold text-foreground">Proof Pending - Action Required</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {proofPendingGoals.map((g) => (
@@ -94,7 +94,7 @@ export default function GoalsPage() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <span className="w-2 h-2 rounded-full bg-primary" />
-            <h2 className="font-display font-semibold text-foreground">Proof Submitted — Awaiting Verification</h2>
+            <h2 className="font-display font-semibold text-foreground">Proof Submitted - Awaiting Verification</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {proofSubmittedGoals.map((g) => (
@@ -182,7 +182,7 @@ export default function GoalsPage() {
               <span className={`text-xs font-medium px-2 py-1 rounded-full ${
                 g.status === "completed" ? "text-success bg-success/10" : "text-danger bg-danger/10"
               }`}>
-                {g.status === "completed" ? "Completed" : "Missed — $75"}
+                {g.status === "completed" ? "Completed" : "Missed - $75"}
               </span>
             </div>
           ))}

@@ -185,7 +185,7 @@ export function CoachLibraryPanel() {
                   <p className="text-sm font-semibold text-foreground">{a.contentTitle}</p>
                   <p className="text-xs text-muted-foreground">
                     Assigned to <span className="text-foreground font-medium">{a.clientName}</span>
-                    {a.assignedNote && <span> — "{a.assignedNote}"</span>}
+                    {a.assignedNote && <span> - "{a.assignedNote}"</span>}
                   </p>
                 </div>
                 <span className={cn(

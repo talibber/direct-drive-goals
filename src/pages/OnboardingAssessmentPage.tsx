@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Check, ArrowRight, Brain, Zap } from "lucide-react";
 
 // ──────────────────────────────────────
-// DISC Assessment — 24 question sets
+// DISC Assessment - 24 question sets
 // ──────────────────────────────────────
 const discQuestions: { words: [string, string, string, string] }[] = [
   { words: ["Determined", "Enthusiastic", "Patient", "Careful"] },
@@ -40,7 +40,7 @@ const discQuestions: { words: [string, string, string, string] }[] = [
 type DiscAnswer = { most: number; least: number };
 
 // ──────────────────────────────────────
-// Execution Style — 16 questions
+// Execution Style - 16 questions
 // ──────────────────────────────────────
 interface ExecQuestion {
   text: string;
@@ -170,10 +170,10 @@ export default function OnboardingAssessmentPage() {
           {phase === "intro" && (
             <div className="text-center">
               <h1 className="font-display text-3xl md:text-4xl font-bold mb-3">
-                Before we start — <span className="text-gradient-gold">know yourself.</span>
+                Before we start - <span className="text-gradient-gold">know yourself.</span>
               </h1>
               <p className="text-muted-foreground mb-10 max-w-lg mx-auto leading-relaxed">
-                This takes 8 minutes. Your coach reviews this before your onboarding call. Be honest — there are no good or bad results.
+                This takes 8 minutes. Your coach reviews this before your onboarding call. Be honest - there are no good or bad results.
               </p>
 
               <div className="grid gap-5 sm:grid-cols-2 max-w-xl mx-auto">
@@ -314,7 +314,7 @@ export default function OnboardingAssessmentPage() {
 
               <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 max-w-lg mx-auto mb-8">
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  This shows how you're wired — not what you're limited to. Your coach will use this to communicate more effectively with you, not to make assumptions about you.
+                  This shows how you're wired - not what you're limited to. Your coach will use this to communicate more effectively with you, not to make assumptions about you.
                 </p>
               </div>
 
@@ -384,13 +384,13 @@ export default function OnboardingAssessmentPage() {
 
               <div className="rounded-lg border border-border bg-card p-5 max-w-md mx-auto mb-8 text-left">
                 <p className="text-sm text-foreground leading-relaxed">
-                  {execResult.planning > 60 ? "You lean toward planning before acting — which means structure will serve you, but over-preparation might slow you down." : "You lean toward action over planning — which means momentum is your strength, but you may benefit from more upfront clarity."}
+                  {execResult.planning > 60 ? "You lean toward planning before acting - which means structure will serve you, but over-preparation might slow you down." : "You lean toward action over planning - which means momentum is your strength, but you may benefit from more upfront clarity."}
                   {" "}
-                  {execResult.consistency > 60 ? "Your consistency is strong — you maintain effort over time." : "You tend toward intense bursts of effort — pacing strategies will be key."}
+                  {execResult.consistency > 60 ? "Your consistency is strong - you maintain effort over time." : "You tend toward intense bursts of effort - pacing strategies will be key."}
                   {" "}
                   {execResult.motivation > 60 ? "You're primarily self-driven." : "External accountability gives you a significant boost."}
                   {" "}
-                  {execResult.risk > 60 ? "You're comfortable with uncertainty and willing to experiment." : "You prefer proven paths — which means we'll frame experiments as low-risk tests."}
+                  {execResult.risk > 60 ? "You're comfortable with uncertainty and willing to experiment." : "You prefer proven paths - which means we'll frame experiments as low-risk tests."}
                 </p>
               </div>
 

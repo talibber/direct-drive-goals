@@ -19,7 +19,7 @@ export default function BillingPage() {
       <div className="rounded-lg border border-border bg-card p-6 shadow-card mb-6 flex items-center justify-between">
         <div>
           <p className="text-sm text-muted-foreground">Current Plan</p>
-          <p className="font-display text-xl font-bold text-foreground">Terrible Coaching — {planName} — ${planPrice}/mo</p>
+          <p className="font-display text-xl font-bold text-foreground">Terrible Coaching - {planName} - ${planPrice}/mo</p>
           <p className="text-xs text-muted-foreground mt-1">Next billing: May 1, 2026</p>
         </div>
         <Badge className="bg-success/10 text-success border-success/30">Active</Badge>

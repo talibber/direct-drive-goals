@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-// Mock data — in production this comes from the coach_activity table
+// Mock data - in production this comes from the coach_activity table
 const mockLastActivity = {
   type: "check_in_review" as const,
   description: "Reviewed your check-in",
@@ -37,13 +37,13 @@ export function CoachActivityStrip() {
         </span>
       </div>
 
-      {/* Activity line — pushed right */}
+      {/* Activity line - pushed right */}
       <div className="ml-auto text-right min-w-0">
         {isStale ? (
           <p className="text-sm font-medium text-warning">Check-in review pending</p>
         ) : (
           <p className="text-sm text-muted-foreground truncate">
-            {activityLabels[activity.type] || activity.description} — <span className="text-foreground font-medium">{activity.date}</span>
+            {activityLabels[activity.type] || activity.description} - <span className="text-foreground font-medium">{activity.date}</span>
           </p>
         )}
       </div>

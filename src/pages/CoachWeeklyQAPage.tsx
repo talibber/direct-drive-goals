@@ -266,7 +266,7 @@ export default function CoachWeeklyQAPage() {
           {answerFormat !== "text" && (
             <div className="rounded-lg border border-dashed border-border p-6 text-center">
               <p className="text-sm text-muted-foreground">
-                {answerFormat === "voice" ? "Voice note recorder" : "Video recorder"} — upload or record your {answerFormat} answer
+                {answerFormat === "voice" ? "Voice note recorder" : "Video recorder"} - upload or record your {answerFormat} answer
               </p>
               <Input type="text" placeholder="Paste media URL..." className="mt-3 max-w-sm mx-auto" onChange={e => setAnswerText(e.target.value || "media")} />
             </div>

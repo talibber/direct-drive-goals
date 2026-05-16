@@ -45,7 +45,7 @@ const comparison: Category[] = [
       { label: "Evidence-based verification", life: "✓", op: "✓", direct: "✓" },
       { label: "$75 Commitment Breach Fee", life: "✓", op: "✓", direct: "✓" },
       { label: "Performance scorecard", life: "✓", op: "✓", direct: "✓" },
-      { label: "Business-focused goal design", life: "—", op: "✓", direct: "✓" },
+      { label: "Business-focused goal design", life: "-", op: "✓", direct: "✓" },
     ],
   },
   {
@@ -53,8 +53,8 @@ const comparison: Category[] = [
     rows: [
       { label: "Personality-matched pod", life: "✓", op: "✓", direct: "✓" },
       { label: "Community feed", life: "✓", op: "✓", direct: "✓" },
-      { label: "Operator-only pod", life: "—", op: "✓", direct: "✓" },
-      { label: "Operator networking directory", life: "—", op: "✓", direct: "✓" },
+      { label: "Operator-only pod", life: "-", op: "✓", direct: "✓" },
+      { label: "Operator networking directory", life: "-", op: "✓", direct: "✓" },
     ],
   },
   {
@@ -62,9 +62,9 @@ const comparison: Category[] = [
     rows: [
       { label: "Unlimited in-app messaging", life: "✓", op: "✓", direct: "✓" },
       { label: "Response target", life: "Async", op: "Priority (biz days)", direct: "Same day" },
-      { label: "Weekly 1-on-1 call", life: "—", op: "—", direct: "✓" },
-      { label: "Pre-decision voice memo", life: "—", op: "—", direct: "✓" },
-      { label: "Monthly private recap", life: "—", op: "—", direct: "✓" },
+      { label: "Weekly 1-on-1 call", life: "-", op: "-", direct: "✓" },
+      { label: "Pre-decision voice memo", life: "-", op: "-", direct: "✓" },
+      { label: "Monthly private recap", life: "-", op: "-", direct: "✓" },
     ],
   },
   {
@@ -97,7 +97,7 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-background">
       <PageHead
-        title="Pricing — Life Track $99, Operator Track $199, Direct $1,000"
+        title="Pricing - Life Track $99, Operator Track $199, Direct $1,000"
         description="Founding pricing for Terrible Coaching. Monthly accountability coaching with weekly check-ins, evidence verification, and $75 commitment breach fees. No refunds after the initial call."
         path="/pricing"
       />
@@ -112,7 +112,7 @@ export default function PricingPage() {
               Three tracks. <span className="text-gradient-gold">One standard.</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Founding rates are limited. Choose based on the access and pressure you actually need — not what sounds impressive.
+              Founding rates are limited. Choose based on the access and pressure you actually need - not what sounds impressive.
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export default function PricingPage() {
                 We do not charge you for honest failure. We charge when you breach the standard: a missed check-in, missing evidence by the deadline, ghosting the system, or a broken controllable commitment you agreed to.
               </p>
               <p>
-                Missing an outcome you could not fully control is different. That gets reviewed — not automatically charged. The Reset Call exists to look at the pattern when a breach happens, not to punish you for ambition.
+                Missing an outcome you could not fully control is different. That gets reviewed - not automatically charged. The Reset Call exists to look at the pattern when a breach happens, not to punish you for ambition.
               </p>
             </div>
             <div className="mt-8 rounded-xl border border-primary/20 bg-primary/[0.03] p-6 md:p-8">

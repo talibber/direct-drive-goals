@@ -85,7 +85,7 @@ export default function CoachClientDetailPage() {
             <span>{client.email}</span>
             <span>·</span>
             {!isBusiness && <>
-              <span className="text-primary font-medium">Level {clientLevel.level} — {clientLevel.name}</span>
+              <span className="text-primary font-medium">Level {clientLevel.level} - {clientLevel.name}</span>
               <span>·</span>
               <span>{totalPoints} pts</span>
               <span>·</span>
@@ -176,7 +176,7 @@ export default function CoachClientDetailPage() {
             </ResponsiveContainer>
           </div>
 
-          {/* Badges — Life Track only */}
+          {/* Badges - Life Track only */}
           {!isBusiness && (
             <div className="rounded-lg border border-border bg-card p-5 shadow-card">
               <h3 className="font-display font-semibold mb-3">Badges Earned</h3>
@@ -303,7 +303,7 @@ export default function CoachClientDetailPage() {
                           </div>
                           <div>
                             <p className="text-xs text-muted-foreground">Pattern</p>
-                            <p className="text-sm text-foreground">{missReport.isFamiliarPattern ? `Familiar — ${missReport.patternDescription}` : "New pattern"}</p>
+                            <p className="text-sm text-foreground">{missReport.isFamiliarPattern ? `Familiar - ${missReport.patternDescription}` : "New pattern"}</p>
                           </div>
                           <div>
                             <p className="text-xs text-muted-foreground">Commitment</p>
@@ -413,7 +413,7 @@ export default function CoachClientDetailPage() {
                       <p className="text-sm font-medium text-foreground">{ci.habits}%</p>
                     </div>
 
-                    {/* Business Mindset Data — mock: show for Operator Track clients */}
+                    {/* Business Mindset Data - mock: show for Operator Track clients */}
                     {client.type === "Business" && (
                       <div className="mt-4 rounded-lg border-l-[4px] border-l-primary border border-primary/20 bg-primary/[0.03] p-4 space-y-4">
                         <h4 className="text-xs font-bold uppercase tracking-wider text-primary">Business Mindset Data</h4>
@@ -453,12 +453,12 @@ export default function CoachClientDetailPage() {
 
       {activeTab === "Application" && (
         <div className="rounded-lg border border-border bg-card p-6 shadow-card max-w-2xl">
-          <h3 className="font-display font-semibold mb-6">Application — Read Only</h3>
+          <h3 className="font-display font-semibold mb-6">Application - Read Only</h3>
           <div className="space-y-5">
             {[
               { label: "Full Name", value: app.name },
               { label: "Email", value: app.email },
-              { label: "Occupation / Role", value: app.occupation || "—" },
+              { label: "Occupation / Role", value: app.occupation || "-" },
               { label: "Coaching Interest", value: app.type },
               { label: "Main Challenge", value: app.challenge },
               { label: "Submitted", value: app.submitted },

@@ -57,7 +57,7 @@ export default function CoachBreachesPage() {
     try {
       const { data, error } = await supabase.functions.invoke("process-commitment-breaches");
       if (error) throw error;
-      toast.success(`Scanned ${data.scanned ?? 0} overdue goals — ${data.created ?? 0} new breach(es)`);
+      toast.success(`Scanned ${data.scanned ?? 0} overdue goals - ${data.created ?? 0} new breach(es)`);
       await load();
     } catch (e) {
       toast.error("Sweep failed: " + (e as Error).message);
@@ -69,7 +69,7 @@ export default function CoachBreachesPage() {
   async function approve(id: string) {
     const { error } = await supabase.from("commitment_breaches").update({ lifecycle_status: "approved", decision: "approved" }).eq("id", id);
     if (error) return toast.error(error.message);
-    toast.success("Breach approved — still requires manual charge.");
+    toast.success("Breach approved - still requires manual charge.");
     load();
   }
 
@@ -155,10 +155,10 @@ export default function CoachBreachesPage() {
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
                   <p className="font-medium text-foreground">
-                    ${b.amount} — {reasonLabel[b.breach_reason] ?? b.breach_reason}
+                    ${b.amount} - {reasonLabel[b.breach_reason] ?? b.breach_reason}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Client: {b.user_id.slice(0, 8)}… · Goal: {b.goal_id?.slice(0, 8) ?? "—"} ·{" "}
+                    Client: {b.user_id.slice(0, 8)}… · Goal: {b.goal_id?.slice(0, 8) ?? "-"} ·{" "}
                     {new Date(b.created_at).toLocaleDateString()}
                   </p>
                 </div>

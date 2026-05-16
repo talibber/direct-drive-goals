@@ -55,7 +55,7 @@ export function CommandCenter() {
             <Icon size={16} className={alert && value > 0 ? "text-destructive" : "text-muted-foreground"} />
             {alert && value > 0 && <Badge variant="destructive" className="text-[10px]">action</Badge>}
           </div>
-          <div className="mt-2 text-2xl font-bold">{loading ? "—" : value}</div>
+          <div className="mt-2 text-2xl font-bold">{loading ? "-" : value}</div>
           <div className="text-xs text-muted-foreground">{label}</div>
         </Card>
       </Link>

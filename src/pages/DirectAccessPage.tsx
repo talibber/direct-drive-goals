@@ -36,7 +36,7 @@ const mockMessages: MockMessage[] = [
     category: "Decision",
     sent_at: "2026-04-09T14:30:00Z",
     read_at: "2026-04-09T15:00:00Z",
-    response_text: "Don't negotiate the price. Negotiate the scope. If they want to pay 30% less, remove 30% of the deliverables. Present it as 'here's what the adjusted engagement looks like' — not as a concession. If they push back, you'll learn whether they value the work or just want a discount. Either answer is useful.",
+    response_text: "Don't negotiate the price. Negotiate the scope. If they want to pay 30% less, remove 30% of the deliverables. Present it as 'here's what the adjusted engagement looks like' - not as a concession. If they push back, you'll learn whether they value the work or just want a discount. Either answer is useful.",
     response_voice_url: null,
     responded_at: "2026-04-09T18:45:00Z",
   },
@@ -134,11 +134,11 @@ export default function DirectAccessPage() {
           <CardContent className="pt-6">
             <h3 className="text-sm font-semibold text-primary mb-3">How this works:</h3>
             <ul className="space-y-1.5 text-sm text-muted-foreground">
-              <li>— One specific question per message</li>
-              <li>— Voice notes max 3 minutes</li>
-              <li>— Responses within 24hrs Mon–Fri</li>
-              <li>— Business decisions and mindset only</li>
-              <li>— The clearer your question, the more useful the response</li>
+              <li>- One specific question per message</li>
+              <li>- Voice notes max 3 minutes</li>
+              <li>- Responses within 24hrs Mon–Fri</li>
+              <li>- Business decisions and mindset only</li>
+              <li>- The clearer your question, the more useful the response</li>
             </ul>
           </CardContent>
         </Card>
@@ -149,7 +149,7 @@ export default function DirectAccessPage() {
             <CardContent className="pt-6 flex items-start gap-3">
               <AlertTriangle size={18} className="text-destructive mt-0.5" />
               <p className="text-sm text-muted-foreground">
-                You've sent {monthMessages} messages this month. Direct Access works best for specific decisions — not ongoing conversation. Consider saving your next question for the Operator Community Call.
+                You've sent {monthMessages} messages this month. Direct Access works best for specific decisions - not ongoing conversation. Consider saving your next question for the Operator Community Call.
               </p>
             </CardContent>
           </Card>

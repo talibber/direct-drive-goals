@@ -68,7 +68,7 @@ export function GamificationPanel() {
           {clientAchievements.map((a) => (
             <span
               key={a.id}
-              title={`${a.badgeName} — ${a.description}`}
+              title={`${a.badgeName} - ${a.description}`}
               className="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[11px] font-medium text-primary cursor-default"
             >
               {badgeIcons[a.badgeName] || "🏅"} {a.badgeName}
