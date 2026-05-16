@@ -163,15 +163,16 @@ export default function CoachBreachesPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  {b.waived && <Badge className="bg-muted text-foreground">Waived</Badge>}
-                  {b.charged && <Badge className="bg-success/10 text-success">Charged</Badge>}
+                  <Badge variant="outline" className="text-[10px] uppercase">{b.lifecycle_status}</Badge>
+                  {b.is_demo && <Badge variant="secondary">demo</Badge>}
+                  {!b.charged && !b.waived && b.lifecycle_status === "candidate" && (
+                    <Button size="sm" onClick={() => approve(b.id)}>Approve</Button>
+                  )}
+                  {!b.charged && !b.waived && b.lifecycle_status === "approved" && (
+                    <Button size="sm" onClick={() => markCharged(b)}>Mark Charged</Button>
+                  )}
                   {!b.charged && !b.waived && (
-                    <>
-                      <Button size="sm" onClick={() => markCharged(b.id)}>Mark Charged</Button>
-                      <Button size="sm" variant="outline" onClick={() => setWaiverFor(b.id)}>
-                        Waive
-                      </Button>
-                    </>
+                    <Button size="sm" variant="outline" onClick={() => setWaiverFor(b.id)}>Waive</Button>
                   )}
                 </div>
               </div>
