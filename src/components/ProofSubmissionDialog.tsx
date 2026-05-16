@@ -84,8 +84,26 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
     resetAndClose();
   };
 
-  const confirmMiss = () => {
+  const confirmMiss = async () => {
     onSubmit(goal.id, { description, selfAssessment: "not_completed", files });
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData?.user) {
+        await supabase.functions.invoke("process-commitment-breaches", {
+          body: {
+            goal_id: goal.id,
+            user_id: userData.user.id,
+            breach_reason: "broken_commitment",
+            notes: description,
+            reset_call_enrolled: true,
+          },
+        });
+      }
+    } catch (e) {
+      // Non-blocking: surface but don't reverse the UX flow
+      console.warn("breach record failed", e);
+    }
     toast.info("Goal marked as not completed. Your $75 commitment breach fee will be charged and you'll be enrolled in the monthly Reset Session.");
     setShowMissConfirm(false);
     resetAndClose();
