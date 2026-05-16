@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 
 export default function SignupPage() {
@@ -32,11 +33,15 @@ export default function SignupPage() {
   }
 
   async function onGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: `${window.location.origin}/onboarding/legal` },
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}/onboarding/legal`,
     });
-    if (error) toast.error(error.message);
+    if (result.redirected) return;
+    if (result.error) {
+      toast.error(result.error.message);
+      return;
+    }
+    navigate("/onboarding/legal");
   }
 
   return (
