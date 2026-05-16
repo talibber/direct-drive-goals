@@ -5,9 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { BreachFeeBadge } from "@/components/BreachFeeBadge";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { goals } from "@/lib/mockData";
+import { goals as mockGoals } from "@/lib/mockData";
+import { supabase } from "@/integrations/supabase/client";
 
 const ratingFields = [
   { key: "energy", label: "Energy Level", borderColor: "border-l-green-500" },
@@ -17,8 +19,24 @@ const ratingFields = [
   { key: "sleep", label: "Sleep Quality", borderColor: "border-l-purple-500" },
 ];
 
+const GOAL_STATUSES = ["on_track", "at_risk", "missed", "completed", "needs_help"] as const;
+type GoalStatusKey = typeof GOAL_STATUSES[number];
+
+const STATUS_TO_EVENT: Record<GoalStatusKey, string> = {
+  on_track: "goal_marked_on_track",
+  at_risk: "goal_marked_at_risk",
+  missed: "goal_marked_missed",
+  completed: "goal_marked_completed",
+  needs_help: "goal_marked_needs_help",
+};
+
+const NEEDS_DRAFT: GoalStatusKey[] = ["at_risk", "missed", "needs_help"];
+
 // TODO: In production, derive from client profile data
 const MOCK_COACHING_TRACK: "life" | "business" = "business";
+
+interface ActiveGoal { id: string; title: string }
+
 
 export default function WeeklyCheckInPage() {
   const { toast } = useToast();
