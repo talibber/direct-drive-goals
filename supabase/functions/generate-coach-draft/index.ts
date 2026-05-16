@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
     );
 
     // Load context
-    const [{ data: profile }, { data: goal }, { data: recentLearning }, { data: recentApproved }] =
+    const [{ data: profile }, { data: goal }, { data: recentLearning }, { data: recentApproved }, { data: latestCheckin }] =
       await Promise.all([
         supabase.from("user_coaching_profiles").select("*").eq("user_id", user_id).maybeSingle(),
         goal_id
@@ -64,17 +64,35 @@ Deno.serve(async (req) => {
           : Promise.resolve({ data: null }),
         supabase
           .from("coach_style_learning")
-          .select("phrase_added,phrase_removed,tone_shift")
+          .select("phrase_added,phrase_removed,tone_shift,example_context")
           .order("created_at", { ascending: false })
-          .limit(15),
+          .limit(50),
         supabase
           .from("coach_message_drafts")
           .select("trigger_type,final_message")
           .in("status", ["sent", "approved", "edited"])
           .not("final_message", "is", null)
+          .eq("trigger_type", event_type)
           .order("created_at", { ascending: false })
           .limit(5),
+        supabase
+          .from("weekly_checkins").select("avoiding,story")
+          .eq("client_id", user_id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
       ]);
+
+    // Filter learning rows to those whose example_context.trigger matches this event_type when available
+    const filteredLearning = (recentLearning || []).filter((l: any) => {
+      const t = l?.example_context?.trigger;
+      return !t || t === event_type;
+    }).slice(0, 15);
+
+    // Refresh common_blockers from latest check-in
+    if (profile && latestCheckin?.avoiding) {
+      const blockers = Array.from(new Set([latestCheckin.avoiding, ...((profile.common_blockers as string[]) || [])])).slice(0, 5);
+      await supabase.from("user_coaching_profiles").update({ common_blockers: blockers }).eq("user_id", user_id);
+    } else if (!profile && latestCheckin?.avoiding) {
+      await supabase.from("user_coaching_profiles").insert({ user_id, common_blockers: [latestCheckin.avoiding] });
+    }
 
     // Record the event
     const { data: eventRow } = await supabase
@@ -96,9 +114,10 @@ User profile: ${profile ? JSON.stringify({
       at_risk: profile.at_risk_count,
     }) : "first interaction, no profile yet"}
 Event payload: ${JSON.stringify(event_payload)}
-Recent coach phrase preferences (added): ${(recentLearning || []).map(l => l.phrase_added).filter(Boolean).slice(0,8).join(" | ") || "none"}
-Recent coach phrase removals: ${(recentLearning || []).map(l => l.phrase_removed).filter(Boolean).slice(0,8).join(" | ") || "none"}
-Last approved messages by trigger:
+Recent coach phrase preferences (added): ${filteredLearning.map((l: any) => l.phrase_added).filter(Boolean).slice(0,8).join(" | ") || "none"}
+Recent coach phrase removals: ${filteredLearning.map((l: any) => l.phrase_removed).filter(Boolean).slice(0,8).join(" | ") || "none"}
+Latest user avoidance signal: ${latestCheckin?.avoiding || "none"}
+Recent same-trigger approved messages:
 ${(recentApproved || []).map(m => `[${m.trigger_type}] ${m.final_message?.slice(0,300)}`).join("\n")}`;
 
     const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
