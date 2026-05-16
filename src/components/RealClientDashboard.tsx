@@ -23,15 +23,15 @@ export function RealClientDashboard({ profile }: { profile: ClientProfile }) {
     (async () => {
       const [g, c, m, r] = await Promise.all([
         supabase.from("goals").select("id,title,status,category,due_date").eq("user_id", profile.user_id).eq("is_demo", false).order("created_at", { ascending: false }),
-        supabase.from("weekly_checkins").select("id,submitted_at,completion_status").eq("client_id", profile.user_id).eq("is_demo", false).order("submitted_at", { ascending: false }).limit(8),
+        supabase.from("weekly_checkins" as any).select("id,submitted_at,completion_status").eq("client_id", profile.user_id).eq("is_demo", false).order("submitted_at", { ascending: false }).limit(8),
         supabase.from("coach_message_drafts").select("id,final_message,ai_draft,sent_at").eq("user_id", profile.user_id).eq("status", "sent").eq("is_demo", false).order("sent_at", { ascending: false }).limit(1).maybeSingle(),
         supabase.from("help_radar_items").select("id,category,client_status,flagged_at").eq("client_id", profile.user_id).eq("is_demo", false).order("flagged_at", { ascending: false }).limit(3),
       ]);
       if (cancelled) return;
-      setGoals((g.data ?? []) as Goal[]);
-      setCheckins((c.data ?? []) as Checkin[]);
-      setMessage((m.data ?? null) as Message | null);
-      setRadar((r.data ?? []) as RadarItem[]);
+      setGoals(((g.data ?? []) as unknown) as Goal[]);
+      setCheckins(((c.data ?? []) as unknown) as Checkin[]);
+      setMessage(((m.data ?? null) as unknown) as Message | null);
+      setRadar(((r.data ?? []) as unknown) as RadarItem[]);
       setLoading(false);
     })();
     return () => { cancelled = true; };
