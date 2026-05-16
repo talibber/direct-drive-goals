@@ -5,9 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { BreachFeeBadge } from "@/components/BreachFeeBadge";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { goals } from "@/lib/mockData";
+import { goals as mockGoals } from "@/lib/mockData";
+import { supabase } from "@/integrations/supabase/client";
 
 const ratingFields = [
   { key: "energy", label: "Energy Level", borderColor: "border-l-green-500" },
@@ -17,8 +19,24 @@ const ratingFields = [
   { key: "sleep", label: "Sleep Quality", borderColor: "border-l-purple-500" },
 ];
 
+const GOAL_STATUSES = ["on_track", "at_risk", "missed", "completed", "needs_help"] as const;
+type GoalStatusKey = typeof GOAL_STATUSES[number];
+
+const STATUS_TO_EVENT: Record<GoalStatusKey, string> = {
+  on_track: "goal_marked_on_track",
+  at_risk: "goal_marked_at_risk",
+  missed: "goal_marked_missed",
+  completed: "goal_marked_completed",
+  needs_help: "goal_marked_needs_help",
+};
+
+const NEEDS_DRAFT: GoalStatusKey[] = ["at_risk", "missed", "needs_help"];
+
 // TODO: In production, derive from client profile data
 const MOCK_COACHING_TRACK: "life" | "business" = "business";
+
+interface ActiveGoal { id: string; title: string }
+
 
 export default function WeeklyCheckInPage() {
   const { toast } = useToast();
@@ -34,8 +52,28 @@ export default function WeeklyCheckInPage() {
   const [fearCost, setFearCost] = useState("");
   const [businessCommitment, setBusinessCommitment] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [activeGoals, setActiveGoals] = useState<ActiveGoal[]>([]);
+  const [goalStatuses, setGoalStatuses] = useState<Record<string, GoalStatusKey>>({});
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    (async () => {
+      const { data: u } = await supabase.auth.getUser();
+      if (!u.user) {
+        setActiveGoals(mockGoals.map(g => ({ id: g.id, title: g.title })));
+        return;
+      }
+      const { data } = await supabase
+        .from("goals")
+        .select("id,title")
+        .eq("user_id", u.user.id)
+        .in("status", ["active", "at_risk"]);
+      const list = (data && data.length > 0) ? data : mockGoals.map(g => ({ id: g.id, title: g.title }));
+      setActiveGoals(list as ActiveGoal[]);
+    })();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isBusiness) {
       if (!revenueActions || !decisionMade.trim() || !decisionAvoided.trim() || !fearCost.trim() || !businessCommitment.trim()) {
@@ -43,8 +81,38 @@ export default function WeeklyCheckInPage() {
         return;
       }
     }
-    setSubmitted(true);
-    toast({ title: "Check-in submitted", description: "Your weekly data has been recorded." });
+    setSubmitting(true);
+    try {
+      const { data: u } = await supabase.auth.getUser();
+      const userId = u.user?.id;
+      if (userId) {
+        // Emit weekly submission event
+        await supabase.functions.invoke("generate-coach-draft", {
+          body: { user_id: userId, event_type: "weekly_goals_submitted", event_payload: { ratings, goalStatuses } },
+        });
+        // Per-goal events; trigger drafts for risky statuses
+        for (const goalId of Object.keys(goalStatuses)) {
+          const status = goalStatuses[goalId];
+          const eventType = STATUS_TO_EVENT[status];
+          if (NEEDS_DRAFT.includes(status)) {
+            await supabase.functions.invoke("generate-coach-draft", {
+              body: { user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status } },
+            });
+          } else {
+            await supabase.from("coaching_events").insert({
+              user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status },
+            });
+          }
+        }
+      }
+      setSubmitted(true);
+      toast({ title: "Check-in submitted", description: "Your coach will review and respond." });
+    } catch (err: any) {
+      toast({ title: "Submission saved locally", description: err?.message || "Check connection.", variant: "destructive" });
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -214,28 +282,42 @@ export default function WeeklyCheckInPage() {
             </div>
           </div>
 
-          {/* Goal status */}
+          {/* Goal status — every active goal must be marked */}
           <div className="rounded-lg border border-border bg-card p-6 shadow-card space-y-4">
-            <h3 className="font-display font-semibold">Goal Status</h3>
-            {goals.map((g) => (
-              <div key={g.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                <span className="text-sm text-foreground">{g.title}</span>
-                <Select>
-                  <SelectTrigger className="w-32">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <h3 className="font-display font-semibold">Goal Status</h3>
+              <BreachFeeBadge label="$75 per missed commitment" />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Mark every active goal honestly. At-risk, missed, and needs-help statuses send a coaching draft to your coach for review and reply.
+            </p>
+            {activeGoals.length === 0 && (
+              <p className="text-sm text-muted-foreground italic">No active goals yet.</p>
+            )}
+            {activeGoals.map((g) => (
+              <div key={g.id} className="flex items-center justify-between gap-3 py-2 border-b border-border/50 last:border-0">
+                <span className="text-sm text-foreground flex-1">{g.title}</span>
+                <Select
+                  value={goalStatuses[g.id] || undefined}
+                  onValueChange={(v) => setGoalStatuses(prev => ({ ...prev, [g.id]: v as GoalStatusKey }))}
+                >
+                  <SelectTrigger className="w-40">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="on-track">On Track</SelectItem>
-                    <SelectItem value="at-risk">At Risk</SelectItem>
+                    <SelectItem value="on_track">On Track</SelectItem>
+                    <SelectItem value="at_risk">At Risk</SelectItem>
                     <SelectItem value="missed">Missed</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="needs_help">Needs Help</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             ))}
           </div>
 
-          <Button type="submit" variant="hero" size="lg" className="w-full text-base">
-            Submit Check-In
+          <Button type="submit" variant="hero" size="lg" className="w-full text-base" disabled={submitting}>
+            {submitting ? "Submitting…" : "Submit Check-In"}
           </Button>
         </form>
       </div>

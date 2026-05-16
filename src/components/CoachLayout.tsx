@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut, Mic, Zap, Trophy, BookOpen, AlertOctagon } from "lucide-react";
+import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut, Mic, Zap, Trophy, BookOpen, AlertOctagon, Inbox, Brain } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const links = [
   { to: "/coach", label: "Overview", icon: LayoutDashboard },
+  { to: "/coach/review-queue", label: "Review Queue", icon: Inbox },
   { to: "/coach/clients", label: "Clients", icon: Users },
   { to: "/coach/messages", label: "Messages", icon: MessageSquare },
   { to: "/coach/direct-access", label: "Direct Access", icon: Zap },
@@ -13,6 +14,7 @@ const links = [
   { to: "/coach/achievement-group", label: "Achievement Group", icon: Trophy },
   { to: "/coach/weekly-qa", label: "Weekly Q&A", icon: BookOpen },
   { to: "/coach/breaches", label: "Breach Fees", icon: AlertOctagon },
+  { to: "/coach/style-learning", label: "Style Learning", icon: Brain },
   { to: "/coach/metrics", label: "Metrics", icon: BarChart3 },
 ];
 

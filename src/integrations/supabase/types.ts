@@ -346,6 +346,148 @@ export type Database = {
         }
         Relationships: []
       }
+      coach_message_drafts: {
+        Row: {
+          ai_draft: string
+          approved_at: string | null
+          approved_by: string | null
+          confidence_score: number
+          created_at: string
+          event_id: string | null
+          final_message: string | null
+          goal_id: string | null
+          id: string
+          sent_at: string | null
+          status: string
+          suggested_tone: string | null
+          trigger_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_draft: string
+          approved_at?: string | null
+          approved_by?: string | null
+          confidence_score?: number
+          created_at?: string
+          event_id?: string | null
+          final_message?: string | null
+          goal_id?: string | null
+          id?: string
+          sent_at?: string | null
+          status?: string
+          suggested_tone?: string | null
+          trigger_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_draft?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          confidence_score?: number
+          created_at?: string
+          event_id?: string | null
+          final_message?: string | null
+          goal_id?: string | null
+          id?: string
+          sent_at?: string | null
+          status?: string
+          suggested_tone?: string | null
+          trigger_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coach_message_drafts_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "coaching_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coach_style_learning: {
+        Row: {
+          coach_id: string
+          created_at: string
+          directness_level: number | null
+          draft_id: string | null
+          encouragement_level: number | null
+          example_context: Json
+          humor_level: number | null
+          id: string
+          phrase_added: string | null
+          phrase_removed: string | null
+          pressure_level: number | null
+          tone_shift: string | null
+        }
+        Insert: {
+          coach_id: string
+          created_at?: string
+          directness_level?: number | null
+          draft_id?: string | null
+          encouragement_level?: number | null
+          example_context?: Json
+          humor_level?: number | null
+          id?: string
+          phrase_added?: string | null
+          phrase_removed?: string | null
+          pressure_level?: number | null
+          tone_shift?: string | null
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string
+          directness_level?: number | null
+          draft_id?: string | null
+          encouragement_level?: number | null
+          example_context?: Json
+          humor_level?: number | null
+          id?: string
+          phrase_added?: string | null
+          phrase_removed?: string | null
+          pressure_level?: number | null
+          tone_shift?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coach_style_learning_draft_id_fkey"
+            columns: ["draft_id"]
+            isOneToOne: false
+            referencedRelation: "coach_message_drafts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coaching_events: {
+        Row: {
+          created_at: string
+          event_payload: Json
+          event_type: string
+          goal_id: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_payload?: Json
+          event_type: string
+          goal_id?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_payload?: Json
+          event_type?: string
+          goal_id?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       commitment_breaches: {
         Row: {
           amount: number
@@ -903,6 +1045,50 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      message_learning_outcomes: {
+        Row: {
+          created_at: string
+          draft_id: string | null
+          engagement_score: number
+          goal_status_after_message: string | null
+          id: string
+          next_action_completed: boolean
+          user_id: string
+          user_replied: boolean
+          user_reply_text: string | null
+        }
+        Insert: {
+          created_at?: string
+          draft_id?: string | null
+          engagement_score?: number
+          goal_status_after_message?: string | null
+          id?: string
+          next_action_completed?: boolean
+          user_id: string
+          user_replied?: boolean
+          user_reply_text?: string | null
+        }
+        Update: {
+          created_at?: string
+          draft_id?: string | null
+          engagement_score?: number
+          goal_status_after_message?: string | null
+          id?: string
+          next_action_completed?: boolean
+          user_id?: string
+          user_replied?: boolean
+          user_reply_text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_learning_outcomes_draft_id_fkey"
+            columns: ["draft_id"]
+            isOneToOne: false
+            referencedRelation: "coach_message_drafts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       messages: {
         Row: {
@@ -1579,6 +1765,57 @@ export type Database = {
           is_open?: boolean
           max_members?: number
           name?: string
+        }
+        Relationships: []
+      }
+      user_coaching_profiles: {
+        Row: {
+          at_risk_count: number
+          avoidance_pattern: string | null
+          breach_count: number
+          coaching_notes: Json
+          common_blockers: Json
+          completion_rate: number
+          id: string
+          last_engagement_at: string | null
+          missed_goal_count: number
+          motivation_pattern: string | null
+          preferred_tone: string
+          reply_rate: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          at_risk_count?: number
+          avoidance_pattern?: string | null
+          breach_count?: number
+          coaching_notes?: Json
+          common_blockers?: Json
+          completion_rate?: number
+          id?: string
+          last_engagement_at?: string | null
+          missed_goal_count?: number
+          motivation_pattern?: string | null
+          preferred_tone?: string
+          reply_rate?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          at_risk_count?: number
+          avoidance_pattern?: string | null
+          breach_count?: number
+          coaching_notes?: Json
+          common_blockers?: Json
+          completion_rate?: number
+          id?: string
+          last_engagement_at?: string | null
+          missed_goal_count?: number
+          motivation_pattern?: string | null
+          preferred_tone?: string
+          reply_rate?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
