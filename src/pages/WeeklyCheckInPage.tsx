@@ -86,24 +86,29 @@ export default function WeeklyCheckInPage() {
       const { data: u } = await supabase.auth.getUser();
       const userId = u.user?.id;
       if (userId) {
-        // Emit weekly submission event
-        await supabase.functions.invoke("generate-coach-draft", {
-          body: { user_id: userId, event_type: "weekly_goals_submitted", event_payload: { ratings, goalStatuses } },
-        });
-        // Per-goal events; trigger drafts for risky statuses
+        // Record the weekly submission as an event (no draft — drafts only fire on risk signals).
+        const safeInserts: any[] = [
+          { user_id: userId, event_type: "weekly_goals_submitted", event_payload: { ratings, goalStatuses } },
+        ];
+        const draftCalls: Promise<unknown>[] = [];
         for (const goalId of Object.keys(goalStatuses)) {
           const status = goalStatuses[goalId];
           const eventType = STATUS_TO_EVENT[status];
           if (NEEDS_DRAFT.includes(status)) {
-            await supabase.functions.invoke("generate-coach-draft", {
-              body: { user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status } },
-            });
+            draftCalls.push(
+              supabase.functions.invoke("generate-coach-draft", {
+                body: { user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status } },
+              })
+            );
           } else {
-            await supabase.from("coaching_events").insert({
-              user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status },
-            });
+            safeInserts.push({ user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status } });
           }
         }
+        // Parallelize: one bulk insert for safe events, all drafts concurrently.
+        await Promise.all([
+          supabase.from("coaching_events").insert(safeInserts),
+          ...draftCalls,
+        ]);
       }
       setSubmitted(true);
       toast({ title: "Check-in submitted", description: "Your coach will review and respond." });
