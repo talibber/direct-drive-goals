@@ -67,7 +67,7 @@ export default function WeeklyCheckInPage() {
         .from("goals")
         .select("id,title")
         .eq("user_id", u.user.id)
-        .in("status", ["active", "approved", "in_progress"]);
+        .in("status", ["active", "at_risk"]);
       const list = (data && data.length > 0) ? data : mockGoals.map(g => ({ id: g.id, title: g.title }));
       setActiveGoals(list as ActiveGoal[]);
     })();
