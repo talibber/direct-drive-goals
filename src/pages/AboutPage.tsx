@@ -1,9 +1,15 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageHead } from "@/components/PageHead";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="About Terrible Coaching — Radically Honest Accountability"
+        description="Terrible Coaching is built for high performers who already move but know they're leaving something on the table. No fluff, no motivation — just clarity, honest feedback, and accountability."
+        path="/about"
+      />
       <Navbar />
       <section className="pt-32 pb-20 md:pt-40">
         <div className="container max-w-3xl">

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageHead } from "@/components/PageHead";
 import { ClipboardCheck, Target, CalendarCheck, TrendingUp, DollarSign, MessageSquare } from "lucide-react";
 
 const steps = [
@@ -14,6 +15,11 @@ const steps = [
 export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="How Terrible Coaching Works — Six Steps to Real Accountability"
+        description="Apply, set measurable goals, complete weekly check-ins, get direct coach feedback, and pay the $75 stake when you miss. Here's exactly how the system works."
+        path="/how-it-works"
+      />
       <Navbar />
       <section className="pt-32 pb-20 md:pt-40">
         <div className="container max-w-3xl">

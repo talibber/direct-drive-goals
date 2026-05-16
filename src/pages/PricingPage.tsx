@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageHead } from "@/components/PageHead";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -95,6 +96,11 @@ function FeatureList({ items }: { items: string[] }) {
 export default function PricingPage() {
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="Pricing — Life Track $99, Operator Track $199, Direct $1,000"
+        description="Founding pricing for Terrible Coaching. Monthly accountability coaching with weekly check-ins, evidence verification, and $75 commitment breach fees. No refunds after the initial call."
+        path="/pricing"
+      />
       <Navbar />
 
       <section className="pt-32 pb-20 md:pt-40">
