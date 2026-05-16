@@ -5,33 +5,34 @@ import { Link } from "react-router-dom";
 const tracks = [
   {
     name: "Life Track",
-    price: "$99/month",
+    founding: "$99",
+    standard: "$149",
     to: "/apply?track=life",
-    body: "Your first call is real coaching — I listen to what's actually going on and build your 30-60-90 day goals from what we uncover together. You're matched to a pod of 4-6 people who operate like you do. Weekly check-ins. Scored goals. $75 fee per miss. Five coach touchpoints per month.",
-    tagline: "For anyone ready to stop figuring it out alone.",
+    body: "For personal goals, routines, health habits, discipline, focus, and consistency. 60-minute initial call. Monthly goals. Weekly check-ins. Evidence tracking. Pod accountability. Unlimited in-app messaging. Access to the monthly Reset Call if needed.",
+    tagline: "For anyone ready to be held to a standard.",
     badge: null,
     gold: false,
     cta: "Apply for Life Track",
   },
   {
-    name: "Business Track",
-    price: "$199/month",
-    to: "/apply?track=business",
-    body: "Your pod is matched to other business owners and operators. Monthly expert calls. Direct messenger access. Peer networking directory.",
-    intro: "Everything in Life Track — in a room full of operators.",
-    tagline: "For people running something who need more than a system — they need perspective from someone who gets the weight.",
+    name: "Operator Track",
+    founding: "$199",
+    standard: "$299",
+    to: "/apply?track=operator",
+    body: "Everything in Life Track, plus operator-level goal design, business-focused feedback, sharper weekly review, and pod matching with other high-output members.",
+    tagline: "For founders, creators, professionals, traders, and builders.",
     badge: "Most Popular",
     gold: false,
-    cta: "Apply for Business Track",
+    cta: "Apply for Operator Track",
   },
   {
     name: "Direct",
-    price: "$1,000/month",
+    founding: "$1,000",
+    standard: "$1,500–$2,500",
     to: "/apply?track=direct",
-    body: "Weekly 1-on-1 calls. Same-day responses. Pre-decision perspective before you commit.",
-    intro: "Everything in Business Track plus the coach directly.",
-    tagline: "For the person who wants the coach, not just the community.",
-    badge: "3 of 5 spots",
+    body: "Weekly 1-on-1 calls. Priority app review. Same-day response target during business days. Pre-decision feedback. Deeper goal and performance review. Limited availability.",
+    tagline: "For the person who wants direct access, not just the system.",
+    badge: "5 Founding Seats",
     gold: true,
     cta: "Apply for Direct",
   },
@@ -73,13 +74,16 @@ export default function TrackSelectionPage() {
                   </span>
                 )}
 
-                <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary mb-1 mt-1">
-                  {t.name} — {t.price}
+                <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary mb-2 mt-1">
+                  {t.name}
                 </p>
-
-                {("intro" in t && t.intro) && (
-                  <p className="text-sm font-medium text-foreground/80 mb-3">{t.intro}</p>
-                )}
+                <div className="mb-4">
+                  <div className="flex items-baseline gap-1">
+                    <span className="font-display text-3xl font-bold text-gradient-gold">{t.founding}</span>
+                    <span className="text-sm text-muted-foreground">/mo founding</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground/70 mt-1">Standard: {t.standard}/mo</p>
+                </div>
 
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4">{t.body}</p>
 
@@ -91,6 +95,10 @@ export default function TrackSelectionPage() {
               </Link>
             ))}
           </div>
+
+          <p className="text-center text-xs text-muted-foreground mt-10 max-w-2xl mx-auto leading-relaxed">
+            All tracks include the $75 Commitment Breach Fee for missed check-ins, missing evidence, ghosting, or broken controllable commitments. Fee may be waived at coach discretion.
+          </p>
         </div>
       </section>
       <Footer />

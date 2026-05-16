@@ -1,3 +1,18 @@
+const cards = [
+  {
+    title: "You ghost the system",
+    body: "If you stop checking in, ignore reminders, and disappear from the process, that is a breach. Coaching without data becomes guessing. And we do not guess.",
+  },
+  {
+    title: "You skip the evidence",
+    body: "Your word matters. Evidence makes it visible. If your commitment requires proof and you do not submit it by the deadline, that is a breach.",
+  },
+  {
+    title: "You break a controllable commitment",
+    body: "We do not charge you for missing an outcome you could not fully control. But if you agreed to a controllable action and did not do it, the commitment carries weight.",
+  },
+];
+
 export default function FeeSection() {
   return (
     <section className="py-20 border-t border-border">
@@ -7,28 +22,22 @@ export default function FeeSection() {
             Your choices have costs here.
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            The $75 accountability fee isn't a penalty. It's what inconsistency costs you.
+            The Commitment Breach Fee is not a punishment. It is the cost of avoidance.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6 mb-8">
-          <div className="rounded-xl border border-danger/20 border-l-2 border-l-danger bg-card p-6 md:p-8">
-            <h3 className="font-display text-lg font-bold text-foreground mb-4">You go dark on the system</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              If you don't update your check-ins or your goals, I can't give you feedback. We make decisions on good data — and silence isn't data. It's avoidance. And avoidance has a price here because you're wasting both of our time.
-            </p>
-          </div>
-          <div className="rounded-xl border border-danger/20 border-l-2 border-l-danger bg-card p-6 md:p-8">
-            <h3 className="font-display text-lg font-bold text-foreground mb-4">You miss a goal you committed to</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              You set it. I approved it. You didn't hit it. That miss isn't free — it's the cost of an opportunity you let pass. The fee makes the pattern visible. The Reset group addresses what's behind it.
-            </p>
-          </div>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-5 mb-10">
+          {cards.map((card) => (
+            <div key={card.title} className="rounded-xl border border-danger/20 border-l-2 border-l-danger bg-card p-6 md:p-7">
+              <h3 className="font-display text-base font-bold text-foreground mb-3">{card.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{card.body}</p>
+            </div>
+          ))}
         </div>
 
         <div className="max-w-3xl mx-auto rounded-xl border border-primary/20 bg-primary/[0.03] p-6 md:p-8 text-center">
-          <p className="text-sm md:text-base text-foreground/80 leading-relaxed">
-            I have the authority to waive any fee. Life doesn't always cooperate. But the default is that what you commit to here carries weight. The fee creates urgency. The pod creates daily visibility. The Reset creates insight. That combination is why this works.
+          <p className="text-sm md:text-base text-foreground/90 leading-relaxed">
+            We do not charge you for honest failure. We charge when you breach the standard: missed check-ins, missing evidence, ghosting, or broken controllable commitments. I can waive the fee when life genuinely happens. But avoidance is not adversity.
           </p>
         </div>
       </div>

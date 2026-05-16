@@ -16,16 +16,22 @@ export default function FounderSection() {
           <div className="flex-1 pt-2">
             <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
               <p>
-                I built Terrible Coaching because I got tired of watching smart people stay stuck — not because they didn't know what to do, but because they didn't have anyone around them who would say the uncomfortable thing.
+                I built Terrible Coaching because I got tired of watching smart people stay stuck — not because they did not know what to do, but because nobody around them was willing to hold them to the standard they claimed they wanted.
               </p>
               <p>
-                Everyone's got a friend who says 'you got this.' Nobody's got a friend who says 'you've tried that three times and it hasn't worked — so what are we actually going to change?'
+                Everyone has somebody saying 'you got this.' Very few people have somebody asking, 'Did you actually do what you said you were going to do?'
+              </p>
+              <p className="text-foreground/90 font-medium">
+                This is not motivation. This is a system.
               </p>
               <p>
-                That's the coaching. Blunt, backed by data, built on frameworks that actually hold up under pressure. Not motivation — information. Not inspiration — pattern recognition.
+                Your first call is real coaching. I listen for the pattern underneath the goal. Then we turn that into monthly targets, weekly commitments, evidence requirements, and a pod that can see whether your behavior matches your ambition.
               </p>
               <p>
-                The system is the tool — it captures what I need to coach you better than anyone else can. The community is the room — people who are in the same fight and won't let you hide. And the stakes exist so nobody wastes their own time or mine.
+                The system is the tool.<br />
+                The pod is the pressure.<br />
+                The feedback is the mirror.<br />
+                And the mirror does not negotiate.
               </p>
             </div>
             <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-foreground/70">
