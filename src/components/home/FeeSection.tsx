@@ -19,10 +19,10 @@ export default function FeeSection() {
       <div className="container">
         <div className="max-w-3xl mx-auto text-center mb-14">
           <h2 className="font-display text-3xl md:text-4xl font-bold">
-            Your choices have costs here.
+            Why there's a $75 breach fee.
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            The Commitment Breach Fee is not a punishment. It is the cost of avoidance.
+            If you say something matters, your behavior should reflect it. The breach fee creates urgency around the commitments you voluntarily make. You are not punished for needing help, adjusting goals, or being human — only for repeatedly disappearing on the standard you agreed to. Inconsistency costs something either way. We just make the cost visible.
           </p>
         </div>
 

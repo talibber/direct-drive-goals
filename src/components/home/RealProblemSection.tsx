@@ -1,35 +1,42 @@
+const knowItems = [
+  "Lose the weight",
+  "Build the business",
+  "Make the calls",
+  "Stop procrastinating",
+  "Finish the project",
+  "Save the money",
+  "Fix the habit",
+];
+
 export default function RealProblemSection() {
   return (
     <section className="py-20 border-t border-border">
       <div className="container">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
-            Most coaching fails for the same reason.
-            <br />
-            Most communities fail for the same reason.
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4">
+            The problem is rarely information.
           </h2>
+          <p className="text-center text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
+            Most people already know what they need to do.
+          </p>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <div className="rounded-xl border border-border bg-card p-6 md:p-8">
-              <h3 className="font-display text-lg font-bold text-foreground mb-4">Why coaching fails</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                One person. One hour a week. No data between sessions. No consequences for not showing up. No one watching when it matters most — which is every other hour of the week.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-6 md:p-8">
-              <h3 className="font-display text-lg font-bold text-foreground mb-4">Why communities fail</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                No structure. No stakes. No reason to keep showing up. People join, post twice, hear nothing back, and quietly disappear. Connection without accountability is just an audience.
-              </p>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-12">
+            {knowItems.map((item) => (
+              <div
+                key={item}
+                className="rounded-lg border border-border bg-card px-4 py-3 text-sm text-foreground/80 text-center"
+              >
+                {item}
+              </div>
+            ))}
           </div>
 
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <p className="text-2xl md:text-3xl font-display font-bold text-gradient-gold italic">
-              Terrible Coaching is neither of those things.
-            </p>
             <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
-              I'm the coach. The system is the tool. It captures the data I need to coach you well — your patterns, your progress, the gaps between what you say and what you do. Without that data, we're both guessing. And I don't guess.
+              The issue is not knowledge. The issue is inconsistency. Most people slowly negotiate with themselves until the goal quietly dies.
+            </p>
+            <p className="text-2xl md:text-3xl font-display font-bold text-gradient-gold italic">
+              Terrible Coaching interrupts that pattern before it becomes your lifestyle.
             </p>
           </div>
         </div>
