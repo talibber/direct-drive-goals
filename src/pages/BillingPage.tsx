@@ -32,7 +32,7 @@ export default function BillingPage() {
           <p className="text-lg font-bold text-foreground">${planPrice}</p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Stakes This Month</p>
+          <p className="text-xs text-muted-foreground">Breach Fees This Month</p>
           <p className="text-lg font-bold text-danger">${stakesThisMonth}</p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
