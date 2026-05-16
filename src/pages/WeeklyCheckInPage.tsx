@@ -52,8 +52,28 @@ export default function WeeklyCheckInPage() {
   const [fearCost, setFearCost] = useState("");
   const [businessCommitment, setBusinessCommitment] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [activeGoals, setActiveGoals] = useState<ActiveGoal[]>([]);
+  const [goalStatuses, setGoalStatuses] = useState<Record<string, GoalStatusKey>>({});
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    (async () => {
+      const { data: u } = await supabase.auth.getUser();
+      if (!u.user) {
+        setActiveGoals(mockGoals.map(g => ({ id: g.id, title: g.title })));
+        return;
+      }
+      const { data } = await supabase
+        .from("goals")
+        .select("id,title")
+        .eq("user_id", u.user.id)
+        .in("status", ["active", "approved", "in_progress"]);
+      const list = (data && data.length > 0) ? data : mockGoals.map(g => ({ id: g.id, title: g.title }));
+      setActiveGoals(list as ActiveGoal[]);
+    })();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isBusiness) {
       if (!revenueActions || !decisionMade.trim() || !decisionAvoided.trim() || !fearCost.trim() || !businessCommitment.trim()) {
@@ -61,8 +81,38 @@ export default function WeeklyCheckInPage() {
         return;
       }
     }
-    setSubmitted(true);
-    toast({ title: "Check-in submitted", description: "Your weekly data has been recorded." });
+    setSubmitting(true);
+    try {
+      const { data: u } = await supabase.auth.getUser();
+      const userId = u.user?.id;
+      if (userId) {
+        // Emit weekly submission event
+        await supabase.functions.invoke("generate-coach-draft", {
+          body: { user_id: userId, event_type: "weekly_goals_submitted", event_payload: { ratings, goalStatuses } },
+        });
+        // Per-goal events; trigger drafts for risky statuses
+        for (const goalId of Object.keys(goalStatuses)) {
+          const status = goalStatuses[goalId];
+          const eventType = STATUS_TO_EVENT[status];
+          if (NEEDS_DRAFT.includes(status)) {
+            await supabase.functions.invoke("generate-coach-draft", {
+              body: { user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status } },
+            });
+          } else {
+            await supabase.from("coaching_events").insert({
+              user_id: userId, goal_id: goalId, event_type: eventType, event_payload: { status },
+            });
+          }
+        }
+      }
+      setSubmitted(true);
+      toast({ title: "Check-in submitted", description: "Your coach will review and respond." });
+    } catch (err: any) {
+      toast({ title: "Submission saved locally", description: err?.message || "Check connection.", variant: "destructive" });
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
