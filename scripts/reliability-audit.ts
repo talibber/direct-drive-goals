@@ -137,12 +137,43 @@ async function noClientSLA() {
   checks.push({ name: "No 10-minute client SLA promise", weight: 5, pass: hits === 0 });
 }
 
+async function demoIsolation() {
+  // Verify is_demo column exists on the critical tables
+  const tables = ["profiles","goals","weekly_checkins","community_posts","community_comments","coach_message_drafts","commitment_breaches","help_radar_items","client_points","direct_access_messages","coaching_events"];
+  const missing: string[] = [];
+  for (const t of tables) {
+    const { error } = await supabase.from(t as any).select("is_demo").limit(1);
+    if (error) missing.push(t);
+  }
+  checks.push({ name: "Demo/Real isolation columns present", weight: 10, pass: missing.length === 0, detail: missing.join(", ") });
+}
+
+async function firstClientArtifacts() {
+  const want = [
+    "supabase/functions/accept-application/index.ts",
+    "src/components/RealClientDashboard.tsx",
+    "src/components/ClientTypeToggle.tsx",
+    "src/hooks/useRealClient.ts",
+    "first-client-go-live-report.md",
+  ];
+  const missing: string[] = [];
+  for (const f of want) { try { await Deno.stat(f); } catch { missing.push(f); } }
+  checks.push({ name: "First-client lane artifacts present", weight: 10, pass: missing.length === 0, detail: missing.join(", ") });
+}
+
+async function clientDashboardNoMockInRealPath() {
+  const t = await Deno.readTextFile("src/pages/ClientDashboard.tsx").catch(() => "");
+  const ok = t.includes("useRealClient") && t.includes("RealClientDashboard");
+  checks.push({ name: "ClientDashboard branches on real client", weight: 5, pass: ok });
+}
+
 async function main() {
   await Promise.all([
     scanLanguage(), schema(), edgeFunctions(), frontendPages(), navGroups(),
     acceptanceSmoke(), permissionsSeeded(), responseTargets(),
     styleLearningTables(), clientAutomationStatus(), commitmentStakesLifecycle(),
     highRiskGuard(), noClientSLA(),
+    demoIsolation(), firstClientArtifacts(), clientDashboardNoMockInRealPath(),
   ]);
 
   const total = checks.reduce((a, c) => a + c.weight, 0);

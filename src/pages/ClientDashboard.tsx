@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useRealClient } from "@/hooks/useRealClient";
+import { RealClientDashboard } from "@/components/RealClientDashboard";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { StatCard } from "@/components/StatCard";
 import { GoalCard } from "@/components/GoalCard";
@@ -14,8 +16,15 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer } from "recharts";
 
 export default function ClientDashboard() {
-  // In real implementation, coachingTrack comes from user profile
-  const coachingTrack = "business"; // mock — change to "life" to see Life Track view
+  const { profile, loading, isReal } = useRealClient();
+  if (loading) {
+    return <DashboardLayout><div className="p-8 text-sm text-muted-foreground">Loading your dashboard…</div></DashboardLayout>;
+  }
+  if (isReal && profile) {
+    return <RealClientDashboard profile={profile} />;
+  }
+  // Demo / unauthenticated view (mock data) — preserved for internal/admin demo use.
+  const coachingTrack = "business";
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
   const pm = clientPerfectMonth;
   const rs = clientResetSession;
