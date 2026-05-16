@@ -37,6 +37,8 @@ import CoachAchievementGroupPage from "./pages/CoachAchievementGroupPage";
 import CoachWeeklyQAPage from "./pages/CoachWeeklyQAPage";
 import CoachBreachesPage from "./pages/CoachBreachesPage";
 import CoachReviewQueuePage from "./pages/CoachReviewQueuePage";
+import CoachActionQueuePage from "./pages/CoachActionQueuePage";
+import CoachTeamSettingsPage from "./pages/CoachTeamSettingsPage";
 import CoachStyleLearningPage from "./pages/CoachStyleLearningPage";
 import LegalPage from "./pages/LegalPage";
 import NotFound from "./pages/NotFound";
@@ -90,6 +92,8 @@ const App = () => (
           <Route path="/coach/weekly-qa" element={<CoachWeeklyQAPage />} />
           <Route path="/coach/breaches" element={<CoachBreachesPage />} />
           <Route path="/coach/review-queue" element={<CoachReviewQueuePage />} />
+          <Route path="/coach/action-queue" element={<CoachActionQueuePage />} />
+          <Route path="/coach/team-settings" element={<CoachTeamSettingsPage />} />
           <Route path="/coach/style-learning" element={<CoachStyleLearningPage />} />
 
           <Route path="*" element={<NotFound />} />

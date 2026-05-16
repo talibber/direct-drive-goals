@@ -121,6 +121,66 @@ export type Database = {
         }
         Relationships: []
       }
+      action_queue_items: {
+        Row: {
+          assigned_owner: string | null
+          client_id: string
+          context_summary: Json
+          created_at: string
+          id: string
+          internal_due_at: string | null
+          priority: number
+          resolved_at: string | null
+          resolved_by: string | null
+          risk_level: string
+          source_id: string | null
+          source_type: string
+          status: string
+          suggested_action: string | null
+          suggested_response_draft_id: string | null
+          trigger: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_owner?: string | null
+          client_id: string
+          context_summary?: Json
+          created_at?: string
+          id?: string
+          internal_due_at?: string | null
+          priority?: number
+          resolved_at?: string | null
+          resolved_by?: string | null
+          risk_level?: string
+          source_id?: string | null
+          source_type: string
+          status?: string
+          suggested_action?: string | null
+          suggested_response_draft_id?: string | null
+          trigger: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_owner?: string | null
+          client_id?: string
+          context_summary?: Json
+          created_at?: string
+          id?: string
+          internal_due_at?: string | null
+          priority?: number
+          resolved_at?: string | null
+          resolved_by?: string | null
+          risk_level?: string
+          source_id?: string | null
+          source_type?: string
+          status?: string
+          suggested_action?: string | null
+          suggested_response_draft_id?: string | null
+          trigger?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       applications: {
         Row: {
           accountability_style: string | null
@@ -292,6 +352,39 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          after_value: Json | null
+          before_value: Json | null
+          entity_id: string | null
+          entity_type: string
+          id: string
+          occurred_at: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          after_value?: Json | null
+          before_value?: Json | null
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          occurred_at?: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          after_value?: Json | null
+          before_value?: Json | null
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          occurred_at?: string
+        }
+        Relationships: []
+      }
       client_automation_settings: {
         Row: {
           automation_level: number
@@ -300,6 +393,7 @@ export type Database = {
           id: string
           onboarded_at: string
           per_trigger_overrides: Json
+          send_status: string
           updated_at: string
         }
         Insert: {
@@ -309,6 +403,7 @@ export type Database = {
           id?: string
           onboarded_at?: string
           per_trigger_overrides?: Json
+          send_status?: string
           updated_at?: string
         }
         Update: {
@@ -318,6 +413,7 @@ export type Database = {
           id?: string
           onboarded_at?: string
           per_trigger_overrides?: Json
+          send_status?: string
           updated_at?: string
         }
         Relationships: []
@@ -346,6 +442,45 @@ export type Database = {
           last_updated?: string
           monthly_points?: number
           total_points?: number
+        }
+        Relationships: []
+      }
+      client_timeline_events: {
+        Row: {
+          client_facing_note: string | null
+          client_id: string
+          client_visible: boolean
+          id: string
+          internal_note: string | null
+          kind: string
+          occurred_at: string
+          owner_id: string | null
+          source_id: string | null
+          source_type: string | null
+        }
+        Insert: {
+          client_facing_note?: string | null
+          client_id: string
+          client_visible?: boolean
+          id?: string
+          internal_note?: string | null
+          kind: string
+          occurred_at?: string
+          owner_id?: string | null
+          source_id?: string | null
+          source_type?: string | null
+        }
+        Update: {
+          client_facing_note?: string | null
+          client_id?: string
+          client_visible?: boolean
+          id?: string
+          internal_note?: string | null
+          kind?: string
+          occurred_at?: string
+          owner_id?: string | null
+          source_id?: string | null
+          source_type?: string | null
         }
         Relationships: []
       }
@@ -544,27 +679,51 @@ export type Database = {
       }
       coaching_events: {
         Row: {
+          admin_notes: string | null
+          assigned_owner: string | null
+          client_visible: boolean | null
           created_at: string
           event_payload: Json
           event_type: string
           goal_id: string | null
           id: string
+          internal_due_at: string | null
+          priority: number | null
+          risk_level: string | null
+          status: string | null
+          suggested_action: string | null
           user_id: string
         }
         Insert: {
+          admin_notes?: string | null
+          assigned_owner?: string | null
+          client_visible?: boolean | null
           created_at?: string
           event_payload?: Json
           event_type: string
           goal_id?: string | null
           id?: string
+          internal_due_at?: string | null
+          priority?: number | null
+          risk_level?: string | null
+          status?: string | null
+          suggested_action?: string | null
           user_id: string
         }
         Update: {
+          admin_notes?: string | null
+          assigned_owner?: string | null
+          client_visible?: boolean | null
           created_at?: string
           event_payload?: Json
           event_type?: string
           goal_id?: string | null
           id?: string
+          internal_due_at?: string | null
+          priority?: number | null
+          risk_level?: string | null
+          status?: string | null
+          suggested_action?: string | null
           user_id?: string
         }
         Relationships: []
@@ -573,12 +732,17 @@ export type Database = {
         Row: {
           amount: number
           breach_reason: string
+          charge_completed_at: string | null
+          charge_scheduled_at: string | null
           charged: boolean
           created_at: string
+          decision: string | null
+          evidence: Json | null
           goal_id: string | null
           id: string
           notes: string | null
           reset_call_enrolled: boolean
+          suggested_decision: string | null
           updated_at: string
           user_id: string
           waived: boolean
@@ -588,12 +752,17 @@ export type Database = {
         Insert: {
           amount?: number
           breach_reason: string
+          charge_completed_at?: string | null
+          charge_scheduled_at?: string | null
           charged?: boolean
           created_at?: string
+          decision?: string | null
+          evidence?: Json | null
           goal_id?: string | null
           id?: string
           notes?: string | null
           reset_call_enrolled?: boolean
+          suggested_decision?: string | null
           updated_at?: string
           user_id: string
           waived?: boolean
@@ -603,12 +772,17 @@ export type Database = {
         Update: {
           amount?: number
           breach_reason?: string
+          charge_completed_at?: string | null
+          charge_scheduled_at?: string | null
           charged?: boolean
           created_at?: string
+          decision?: string | null
+          evidence?: Json | null
           goal_id?: string | null
           id?: string
           notes?: string | null
           reset_call_enrolled?: boolean
+          suggested_decision?: string | null
           updated_at?: string
           user_id?: string
           waived?: boolean
@@ -1082,6 +1256,7 @@ export type Database = {
       help_radar_items: {
         Row: {
           addressed_at: string | null
+          assigned_owner: string | null
           category: string
           client_id: string
           client_status: string
@@ -1091,6 +1266,7 @@ export type Database = {
           created_at: string
           custom_description: string | null
           flagged_at: string
+          follow_up_at: string | null
           id: string
           resolved_at: string | null
           resolved_by_client: boolean
@@ -1098,6 +1274,7 @@ export type Database = {
         }
         Insert: {
           addressed_at?: string | null
+          assigned_owner?: string | null
           category: string
           client_id: string
           client_status?: string
@@ -1107,6 +1284,7 @@ export type Database = {
           created_at?: string
           custom_description?: string | null
           flagged_at?: string
+          follow_up_at?: string | null
           id?: string
           resolved_at?: string | null
           resolved_by_client?: boolean
@@ -1114,6 +1292,7 @@ export type Database = {
         }
         Update: {
           addressed_at?: string | null
+          assigned_owner?: string | null
           category?: string
           client_id?: string
           client_status?: string
@@ -1123,6 +1302,7 @@ export type Database = {
           created_at?: string
           custom_description?: string | null
           flagged_at?: string
+          follow_up_at?: string | null
           id?: string
           resolved_at?: string | null
           resolved_by_client?: boolean
@@ -1773,6 +1953,108 @@ export type Database = {
         }
         Relationships: []
       }
+      response_target_settings: {
+        Row: {
+          created_at: string
+          id: string
+          internal_target_minutes: number
+          message_type: string
+          priority: number
+          track: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          internal_target_minutes?: number
+          message_type?: string
+          priority?: number
+          track?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          internal_target_minutes?: number
+          message_type?: string
+          priority?: number
+          track?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      staff_members: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          email: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      staff_permissions: {
+        Row: {
+          id: string
+          permission: string
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          id?: string
+          permission: string
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          id?: string
+          permission?: string
+          role?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
+      }
+      style_phrase_bank: {
+        Row: {
+          client_id: string | null
+          coach_id: string
+          created_at: string
+          id: string
+          kind: string
+          phrase: string
+        }
+        Insert: {
+          client_id?: string | null
+          coach_id: string
+          created_at?: string
+          id?: string
+          kind: string
+          phrase: string
+        }
+        Update: {
+          client_id?: string | null
+          coach_id?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          phrase?: string
+        }
+        Relationships: []
+      }
       team_challenges: {
         Row: {
           completed: boolean
@@ -2013,9 +2295,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
+      app_role:
+        | "owner"
+        | "lead_coach"
+        | "assistant_coach"
+        | "client_success"
+        | "billing_admin"
+        | "viewer"
       goal_approval_action: "approved" | "revision_requested" | "rejected"
       goal_status:
         | "pending_approval"
@@ -2161,6 +2457,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: [
+        "owner",
+        "lead_coach",
+        "assistant_coach",
+        "client_success",
+        "billing_admin",
+        "viewer",
+      ],
       goal_approval_action: ["approved", "revision_requested", "rejected"],
       goal_status: [
         "pending_approval",
