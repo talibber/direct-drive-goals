@@ -124,81 +124,126 @@ export type Database = {
       applications: {
         Row: {
           accountability_style: string | null
+          additional_notes: string | null
           avoided_decision: string | null
+          avoiding: string | null
+          breach_fee_acknowledged: boolean | null
+          breach_terms_agreed: boolean | null
           business_name: string | null
+          cancellation_terms_agreed: boolean | null
           challenge: string | null
           coaching_interest: string
           community_motivation: string | null
           created_at: string
           decision_outcome: string | null
           email: string
+          goal_area: string | null
           goals_30_day: string | null
           id: string
+          in_crisis: boolean | null
           industry: string | null
           name: string
+          not_therapy_agreed: boolean | null
           occupation: string | null
+          pod_visibility_ok: string | null
           prior_coaching: string | null
           readiness: string | null
           revenue_range: string | null
           reviewed_at: string | null
           reviewer_notes: string | null
           status: string
+          subscription_terms_agreed: boolean | null
           support_level: string | null
           team_size: string | null
           track: string
+          tried_before: string | null
+          truth_readiness: string | null
+          understands_not_therapy: boolean | null
           updated_at: string
+          willing_checkins: string | null
+          willing_evidence: string | null
         }
         Insert: {
           accountability_style?: string | null
+          additional_notes?: string | null
           avoided_decision?: string | null
+          avoiding?: string | null
+          breach_fee_acknowledged?: boolean | null
+          breach_terms_agreed?: boolean | null
           business_name?: string | null
+          cancellation_terms_agreed?: boolean | null
           challenge?: string | null
           coaching_interest?: string
           community_motivation?: string | null
           created_at?: string
           decision_outcome?: string | null
           email: string
+          goal_area?: string | null
           goals_30_day?: string | null
           id?: string
+          in_crisis?: boolean | null
           industry?: string | null
           name: string
+          not_therapy_agreed?: boolean | null
           occupation?: string | null
+          pod_visibility_ok?: string | null
           prior_coaching?: string | null
           readiness?: string | null
           revenue_range?: string | null
           reviewed_at?: string | null
           reviewer_notes?: string | null
           status?: string
+          subscription_terms_agreed?: boolean | null
           support_level?: string | null
           team_size?: string | null
           track?: string
+          tried_before?: string | null
+          truth_readiness?: string | null
+          understands_not_therapy?: boolean | null
           updated_at?: string
+          willing_checkins?: string | null
+          willing_evidence?: string | null
         }
         Update: {
           accountability_style?: string | null
+          additional_notes?: string | null
           avoided_decision?: string | null
+          avoiding?: string | null
+          breach_fee_acknowledged?: boolean | null
+          breach_terms_agreed?: boolean | null
           business_name?: string | null
+          cancellation_terms_agreed?: boolean | null
           challenge?: string | null
           coaching_interest?: string
           community_motivation?: string | null
           created_at?: string
           decision_outcome?: string | null
           email?: string
+          goal_area?: string | null
           goals_30_day?: string | null
           id?: string
+          in_crisis?: boolean | null
           industry?: string | null
           name?: string
+          not_therapy_agreed?: boolean | null
           occupation?: string | null
+          pod_visibility_ok?: string | null
           prior_coaching?: string | null
           readiness?: string | null
           revenue_range?: string | null
           reviewed_at?: string | null
           reviewer_notes?: string | null
           status?: string
+          subscription_terms_agreed?: boolean | null
           support_level?: string | null
           team_size?: string | null
           track?: string
+          tried_before?: string | null
+          truth_readiness?: string | null
+          understands_not_therapy?: boolean | null
           updated_at?: string
+          willing_checkins?: string | null
+          willing_evidence?: string | null
         }
         Relationships: []
       }
@@ -298,6 +343,54 @@ export type Database = {
           coach_id?: string
           created_at?: string
           id?: string
+        }
+        Relationships: []
+      }
+      commitment_breaches: {
+        Row: {
+          amount: number
+          breach_reason: string
+          charged: boolean
+          created_at: string
+          goal_id: string | null
+          id: string
+          notes: string | null
+          reset_call_enrolled: boolean
+          updated_at: string
+          user_id: string
+          waived: boolean
+          waived_by: string | null
+          waiver_reason: string | null
+        }
+        Insert: {
+          amount?: number
+          breach_reason: string
+          charged?: boolean
+          created_at?: string
+          goal_id?: string | null
+          id?: string
+          notes?: string | null
+          reset_call_enrolled?: boolean
+          updated_at?: string
+          user_id: string
+          waived?: boolean
+          waived_by?: string | null
+          waiver_reason?: string | null
+        }
+        Update: {
+          amount?: number
+          breach_reason?: string
+          charged?: boolean
+          created_at?: string
+          goal_id?: string | null
+          id?: string
+          notes?: string | null
+          reset_call_enrolled?: boolean
+          updated_at?: string
+          user_id?: string
+          waived?: boolean
+          waived_by?: string | null
+          waiver_reason?: string | null
         }
         Relationships: []
       }
