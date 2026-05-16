@@ -89,6 +89,8 @@ const App = () => (
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
           <Route path="/coach/weekly-qa" element={<CoachWeeklyQAPage />} />
           <Route path="/coach/breaches" element={<CoachBreachesPage />} />
+          <Route path="/coach/review-queue" element={<CoachReviewQueuePage />} />
+          <Route path="/coach/style-learning" element={<CoachStyleLearningPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
