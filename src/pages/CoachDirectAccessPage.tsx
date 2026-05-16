@@ -93,7 +93,7 @@ export default function CoachDirectAccessPage() {
             Direct Access Queue
           </h1>
           <p className="text-muted-foreground mt-1">
-            {mockPending.length} pending messages · Business Track clients only
+            {mockPending.length} pending messages · Operator Track clients only
           </p>
         </div>
 

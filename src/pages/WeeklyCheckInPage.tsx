@@ -93,12 +93,12 @@ export default function WeeklyCheckInPage() {
             </div>
           </div>
 
-          {/* Business Track Section */}
+          {/* Operator Track Section */}
           {isBusiness && (
             <div className="rounded-lg border-2 border-primary/30 border-l-[4px] border-l-primary bg-card p-6 shadow-card space-y-5">
               <div>
                 <h3 className="font-display font-semibold text-foreground mb-0.5">Your business this week</h3>
-                <p className="text-xs text-muted-foreground">Required for Business Track clients.</p>
+                <p className="text-xs text-muted-foreground">Required for Operator Track clients.</p>
               </div>
 
               <div>

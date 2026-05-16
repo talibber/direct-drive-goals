@@ -245,7 +245,7 @@ export default function CoachWeeklyQAPage() {
                 <SelectContent>
                   <SelectItem value="all">All Tracks</SelectItem>
                   <SelectItem value="life">Life Track</SelectItem>
-                  <SelectItem value="business">Business Track</SelectItem>
+                  <SelectItem value="business">Operator Track</SelectItem>
                 </SelectContent>
               </Select>
             </div>

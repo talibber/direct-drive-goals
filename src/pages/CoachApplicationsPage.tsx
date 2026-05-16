@@ -9,7 +9,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 type Application = Tables<"applications">;
 
-const filterTabs = ["All", "Life Track", "Business Track", "Pending", "Approved", "Rejected"] as const;
+const filterTabs = ["All", "Life Track", "Operator Track", "Pending", "Approved", "Rejected"] as const;
 type FilterTab = typeof filterTabs[number];
 
 export default function CoachApplicationsPage() {
@@ -63,7 +63,7 @@ export default function CoachApplicationsPage() {
 
   const filtered = applications.filter((a) => {
     if (filter === "Life Track") return a.track === "life";
-    if (filter === "Business Track") return a.track === "business";
+    if (filter === "Operator Track") return a.track === "business";
     if (filter === "Pending") return a.status === "pending";
     if (filter === "Approved") return a.status === "approved";
     if (filter === "Rejected") return a.status === "rejected";
@@ -112,7 +112,7 @@ export default function CoachApplicationsPage() {
                         ? "bg-primary text-primary-foreground"
                         : "bg-foreground/10 text-foreground"
                     )}>
-                      {a.track === "business" ? "Business Track" : "Life Track"}
+                      {a.track === "business" ? "Operator Track" : "Life Track"}
                     </span>
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                       a.status === "pending" ? "text-warning bg-warning/10 border border-warning/30" :

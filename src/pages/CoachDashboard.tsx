@@ -558,11 +558,11 @@ export default function CoachDashboard() {
             </div>
           )}
 
-          {/* Business Track At-Risk */}
+          {/* Operator Track At-Risk */}
           {atRisk.filter(c => c.type === "Business").length > 0 && (
             <div className="rounded-lg border border-warning/30 bg-warning/5 p-5">
               <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
-                <AlertTriangle size={18} /> Business Track — Needs Attention
+                <AlertTriangle size={18} /> Operator Track — Needs Attention
               </h3>
               <div className="space-y-3">
                 {atRisk.filter(c => c.type === "Business").map((c) => (

@@ -68,7 +68,7 @@ const businessSteps: OnboardingStep[] = [
   {
     id: "b0",
     day: 0,
-    title: "Welcome to Business Track.",
+    title: "Welcome to Operator Track.",
     description: "",
     status: "complete",
     completedAt: "Apr 3, 2026",
@@ -123,7 +123,7 @@ export function OnboardingChecklist({ track = "life" }: OnboardingChecklistProps
   if (allComplete) return null;
 
   const title = track === "business"
-    ? "Your Business Track starts here."
+    ? "Your Operator Track starts here."
     : "Your first 7 days.";
 
   const subtitle = track === "business"

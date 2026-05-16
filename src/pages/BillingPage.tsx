@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 export default function BillingPage() {
   // In real implementation, coachingTrack would come from user profile
   const coachingTrack = "business"; // mock
-  const planName = coachingTrack === "business" ? "Business Track" : "Life Track";
+  const planName = coachingTrack === "business" ? "Operator Track" : "Life Track";
   const planPrice = coachingTrack === "business" ? 199 : 99;
   const stakesThisMonth = billingHistory.filter(b => b.type === "stake" && b.date.includes("Apr")).reduce((s, b) => s + b.amount, 0);
   const totalThisMonth = planPrice + stakesThisMonth;
