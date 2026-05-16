@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { AlertOctagon, RefreshCw } from "lucide-react";
+import { BreachFeeBadge } from "@/components/BreachFeeBadge";
 
 interface Breach {
   id: string;
@@ -103,9 +104,10 @@ export default function CoachBreachesPage() {
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-bold flex items-center gap-2">
             <AlertOctagon className="text-danger" /> Commitment Breach Fees
+            <BreachFeeBadge />
           </h1>
           <p className="text-muted-foreground mt-1 text-sm">
-            Pending breach fees, waivers, and charge status across all clients.
+            Pending breach fees, waivers, and charge status across all clients. Nothing charges automatically.
           </p>
         </div>
         <Button onClick={runSweep} disabled={scanning} variant="outline">
