@@ -16,25 +16,29 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-5 py-1.5 mb-8 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary animate-fade-up">
-              Execution + accountability from the Terrible Therapist team
+              High-speed personalized accountability
             </div>
 
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.08] animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              You do not need
+              Stop negotiating
               <br />
-              more motivation.
+              with yourself.
               <br />
-              <span className="text-gradient-gold">You need a system that makes avoidance expensive.</span>
+              <span className="text-gradient-gold">Start catching the drift early.</span>
             </h1>
 
             <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Terrible Coaching turns your goals into monthly targets, weekly commitments, submitted evidence, and blunt feedback — before your ambition turns into another note in your phone.
+              You already know what the goal is. The problem is what happens between Monday motivation and Thursday pressure. Terrible Coaching keeps you accountable through weekly commitments, direct feedback, structured check-ins, and real consequences when you stop following through.
+            </p>
+
+            <p className="mt-4 text-base md:text-lg font-medium text-foreground/90 animate-fade-up max-w-xl" style={{ animationDelay: "0.25s" }}>
+              This is not motivation. This is behavioral accountability.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
               <Link to="/apply/select">
                 <Button variant="hero" size="lg" className="text-base px-8">
-                  Apply for Your Pod
+                  Start Your Accountability Plan
                 </Button>
               </Link>
               <Link to="/how-it-works">
@@ -45,7 +49,7 @@ export default function HeroSection() {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground animate-fade-up max-w-xl leading-relaxed" style={{ animationDelay: "0.4s" }}>
-              60-minute initial call. Weekly check-ins. Unlimited in-app messaging. Pod accountability. Not therapy.
+              Personalized feedback delivered fast based on your goals, behavior, check-ins, and progress patterns.
             </p>
           </div>
 
