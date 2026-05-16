@@ -18,9 +18,9 @@ export function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-      <div className="container flex h-20 md:h-24 items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <img src={logo} alt="Terrible Coaching" className="h-16 md:h-20 w-auto object-contain" />
+      <div className="container flex h-16 items-center justify-between">
+        <Link to="/" className="flex items-center -my-6">
+          <img src={logo} alt="Terrible Coaching" className="h-24 md:h-32 w-auto object-contain" />
         </Link>
 
         {/* Desktop */}
