@@ -10,6 +10,9 @@ import PricingPage from "./pages/PricingPage";
 import ApplyPage from "./pages/ApplyPage";
 import TrackSelectionPage from "./pages/TrackSelectionPage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import LegalAcceptancePage from "./pages/LegalAcceptancePage";
+import AdminDiagnosticsPage from "./pages/AdminDiagnosticsPage";
 import ClientDashboard from "./pages/ClientDashboard";
 import WeeklyCheckInPage from "./pages/WeeklyCheckInPage";
 import GoalsPage from "./pages/GoalsPage";
@@ -60,6 +63,9 @@ const App = () => (
           <Route path="/apply" element={<ApplyPage />} />
           <Route path="/apply/select" element={<TrackSelectionPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/onboarding/legal" element={<LegalAcceptancePage />} />
+          <Route path="/admin/diagnostics" element={<AdminDiagnosticsPage />} />
           <Route path="/legal/:slug" element={<LegalPage />} />
 
           {/* Client */}
