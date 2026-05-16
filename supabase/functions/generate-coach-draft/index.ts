@@ -151,6 +151,25 @@ ${(recentApproved || []).map(m => `[${m.trigger_type}] ${m.final_message?.slice(
     const crisis = !!parsed.crisis_flag;
     const lowConfidence = (parsed.confidence_score ?? 0) < 0.5;
 
+    // High-risk keyword scan — never auto-send these
+    const HIGH_RISK = /(suicid|self.?harm|kill myself|abuse|assault|overdose|chargeback|refund|lawyer|legal|harass|discriminat|emergency|crisis)/i;
+    const blob = `${parsed.draft || ""} ${JSON.stringify(event_payload)} ${latestCheckin?.story || ""} ${latestCheckin?.avoiding || ""}`;
+    const highRisk = crisis || HIGH_RISK.test(blob);
+    const risk_level = highRisk ? "high" : (lowConfidence ? "medium" : "low");
+
+    // tone match: how many recent learning rows match the suggested tone
+    const tonePref = (filteredLearning as any[]).map(l => l.tone_shift).filter(Boolean);
+    const tone_match_score = parsed.suggested_tone && tonePref.length
+      ? tonePref.filter((t: string) => t === parsed.suggested_tone).length / tonePref.length
+      : 0;
+
+    // Eligibility for auto-send: must be low risk, decent confidence, simple trigger
+    const SIMPLE_TRIGGERS = new Set(["weekly_goals_submitted", "win_reinforcement", "proof_request", "checkin_missed"]);
+    const automation_eligible = !highRisk && (parsed.confidence_score ?? 0) >= 0.75 && SIMPLE_TRIGGERS.has(event_type);
+
+    // 10-minute response SLA target
+    const response_due_at = new Date(Date.now() + 10 * 60_000).toISOString();
+
     const { data: draft, error: draftErr } = await supabase
       .from("coach_message_drafts")
       .insert({
@@ -159,9 +178,13 @@ ${(recentApproved || []).map(m => `[${m.trigger_type}] ${m.final_message?.slice(
         event_id: eventRow?.id,
         trigger_type: event_type,
         ai_draft: parsed.draft || "",
-        status: crisis || lowConfidence ? "needs_human_review" : "pending",
+        status: highRisk || lowConfidence ? "needs_human_review" : "pending",
         confidence_score: parsed.confidence_score ?? 0.5,
         suggested_tone: parsed.suggested_tone || null,
+        risk_level,
+        tone_match_score,
+        automation_eligible,
+        response_due_at,
       })
       .select("id")
       .single();
