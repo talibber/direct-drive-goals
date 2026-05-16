@@ -120,7 +120,7 @@ export function GoalBuilderDialog({ onSubmit, editGoal }: GoalBuilderDialogProps
           </div>
 
           <div className="rounded-md bg-secondary p-3">
-            <p className="text-sm font-medium text-foreground mb-1">Accountability Stake: $75</p>
+            <p className="text-sm font-medium text-foreground mb-1">Commitment Breach Fee: $75</p>
             <p className="text-xs text-muted-foreground">Stake activates only after your coach approves this goal.</p>
           </div>
 
@@ -129,7 +129,7 @@ export function GoalBuilderDialog({ onSubmit, editGoal }: GoalBuilderDialogProps
           </Button>
 
           <p className="text-xs text-muted-foreground text-center leading-relaxed">
-            Your goal will be reviewed by your coach before the accountability stake becomes active. Goals must be specific, measurable, and genuinely challenging to be approved.
+            Your goal will be reviewed by your coach before the commitment breach fee becomes active. Goals must be specific, measurable, and genuinely challenging to be approved.
           </p>
         </form>
       </DialogContent>

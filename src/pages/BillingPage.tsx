@@ -13,7 +13,7 @@ export default function BillingPage() {
   return (
     <DashboardLayout coachingTrack={coachingTrack}>
       <h1 className="font-display text-2xl md:text-3xl font-bold mb-2">Billing</h1>
-      <p className="text-muted-foreground mb-8">Your subscription and accountability stake history.</p>
+      <p className="text-muted-foreground mb-8">Your subscription and commitment breach fee history.</p>
 
       {/* Subscription card */}
       <div className="rounded-lg border border-border bg-card p-6 shadow-card mb-6 flex items-center justify-between">
@@ -64,7 +64,7 @@ export default function BillingPage() {
                 <span className={`text-sm font-semibold ${b.type === "stake" ? "text-danger" : "text-foreground"}`}>
                   ${b.amount}
                 </span>
-                <p className="text-xs text-muted-foreground">{b.type === "stake" ? "Accountability Stake" : "Subscription"}</p>
+                <p className="text-xs text-muted-foreground">{b.type === "stake" ? "Commitment Breach Fee" : "Subscription"}</p>
               </div>
             </div>
           ))}

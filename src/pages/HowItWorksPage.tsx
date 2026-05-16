@@ -4,7 +4,7 @@ import { ClipboardCheck, Target, CalendarCheck, TrendingUp, DollarSign, MessageS
 
 const steps = [
   { icon: ClipboardCheck, title: "1. Apply", desc: "Fill out our application. Tell us who you are, what you're working on, and what's not working. Tell us whether you're applying for Life Track or Operator Track. The system is the same. The focus is different. We'll review within 48 hours." },
-  { icon: Target, title: "2. Set Goals", desc: "If accepted, you'll define 1–3 measurable, time-bound goals for your first month. Each goal gets a $75 accountability stake." },
+  { icon: Target, title: "2. Set Goals", desc: "If accepted, you'll define 1–3 measurable, time-bound goals for your first month. Each goal gets a $75 commitment breach fee." },
   { icon: CalendarCheck, title: "3. Weekly Check-Ins", desc: "Every week, you complete a check-in: energy, focus, stress, habits, wins, failures, and what you're avoiding. No hiding." },
   { icon: MessageSquare, title: "4. Coach Feedback", desc: "Your coach reviews your data, writes direct notes, and adjusts your plan. No fluffy encouragement—just what you need to hear." },
   { icon: TrendingUp, title: "5. Score & Track", desc: "Your weekly performance score combines goal progress, habit adherence, well-being metrics, and coach assessment. Watch the trend." },
