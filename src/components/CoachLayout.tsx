@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut, Mic, Zap, Trophy, BookOpen } from "lucide-react";
+import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut, Mic, Zap, Trophy, BookOpen, AlertOctagon } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const links = [
@@ -12,6 +12,7 @@ const links = [
   { to: "/coach/operator-call", label: "Operator Call", icon: Mic },
   { to: "/coach/achievement-group", label: "Achievement Group", icon: Trophy },
   { to: "/coach/weekly-qa", label: "Weekly Q&A", icon: BookOpen },
+  { to: "/coach/breaches", label: "Breach Fees", icon: AlertOctagon },
   { to: "/coach/metrics", label: "Metrics", icon: BarChart3 },
 ];
 

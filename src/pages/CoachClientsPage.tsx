@@ -5,7 +5,7 @@ import { clients } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const filterTabs = ["All Clients", "Life Track", "Business Track", "At Risk", "Missing Check-In"] as const;
+const filterTabs = ["All Clients", "Life Track", "Operator Track", "At Risk", "Missing Check-In"] as const;
 type FilterTab = typeof filterTabs[number];
 
 export default function CoachClientsPage() {
@@ -13,7 +13,7 @@ export default function CoachClientsPage() {
 
   const filtered = clients.filter((c) => {
     if (filter === "Life Track") return c.type === "Life";
-    if (filter === "Business Track") return c.type === "Business";
+    if (filter === "Operator Track") return c.type === "Business";
     if (filter === "At Risk") return c.risk;
     if (filter === "Missing Check-In") return c.lastCheckIn.includes("5") || c.lastCheckIn.includes("8");
     return true;

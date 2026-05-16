@@ -84,9 +84,27 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
     resetAndClose();
   };
 
-  const confirmMiss = () => {
+  const confirmMiss = async () => {
     onSubmit(goal.id, { description, selfAssessment: "not_completed", files });
-    toast.info("Goal marked as not completed. Your $75 accountability stake will be charged and you'll be enrolled in the monthly Reset Session.");
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData?.user) {
+        await supabase.functions.invoke("process-commitment-breaches", {
+          body: {
+            goal_id: goal.id,
+            user_id: userData.user.id,
+            breach_reason: "broken_commitment",
+            notes: description,
+            reset_call_enrolled: true,
+          },
+        });
+      }
+    } catch (e) {
+      // Non-blocking: surface but don't reverse the UX flow
+      console.warn("breach record failed", e);
+    }
+    toast.info("Goal marked as not completed. Your $75 commitment breach fee will be charged and you'll be enrolled in the monthly Reset Session.");
     setShowMissConfirm(false);
     resetAndClose();
   };
@@ -120,7 +138,7 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
               {goal.proofRequirement && (
                 <p className="text-xs text-muted-foreground mt-1">Proof required: {goal.proofRequirement}</p>
               )}
-              <p className="text-xs font-medium text-foreground mt-2">${goal.stake} accountability stake</p>
+              <p className="text-xs font-medium text-foreground mt-2">${goal.stake} commitment breach fee</p>
             </div>
 
             {/* Description */}
@@ -243,7 +261,7 @@ export function ProofSubmissionDialog({ goal, open, onClose, onSubmit }: ProofSu
             <AlertTriangle size={40} className="mx-auto text-warning" />
             <h3 className="font-display font-semibold text-lg text-foreground">Are you sure?</h3>
             <p className="text-sm text-muted-foreground">
-              Submitting this will trigger your <span className="font-semibold text-foreground">${goal.stake} accountability stake</span> and enroll you in the monthly Reset Session.
+              Submitting this will trigger your <span className="font-semibold text-foreground">${goal.stake} commitment breach fee</span> and enroll you in the monthly Reset Session.
             </p>
             <div className="flex gap-3 pt-2">
               <Button onClick={() => setShowMissConfirm(false)} variant="outline" className="flex-1">

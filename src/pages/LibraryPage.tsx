@@ -321,7 +321,7 @@ export default function LibraryPage() {
                         ? "bg-primary/20 text-primary border border-primary/30"
                         : "bg-muted text-muted-foreground"
                     )}>
-                      {qa.trackVisibility === "all" ? "All tracks" : "Business Track"}
+                      {qa.trackVisibility === "all" ? "All tracks" : "Operator Track"}
                     </span>
                   </div>
 

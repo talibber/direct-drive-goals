@@ -80,7 +80,7 @@ export default function CoachClientDetailPage() {
             <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
               isBusiness ? "bg-primary text-primary-foreground" : "bg-foreground/10 text-foreground"
             }`}>
-              {isBusiness ? "Business Track" : "Life Track"}
+              {isBusiness ? "Operator Track" : "Life Track"}
             </span>
             <span>{client.email}</span>
             <span>·</span>
@@ -413,7 +413,7 @@ export default function CoachClientDetailPage() {
                       <p className="text-sm font-medium text-foreground">{ci.habits}%</p>
                     </div>
 
-                    {/* Business Mindset Data — mock: show for Business Track clients */}
+                    {/* Business Mindset Data — mock: show for Operator Track clients */}
                     {client.type === "Business" && (
                       <div className="mt-4 rounded-lg border-l-[4px] border-l-primary border border-primary/20 bg-primary/[0.03] p-4 space-y-4">
                         <h4 className="text-xs font-bold uppercase tracking-wider text-primary">Business Mindset Data</h4>

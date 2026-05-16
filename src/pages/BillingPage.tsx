@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 export default function BillingPage() {
   // In real implementation, coachingTrack would come from user profile
   const coachingTrack = "business"; // mock
-  const planName = coachingTrack === "business" ? "Business Track" : "Life Track";
+  const planName = coachingTrack === "business" ? "Operator Track" : "Life Track";
   const planPrice = coachingTrack === "business" ? 199 : 99;
   const stakesThisMonth = billingHistory.filter(b => b.type === "stake" && b.date.includes("Apr")).reduce((s, b) => s + b.amount, 0);
   const totalThisMonth = planPrice + stakesThisMonth;
@@ -13,7 +13,7 @@ export default function BillingPage() {
   return (
     <DashboardLayout coachingTrack={coachingTrack}>
       <h1 className="font-display text-2xl md:text-3xl font-bold mb-2">Billing</h1>
-      <p className="text-muted-foreground mb-8">Your subscription and accountability stake history.</p>
+      <p className="text-muted-foreground mb-8">Your subscription and commitment breach fee history.</p>
 
       {/* Subscription card */}
       <div className="rounded-lg border border-border bg-card p-6 shadow-card mb-6 flex items-center justify-between">
@@ -32,7 +32,7 @@ export default function BillingPage() {
           <p className="text-lg font-bold text-foreground">${planPrice}</p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Stakes This Month</p>
+          <p className="text-xs text-muted-foreground">Breach Fees This Month</p>
           <p className="text-lg font-bold text-danger">${stakesThisMonth}</p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
@@ -64,7 +64,7 @@ export default function BillingPage() {
                 <span className={`text-sm font-semibold ${b.type === "stake" ? "text-danger" : "text-foreground"}`}>
                   ${b.amount}
                 </span>
-                <p className="text-xs text-muted-foreground">{b.type === "stake" ? "Accountability Stake" : "Subscription"}</p>
+                <p className="text-xs text-muted-foreground">{b.type === "stake" ? "Commitment Breach Fee" : "Subscription"}</p>
               </div>
             </div>
           ))}

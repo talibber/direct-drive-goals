@@ -35,6 +35,7 @@ import CoachDirectAccessPage from "./pages/CoachDirectAccessPage";
 import AchievementGroupPage from "./pages/AchievementGroupPage";
 import CoachAchievementGroupPage from "./pages/CoachAchievementGroupPage";
 import CoachWeeklyQAPage from "./pages/CoachWeeklyQAPage";
+import CoachBreachesPage from "./pages/CoachBreachesPage";
 import LegalPage from "./pages/LegalPage";
 import NotFound from "./pages/NotFound";
 
@@ -85,6 +86,7 @@ const App = () => (
           <Route path="/coach/achievement-group" element={<CoachAchievementGroupPage />} />
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
           <Route path="/coach/weekly-qa" element={<CoachWeeklyQAPage />} />
+          <Route path="/coach/breaches" element={<CoachBreachesPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
