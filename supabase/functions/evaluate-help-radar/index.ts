@@ -40,6 +40,19 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ triggered: false }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
+    // Persist radar items (dedupe per category, last 24h)
+    const since24 = new Date(Date.now() - 86400_000).toISOString();
+    for (const t of triggers) {
+      const { data: existing } = await supabase
+        .from("help_radar_items").select("id")
+        .eq("client_id", user_id).eq("category", t).gte("created_at", since24).maybeSingle();
+      if (!existing) {
+        await supabase.from("help_radar_items").insert({
+          client_id: user_id, category: t, context: `auto: ${t}`, coach_status: "seen",
+        });
+      }
+    }
+
     // Forward to draft generator
     const draftRes = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-coach-draft`, {
       method: "POST",

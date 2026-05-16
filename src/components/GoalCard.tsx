@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Target, TrendingUp, AlertTriangle, XCircle, Clock, Edit3, CheckCircle, FileCheck, Upload, Shield } from "lucide-react";
 import type { GoalStatus } from "@/lib/mockData";
+import { BreachFeeBadge } from "@/components/BreachFeeBadge";
 
 interface GoalCardProps {
   title: string;
@@ -50,9 +51,12 @@ export function GoalCard({
           <h4 className="font-display font-semibold text-foreground">{title}</h4>
           <p className="text-xs text-muted-foreground mt-0.5">{category} · Due {dueDate}</p>
         </div>
-        <span className={cn("inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full border", cfg.color)}>
-          <Icon size={12} /> {cfg.label}
-        </span>
+        <div className="flex items-center gap-2">
+          {(status === "at_risk" || status === "missed" || status === "proof_pending") && <BreachFeeBadge />}
+          <span className={cn("inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full border", cfg.color)}>
+            <Icon size={12} /> {cfg.label}
+          </span>
+        </div>
       </div>
 
       <p className="text-sm text-muted-foreground mb-3">Target: {target}</p>

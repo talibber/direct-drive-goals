@@ -408,6 +408,36 @@ export type Database = {
           },
         ]
       }
+      coach_message_templates: {
+        Row: {
+          body: string
+          coach_id: string
+          created_at: string
+          id: string
+          title: string
+          trigger_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          coach_id: string
+          created_at?: string
+          id?: string
+          title: string
+          trigger_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          coach_id?: string
+          created_at?: string
+          id?: string
+          title?: string
+          trigger_type?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       coach_style_learning: {
         Row: {
           coach_id: string
@@ -1448,6 +1478,33 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          coaching_track: string
+          created_at: string
+          display_name: string | null
+          email: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          coaching_track?: string
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          coaching_track?: string
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       qa_published: {
         Row: {
           anonymized_question: string
@@ -1834,6 +1891,7 @@ export type Database = {
           failures: string | null
           fear_cost: string | null
           focus: number
+          goal_statuses: Json
           habit_completion: number | null
           id: string
           revenue_actions_count: number | null
@@ -1858,6 +1916,7 @@ export type Database = {
           failures?: string | null
           fear_cost?: string | null
           focus?: number
+          goal_statuses?: Json
           habit_completion?: number | null
           id?: string
           revenue_actions_count?: number | null
@@ -1882,6 +1941,7 @@ export type Database = {
           failures?: string | null
           fear_cost?: string | null
           focus?: number
+          goal_statuses?: Json
           habit_completion?: number | null
           id?: string
           revenue_actions_count?: number | null

@@ -43,10 +43,30 @@ Deno.serve(async (req) => {
     const replyRate = totalOutcomes ? (replies || 0) / totalOutcomes : 0;
     const completionRate = totalOutcomes ? (completions || 0) / totalOutcomes : 0;
 
+    // Compute preferred_tone: most common suggested_tone across high-engagement drafts (score >= 0.5)
+    let preferredTone: string | null = null;
+    const { data: highEngDrafts } = await supabase
+      .from("message_learning_outcomes")
+      .select("draft_id, engagement_score")
+      .eq("user_id", draft.user_id)
+      .gte("engagement_score", 0.5);
+    const ids = (highEngDrafts || []).map(d => d.draft_id).filter(Boolean) as string[];
+    if (ids.length) {
+      const { data: tones } = await supabase
+        .from("coach_message_drafts").select("suggested_tone").in("id", ids);
+      const counts = new Map<string, number>();
+      for (const t of tones || []) {
+        if (t.suggested_tone) counts.set(t.suggested_tone, (counts.get(t.suggested_tone) || 0) + 1);
+      }
+      let best = 0;
+      for (const [tone, c] of counts) if (c > best) { best = c; preferredTone = tone; }
+    }
+
     if (profile) {
       await supabase.from("user_coaching_profiles").update({
         reply_rate: replyRate,
         completion_rate: completionRate,
+        preferred_tone: preferredTone ?? profile.preferred_tone,
         last_engagement_at: user_replied ? new Date().toISOString() : profile.last_engagement_at,
       }).eq("user_id", draft.user_id);
     } else {
@@ -54,6 +74,7 @@ Deno.serve(async (req) => {
         user_id: draft.user_id,
         reply_rate: replyRate,
         completion_rate: completionRate,
+        preferred_tone: preferredTone,
         last_engagement_at: user_replied ? new Date().toISOString() : null,
       });
     }
