@@ -4,60 +4,54 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSearchParams, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 
-const industryOptions = [
-  "SaaS / Technology", "E-commerce / Retail", "Professional Services", "Healthcare", "Real Estate",
-  "Finance / Fintech", "Marketing / Advertising", "Construction / Trades", "Education", "Food & Beverage",
-  "Manufacturing", "Media / Content", "Legal", "Non-Profit", "Other",
+type TrackKey = "life" | "operator" | "direct" | "unsure";
+
+const tracks: { value: TrackKey; label: string; price: string }[] = [
+  { value: "life", label: "Life Track", price: "$99/mo founding" },
+  { value: "operator", label: "Operator Track", price: "$199/mo founding" },
+  { value: "direct", label: "Direct", price: "$1,000/mo founding" },
+  { value: "unsure", label: "Not sure", price: "We'll help you choose" },
 ];
 
-const communityMotivationOptions = [
-  {
-    value: "accountability",
-    title: "Accountability I can't create alone",
-    desc: "I need people who will notice when I go quiet and call me on it.",
-  },
-  {
-    value: "understanding",
-    title: "People who understand what I'm going through",
-    desc: "I want to be around people who are working as hard as I am on things that actually matter.",
-  },
-  {
-    value: "both",
-    title: "Both — I need the structure and the right room equally",
-    desc: "",
-  },
+const goalAreaOptions = [
+  "Health / fitness / routine",
+  "Business / revenue / clients",
+  "Career / performance",
+  "Content / brand / audience",
+  "Money / discipline",
+  "Relationships / personal standards",
+  "Other",
 ];
 
-const accountabilityStyleOptions = [
-  { value: "restart", label: "I restart immediately and don't dwell on it" },
-  { value: "understand", label: "I need to understand why before I can move forward" },
-  { value: "external", label: "I need external pressure to get back on track" },
-  { value: "avoid", label: "I tend to avoid it and hope no one notices" },
+const ynUnsure = [
+  { v: "yes", l: "Yes" },
+  { v: "no", l: "No" },
+  { v: "unsure", l: "I am not sure" },
 ];
 
-const supportOptions = [
-  {
-    value: "accountability_only",
-    title: "System + Accountability",
-    subtitle: "I'm self-directed. I need structure, a scorecard, and consequences.",
-  },
-  {
-    value: "monthly_coaching",
-    title: "System + Monthly Coaching",
-    subtitle: "I want the full accountability system plus a dedicated monthly coaching call.",
-  },
-  {
-    value: "undecided",
-    title: "I'm not sure yet",
-    subtitle: "I'll figure it out once I understand the program better.",
-  },
+const ynClarify = [
+  { v: "yes", l: "Yes" },
+  { v: "no", l: "No" },
+  { v: "clarification", l: "I need clarification" },
+];
+
+const podVisibility = [
+  { v: "yes", l: "Yes" },
+  { v: "no", l: "No" },
+  { v: "private_only", l: "Only if private details are hidden" },
+];
+
+const truthOptions = [
+  { v: "yes", l: "Yes" },
+  { v: "no", l: "No" },
+  { v: "depends", l: "Depends on the day" },
 ];
 
 export default function ApplyPage() {
@@ -65,74 +59,88 @@ export default function ApplyPage() {
   const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [supportLevel, setSupportLevel] = useState("");
-  const [coachingInterest, setCoachingInterest] = useState("");
-  const [track, setTrack] = useState<"life" | "business" | "direct">("life");
+  const [crisisBlocked, setCrisisBlocked] = useState(false);
 
-  // Common fields
+  const [track, setTrack] = useState<TrackKey>("life");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [challenge, setChallenge] = useState("");
   const [goals30Day, setGoals30Day] = useState("");
-  const [readiness, setReadiness] = useState("");
-  const [priorCoaching, setPriorCoaching] = useState("");
-  const [communityMotivation, setCommunityMotivation] = useState("");
-  const [accountabilityStyle, setAccountabilityStyle] = useState("");
+  const [triedBefore, setTriedBefore] = useState("");
+  const [avoiding, setAvoiding] = useState("");
+  const [goalArea, setGoalArea] = useState("");
+  const [willingCheckins, setWillingCheckins] = useState("");
+  const [willingEvidence, setWillingEvidence] = useState("");
+  const [podVisOk, setPodVisOk] = useState("");
+  const [understandsNotTherapy, setUnderstandsNotTherapy] = useState("");
+  const [inCrisis, setInCrisis] = useState("");
+  const [breachAck, setBreachAck] = useState(false);
+  const [truthReadiness, setTruthReadiness] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState("");
 
-  // Business-specific
-  const [businessName, setBusinessName] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [revenueRange, setRevenueRange] = useState("");
-  const [teamSize, setTeamSize] = useState("");
-  const [avoidedDecision, setAvoidedDecision] = useState("");
-  const [decisionOutcome, setDecisionOutcome] = useState("");
+  // Subscription disclosure
+  const [agreeSubscription, setAgreeSubscription] = useState(false);
+  const [agreeBreach, setAgreeBreach] = useState(false);
+  const [agreeNotTherapy, setAgreeNotTherapy] = useState(false);
+  const [agreeCancellation, setAgreeCancellation] = useState(false);
 
   useEffect(() => {
     const t = searchParams.get("track");
-    if (t === "business") { setTrack("business"); setCoachingInterest("business"); }
-    else if (t === "direct") { setTrack("direct"); setCoachingInterest("business"); }
-    else { setTrack("life"); setCoachingInterest("life"); }
+    if (t === "operator" || t === "business") setTrack("operator");
+    else if (t === "direct") setTrack("direct");
+    else if (t === "life") setTrack("life");
   }, [searchParams]);
 
-  const isBusiness = track === "business" || track === "direct";
-
-  const trackLabel = track === "direct" ? "Direct" : track === "business" ? "Business Track" : "Life Track";
-  const trackPrice = track === "direct" ? "$1,000/month" : track === "business" ? "$199/month" : "$99/month";
+  // Crisis block
+  useEffect(() => {
+    setCrisisBlocked(inCrisis === "yes");
+  }, [inCrisis]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!supportLevel) {
-      toast({ title: "Required field", description: "Please select your preferred level of support.", variant: "destructive" });
+
+    if (crisisBlocked) {
+      toast({ title: "We cannot accept this application", description: "Please reach out to a licensed professional.", variant: "destructive" });
+      return;
+    }
+    if (!breachAck) {
+      toast({ title: "Acknowledgment required", description: "Please acknowledge the Commitment Breach Fee.", variant: "destructive" });
+      return;
+    }
+    if (!agreeSubscription || !agreeBreach || !agreeNotTherapy || !agreeCancellation) {
+      toast({ title: "Subscription + commitment terms", description: "Please agree to all four subscription terms.", variant: "destructive" });
       return;
     }
 
     setSubmitting(true);
     try {
+      const trackForDb = track === "unsure" ? "life" : track;
+      const coachingInterest = track === "life" ? "life" : "business";
       const { error } = await supabase.from("applications").insert({
         name,
         email,
-        occupation,
-        coaching_interest: coachingInterest || "life",
-        track: track === "direct" ? "direct" : track,
-        challenge,
+        coaching_interest: coachingInterest,
+        track: trackForDb,
         goals_30_day: goals30Day,
-        readiness,
-        prior_coaching: priorCoaching,
-        support_level: supportLevel,
-        community_motivation: communityMotivation || null,
-        accountability_style: accountabilityStyle || null,
-        business_name: isBusiness ? businessName || null : null,
-        industry: isBusiness ? industry || null : null,
-        revenue_range: isBusiness ? revenueRange || null : null,
-        team_size: isBusiness ? teamSize || null : null,
-        avoided_decision: isBusiness ? avoidedDecision || null : null,
-        decision_outcome: isBusiness ? decisionOutcome || null : null,
+        tried_before: triedBefore,
+        avoiding,
+        goal_area: goalArea,
+        willing_checkins: willingCheckins,
+        willing_evidence: willingEvidence,
+        pod_visibility_ok: podVisOk,
+        understands_not_therapy: understandsNotTherapy === "yes",
+        in_crisis: false,
+        breach_fee_acknowledged: breachAck,
+        truth_readiness: truthReadiness,
+        additional_notes: additionalNotes,
+        subscription_terms_agreed: agreeSubscription,
+        breach_terms_agreed: agreeBreach,
+        not_therapy_agreed: agreeNotTherapy,
+        cancellation_terms_agreed: agreeCancellation,
       } as any);
 
       if (error) throw error;
       setSubmitted(true);
-      toast({ title: "Application submitted", description: "We'll review your application within 48 hours." });
+      toast({ title: "Application received", description: "We'll get back to you within 48 hours." });
     } catch (err: any) {
       console.error("Application submission error:", err);
       toast({ title: "Error submitting application", description: err.message || "Please try again.", variant: "destructive" });
@@ -147,25 +155,10 @@ export default function ApplyPage() {
         <Navbar />
         <section className="pt-32 pb-20 md:pt-40">
           <div className="container max-w-lg text-center">
-            <h1 className="font-display text-3xl font-bold mb-4">Application Received</h1>
+            <h1 className="font-display text-3xl font-bold mb-4">Application received.</h1>
             <p className="text-muted-foreground mb-6">
-              We'll review your application within 48 hours. If you're a fit, you'll receive an email with next steps. No sales calls. No BS.
+              If accepted, you will receive the next step within 48 hours.
             </p>
-            <div className="text-left max-w-sm mx-auto space-y-2">
-              {[
-                "We review within 48 hours",
-                "You complete your personality assessment",
-                "Your coaching call is scheduled",
-                "Your 30-60-90 goals are built from that call",
-                "You're matched to your pod",
-                "Day 1 begins",
-              ].map((step, i) => (
-                <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                  <span className="text-primary font-display font-bold text-xs mt-0.5">{i + 1}.</span>
-                  {step}
-                </div>
-              ))}
-            </div>
           </div>
         </section>
         <Footer />
@@ -177,287 +170,190 @@ export default function ApplyPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <section className="pt-32 pb-20 md:pt-40">
-        <div className="container max-w-lg">
-          <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">
+        <div className="container max-w-2xl">
+          <h1 className="font-display text-3xl md:text-4xl font-bold mb-3">
             Apply for <span className="text-gradient-gold">Terrible Coaching</span>
           </h1>
-          <p className="text-muted-foreground mb-6">
-            This takes 3 minutes. Be honest — that's the whole point.
+          <p className="text-muted-foreground mb-8 leading-relaxed">
+            This is not a motivation group. This is a commitment system. The questionnaire helps us determine whether you are a fit, which track makes sense, and what kind of pod you should be matched with.
           </p>
 
-          {/* Track Badge */}
-          <div className="mb-8 flex items-center justify-between rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
-            <div className="flex items-center gap-3">
-              <span className={cn(
-                "text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full",
-                track === "direct"
-                  ? "bg-primary text-primary-foreground"
-                  : track === "business"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-foreground/10 text-foreground"
-              )}>
-                {trackLabel}
-              </span>
-              <span className="text-sm text-muted-foreground">{trackPrice}</span>
-            </div>
-            <Link
-              to="/apply/select"
-              className="text-xs text-primary hover:underline font-medium"
-            >
-              Change track
-            </Link>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Name & Email */}
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" placeholder="Your name" required className="mt-1.5" value={name} onChange={e => setName(e.target.value)} />
+                <Input id="name" required className="mt-1.5" value={name} onChange={e => setName(e.target.value)} />
               </div>
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="you@example.com" required className="mt-1.5" value={email} onChange={e => setEmail(e.target.value)} />
+                <Input id="email" type="email" required className="mt-1.5" value={email} onChange={e => setEmail(e.target.value)} />
               </div>
             </div>
 
+            {/* Q1: Track */}
             <div>
-              <Label htmlFor="occupation">Occupation / Role</Label>
-              <Input id="occupation" placeholder="e.g. Teacher, Entrepreneur, Sales Rep" required className="mt-1.5" value={occupation} onChange={e => setOccupation(e.target.value)} />
-            </div>
-
-            <div>
-              <Label>Coaching Interest</Label>
-              <Select required value={coachingInterest} onValueChange={(v) => {
-                setCoachingInterest(v);
-                if (v === "business") setTrack("business");
-                else if (v === "life") setTrack("life");
-              }}>
-                <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="business">Business Coaching</SelectItem>
-                  <SelectItem value="life">Life Coaching</SelectItem>
-                  <SelectItem value="both">Both</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Community Motivation — ALL TRACKS */}
-            <div>
-              <Label>What are you most hoping to get from the Terrible Coaching community? <span className="text-destructive">*</span></Label>
-              <div className="grid gap-3 mt-3">
-                {communityMotivationOptions.map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => setCommunityMotivation(opt.value)}
+              <Label>1. Which track are you applying for? <span className="text-destructive">*</span></Label>
+              <div className="grid gap-3 mt-3 sm:grid-cols-2">
+                {tracks.map(t => (
+                  <button key={t.value} type="button" onClick={() => setTrack(t.value)}
                     className={cn(
                       "text-left rounded-lg border-2 p-4 transition-all",
-                      communityMotivation === opt.value
-                        ? "border-primary/80 bg-primary/5"
-                        : "border-border hover:border-muted-foreground/30"
-                    )}
-                  >
-                    <p className={cn(
-                      "font-semibold text-sm",
-                      communityMotivation === opt.value ? "text-primary" : "text-foreground"
-                    )}>{opt.title}</p>
-                    {opt.desc && (
-                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{opt.desc}</p>
-                    )}
+                      track === t.value ? "border-primary/80 bg-primary/5" : "border-border hover:border-muted-foreground/30"
+                    )}>
+                    <p className={cn("font-semibold text-sm", track === t.value ? "text-primary" : "text-foreground")}>{t.label}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t.price}</p>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Accountability Style — ALL TRACKS */}
+            {/* Q2 */}
             <div>
-              <Label>How do you typically respond when you fall behind on a commitment? <span className="text-destructive">*</span></Label>
-              <div className="grid gap-3 mt-3">
-                {accountabilityStyleOptions.map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => setAccountabilityStyle(opt.value)}
-                    className={cn(
-                      "text-left rounded-lg border-2 p-4 transition-all",
-                      accountabilityStyle === opt.value
-                        ? "border-primary/80 bg-primary/5"
-                        : "border-border hover:border-muted-foreground/30"
-                    )}
-                  >
-                    <p className={cn(
-                      "font-medium text-sm",
-                      accountabilityStyle === opt.value ? "text-primary" : "text-foreground"
-                    )}>{opt.label}</p>
-                  </button>
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground italic mt-2">
-                Used alongside your personality assessment for pod matching. No wrong answer.
-              </p>
+              <Label htmlFor="goals">2. What is the main goal you want to hit in the next 90 days? <span className="text-destructive">*</span></Label>
+              <Textarea id="goals" required className="mt-1.5 min-h-[90px]" value={goals30Day} onChange={e => setGoals30Day(e.target.value)} />
             </div>
 
-            {/* Business-specific fields */}
-            {isBusiness && (
-              <div className="space-y-5 rounded-lg border-2 border-primary/20 bg-primary/[0.02] p-5">
-                <p className="text-xs font-bold uppercase tracking-wider text-primary">
-                  {track === "direct" ? "Direct Track Details" : "Business Track Details"}
+            {/* Q3 */}
+            <div>
+              <Label htmlFor="tried">3. What have you already tried that did not work?</Label>
+              <Textarea id="tried" className="mt-1.5 min-h-[80px]" value={triedBefore} onChange={e => setTriedBefore(e.target.value)} />
+            </div>
+
+            {/* Q4 */}
+            <div>
+              <Label htmlFor="avoiding">4. What do you keep avoiding? <span className="text-destructive">*</span></Label>
+              <Textarea id="avoiding" required className="mt-1.5 min-h-[80px]" value={avoiding} onChange={e => setAvoiding(e.target.value)} />
+            </div>
+
+            {/* Q5 */}
+            <div>
+              <Label>5. Which area best describes your goal? <span className="text-destructive">*</span></Label>
+              <div className="grid gap-2 mt-3 sm:grid-cols-2">
+                {goalAreaOptions.map(opt => (
+                  <button key={opt} type="button" onClick={() => setGoalArea(opt)}
+                    className={cn(
+                      "text-left rounded-lg border-2 px-3 py-2 text-sm transition-all",
+                      goalArea === opt ? "border-primary/80 bg-primary/5 text-primary" : "border-border text-foreground hover:border-muted-foreground/30"
+                    )}>{opt}</button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q6 */}
+            <RadioRow
+              label="6. Are you willing to complete weekly check-ins?"
+              options={ynUnsure}
+              value={willingCheckins}
+              onChange={setWillingCheckins}
+              required
+            />
+
+            {/* Q7 */}
+            <RadioRow
+              label="7. Are you willing to submit evidence when your commitment requires it?"
+              options={ynClarify}
+              value={willingEvidence}
+              onChange={setWillingEvidence}
+              required
+            />
+
+            {/* Q8 */}
+            <RadioRow
+              label="8. Are you comfortable with your pod seeing your completion percentage, streak, and commitment ratio?"
+              options={podVisibility}
+              value={podVisOk}
+              onChange={setPodVisOk}
+              required
+            />
+
+            {/* Q9 */}
+            <RadioRow
+              label="9. Do you understand that Terrible Coaching is not therapy, counseling, crisis care, diagnosis, or treatment?"
+              options={[{ v: "yes", l: "Yes" }, { v: "no", l: "No" }]}
+              value={understandsNotTherapy}
+              onChange={setUnderstandsNotTherapy}
+              required
+            />
+
+            {/* Q10 — Crisis */}
+            <RadioRow
+              label="10. Are you currently in crisis, at risk of harming yourself or someone else, or seeking clinical mental health care from this program?"
+              options={[{ v: "no", l: "No" }, { v: "yes", l: "Yes" }]}
+              value={inCrisis}
+              onChange={setInCrisis}
+              required
+            />
+
+            {crisisBlocked && (
+              <div className="rounded-lg border-2 border-danger/40 bg-danger/5 p-5">
+                <p className="font-display font-bold text-foreground mb-2">Terrible Coaching is not the right support for this moment.</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Please contact a licensed mental health professional, emergency services, or a crisis support line in your area. In the US, you can dial or text <strong>988</strong> for the Suicide &amp; Crisis Lifeline.
                 </p>
-
-                <div>
-                  <Label htmlFor="businessName">Business Name (optional)</Label>
-                  <Input id="businessName" placeholder="Your company name" className="mt-1.5" value={businessName} onChange={e => setBusinessName(e.target.value)} />
-                </div>
-
-                <div>
-                  <Label>Industry</Label>
-                  <Select value={industry} onValueChange={setIndustry}>
-                    <SelectTrigger className="mt-1.5">
-                      <SelectValue placeholder="Select your industry" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {industryOptions.map(i => (
-                        <SelectItem key={i} value={i}>{i}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label>Current Annual Revenue Range</Label>
-                  <Select value={revenueRange} onValueChange={setRevenueRange}>
-                    <SelectTrigger className="mt-1.5">
-                      <SelectValue placeholder="Select range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pre-revenue">Pre-revenue</SelectItem>
-                      <SelectItem value="under-100k">Under $100K</SelectItem>
-                      <SelectItem value="100k-500k">$100K-$500K</SelectItem>
-                      <SelectItem value="500k-1m">$500K-$1M</SelectItem>
-                      <SelectItem value="over-1m">Over $1M</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label>Team Size</Label>
-                  <Select value={teamSize} onValueChange={setTeamSize}>
-                    <SelectTrigger className="mt-1.5">
-                      <SelectValue placeholder="Select team size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="solo">Solo</SelectItem>
-                      <SelectItem value="2-5">2-5</SelectItem>
-                      <SelectItem value="6-15">6-15</SelectItem>
-                      <SelectItem value="16-50">16-50</SelectItem>
-                      <SelectItem value="50+">50+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="avoidedDecision">Biggest business decision you're currently avoiding</Label>
-                  <Textarea
-                    id="avoidedDecision"
-                    placeholder="Be specific. This is the first honest thing you'll do here."
-                    className="mt-1.5 min-h-[80px]"
-                    value={avoidedDecision}
-                    onChange={e => setAvoidedDecision(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="decisionOutcome">What would change in your business if you made that decision?</Label>
-                  <Textarea
-                    id="decisionOutcome"
-                    placeholder="Connect the decision to the outcome."
-                    className="mt-1.5 min-h-[80px]"
-                    value={decisionOutcome}
-                    onChange={e => setDecisionOutcome(e.target.value)}
-                  />
-                </div>
               </div>
             )}
 
-            <div>
-              <Label htmlFor="challenge">What's your main challenge right now?</Label>
-              <Textarea id="challenge" placeholder="Be specific. What's actually not working?" required className="mt-1.5 min-h-[100px]" value={challenge} onChange={e => setChallenge(e.target.value)} />
+            {/* Q11 — Breach Fee acknowledgment */}
+            <div className="rounded-lg border-2 border-border bg-card p-5">
+              <Label className="flex items-start gap-3 cursor-pointer">
+                <Checkbox checked={breachAck} onCheckedChange={(v) => setBreachAck(v === true)} className="mt-0.5" />
+                <span className="text-sm text-foreground/90 leading-relaxed">
+                  11. I understand that a <strong>$75 Commitment Breach Fee</strong> may apply if I miss required check-ins, fail to submit evidence, ghost the system, or break controllable commitments I agreed to.
+                </span>
+              </Label>
             </div>
 
+            {/* Q12 */}
+            <RadioRow
+              label="12. Are you ready to be told the truth about your patterns?"
+              options={truthOptions}
+              value={truthReadiness}
+              onChange={setTruthReadiness}
+              required
+            />
+
+            {/* Q13 */}
             <div>
-              <Label htmlFor="goals">What would you want to accomplish in the first 30 days?</Label>
-              <Textarea id="goals" placeholder="Name 1-3 specific, measurable goals" required className="mt-1.5 min-h-[80px]" value={goals30Day} onChange={e => setGoals30Day(e.target.value)} />
+              <Label htmlFor="notes">13. Anything else we should know before reviewing your application?</Label>
+              <Textarea id="notes" className="mt-1.5 min-h-[80px]" value={additionalNotes} onChange={e => setAdditionalNotes(e.target.value)} />
             </div>
 
-            <div>
-              <Label>Readiness Level</Label>
-              <Select required value={readiness} onValueChange={setReadiness}>
-                <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="How ready are you?" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ready">Ready now — let's go</SelectItem>
-                  <SelectItem value="soon">Interested — deciding soon</SelectItem>
-                  <SelectItem value="exploring">Just exploring</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label>Prior Coaching Experience</Label>
-              <Select value={priorCoaching} onValueChange={setPriorCoaching}>
-                <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="Have you worked with a coach before?" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">No prior coaching</SelectItem>
-                  <SelectItem value="some">Some experience</SelectItem>
-                  <SelectItem value="extensive">Extensive experience</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label>What level of support are you looking for? <span className="text-destructive">*</span></Label>
-              <div className="grid gap-3 mt-3">
-                {supportOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => setSupportLevel(option.value)}
-                    className={cn(
-                      "text-left rounded-lg border-2 p-4 transition-all",
-                      supportLevel === option.value
-                        ? "border-primary/80 bg-primary/5"
-                        : "border-border hover:border-muted-foreground/30"
-                    )}
-                  >
-                    <p className={cn(
-                      "font-semibold text-sm",
-                      supportLevel === option.value ? "text-primary" : "text-foreground"
-                    )}>{option.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{option.subtitle}</p>
-                  </button>
-                ))}
+            {/* Subscription + Commitment Terms */}
+            <div className="rounded-xl border-2 border-primary/30 bg-primary/[0.03] p-6">
+              <h3 className="font-display font-bold text-foreground mb-4">Subscription + Commitment Terms</h3>
+              <div className="text-xs text-muted-foreground space-y-3 leading-relaxed mb-5 max-h-72 overflow-y-auto pr-2">
+                <p>By subscribing, I understand that Terrible Coaching is a recurring monthly subscription. My selected track will renew monthly until I cancel.</p>
+                <p>I understand my membership includes a 60-minute initial coaching call, monthly goals, weekly check-ins, evidence-based accountability, pod matching, unlimited in-app messaging, and access to the monthly Reset Call if needed.</p>
+                <p>I understand Terrible Coaching is not therapy, counseling, medical care, crisis care, diagnosis, or treatment.</p>
+                <p>I understand that my pod may see my completion percentage, streak, and commitment ratio, but not my private evidence or personal details unless I choose to share them.</p>
+                <p>I understand that a $75 Commitment Breach Fee may apply if I miss a required check-in, fail to submit required evidence, ghost the system, or break a controllable commitment I agreed to.</p>
+                <p>I understand that missing an outcome target is different from breaching a controllable commitment. Honest failure gets reviewed. Avoidance gets reset.</p>
+                <p>I understand that if a Commitment Breach Fee applies, I may be automatically enrolled in the monthly Reset Call.</p>
+                <p>I understand that fees may be waived at the coach's discretion when life genuinely happens.</p>
+                <p>I understand that payments are non-refundable after my initial coaching call has been completed.</p>
+                <p>I understand that I may cancel my subscription before my next billing cycle to avoid future subscription charges.</p>
+              </div>
+              <div className="space-y-3">
+                <CheckRow checked={agreeSubscription} onChange={setAgreeSubscription} label="I agree to the subscription terms." />
+                <CheckRow checked={agreeBreach} onChange={setAgreeBreach} label="I agree to the Commitment Breach Fee terms." />
+                <CheckRow checked={agreeNotTherapy} onChange={setAgreeNotTherapy} label="I understand this is not therapy or mental health care." />
+                <CheckRow checked={agreeCancellation} onChange={setAgreeCancellation} label="I understand cancellation stops future billing but does not refund completed services." />
               </div>
             </div>
 
-            <Button type="submit" variant="hero" size="lg" className="w-full text-base mt-4" disabled={submitting}>
+            <Button type="submit" variant="hero" size="lg" className="w-full text-base" disabled={submitting || crisisBlocked}>
               {submitting ? "Submitting..." : "Submit Application"}
             </Button>
 
-            {/* Post-submit flow */}
             <div className="rounded-lg border border-border bg-card/50 p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">After you apply:</p>
               <div className="space-y-2">
                 {[
                   "We review within 48 hours",
-                  "You complete your personality assessment",
-                  "Your coaching call is scheduled",
-                  "Your 30-60-90 goals are built from that call",
+                  "If accepted, your 60-minute coaching call is scheduled",
+                  "Monthly goals and weekly commitments are built from that call",
+                  "Evidence requirements are set per commitment",
                   "You're matched to your pod",
                   "Day 1 begins",
                 ].map((step, i) => (
@@ -470,15 +366,46 @@ export default function ApplyPage() {
             </div>
 
             <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              By applying, you understand that Terrible Coaching is not therapy and is not a
-              substitute for licensed mental health care. All sales are final.
-              No refunds are issued after payment is processed. You may cancel your
-              subscription after your first 30 days at any time with no further charges.
+              By applying, you confirm that Terrible Coaching is not therapy, counseling, crisis care, diagnosis, or treatment. See our{" "}
+              <Link to="/legal/subscription" className="underline">Subscription &amp; Fee Terms</Link> and{" "}
+              <Link to="/legal/disclaimer" className="underline">Coaching Disclaimer</Link>.
             </p>
           </form>
         </div>
       </section>
       <Footer />
     </div>
+  );
+}
+
+function RadioRow({ label, options, value, onChange, required }: {
+  label: string;
+  options: { v: string; l: string }[];
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+}) {
+  return (
+    <div>
+      <Label>{label} {required && <span className="text-destructive">*</span>}</Label>
+      <div className="flex flex-wrap gap-2 mt-3">
+        {options.map(o => (
+          <button key={o.v} type="button" onClick={() => onChange(o.v)}
+            className={cn(
+              "rounded-lg border-2 px-4 py-2 text-sm transition-all",
+              value === o.v ? "border-primary/80 bg-primary/5 text-primary font-medium" : "border-border text-foreground hover:border-muted-foreground/30"
+            )}>{o.l}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CheckRow({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
+  return (
+    <Label className="flex items-start gap-3 cursor-pointer">
+      <Checkbox checked={checked} onCheckedChange={(v) => onChange(v === true)} className="mt-0.5" />
+      <span className="text-sm text-foreground/90 leading-relaxed">{label}</span>
+    </Label>
   );
 }
