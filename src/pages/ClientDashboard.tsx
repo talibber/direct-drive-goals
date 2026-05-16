@@ -55,10 +55,10 @@ export default function ClientDashboard() {
               <RotateCcw size={24} className="text-danger mt-0.5" />
               <div>
                 <p className="font-display font-bold text-foreground">
-                  Goal missed. $75 stake charged.
+                  Commitment breach logged. $75 Commitment Breach Fee applied.
                 </p>
                 <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                  You've been enrolled in this month's Reset Session. The Reset is a group coaching call where we address common patterns, recalibrate, and set the next commitment. No one is called out. Everyone benefits.
+                  You've been enrolled in this month's Reset Call. We'll look at what was committed, what actually happened, what got avoided, and what changes before the next cycle. The goal is correction, not shame.
                 </p>
               </div>
             </div>
@@ -80,10 +80,10 @@ export default function ClientDashboard() {
       {/* Stats */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-5 mb-8">
         <StatCard label="Performance Score" value={pm.active ? latestScore + 10 : latestScore} change={pm.active ? "+10 Perfect Month bonus" : "+5 from last week"} trend="up" icon={Activity} />
-        <StatCard label="Goal Completion" value="80%" change="8 of 10 goals" trend="up" icon={Target} />
+        <StatCard label="Commitment Ratio" value="80%" change="8 of 10 commitments" trend="up" icon={Target} />
         <StatCard label="Check-In Streak" value="6 wks" change="Personal best!" trend="up" icon={Flame} />
-        <StatCard label="Perfect Months" value={pm.perfectMonthCount} change="Lifetime total" trend="up" icon={Trophy} />
-        <StatCard label="Stakes Charged" value="$150" change="2 missed goals" trend="down" icon={DollarSign} />
+        <StatCard label="Evidence Submitted" value="92%" change="On time this month" trend="up" icon={Trophy} />
+        <StatCard label="Breach Fees" value="$150" change="2 commitment breaches" trend="down" icon={DollarSign} />
       </div>
 
       {/* Coach Activity Strip */}
