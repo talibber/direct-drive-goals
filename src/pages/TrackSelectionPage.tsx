@@ -42,6 +42,11 @@ const tracks = [
 export default function TrackSelectionPage() {
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="Apply — Choose Your Track | Terrible Coaching"
+        description="Apply to Terrible Coaching. Choose Life Track for personal accountability ($99/mo), Operator Track for founders and operators ($199/mo), or Direct 1:1 access ($1,000/mo)."
+        path="/apply/select"
+      />
       <Navbar />
       <section className="pt-32 pb-20 md:pt-40">
         <div className="container max-w-5xl">
