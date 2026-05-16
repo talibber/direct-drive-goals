@@ -86,6 +86,7 @@ const App = () => (
           <Route path="/coach/achievement-group" element={<CoachAchievementGroupPage />} />
           <Route path="/coach/clients/:clientId" element={<CoachClientDetailPage />} />
           <Route path="/coach/weekly-qa" element={<CoachWeeklyQAPage />} />
+          <Route path="/coach/breaches" element={<CoachBreachesPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
