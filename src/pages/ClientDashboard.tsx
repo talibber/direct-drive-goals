@@ -17,6 +17,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, 
 
 export default function ClientDashboard() {
   const { profile, loading, isReal } = useRealClient();
+  const [pendingReports, setPendingReports] = useState(clientMissedGoalsPendingReport);
+
   if (loading) {
     return <DashboardLayout><div className="p-8 text-sm text-muted-foreground">Loading your dashboard…</div></DashboardLayout>;
   }
@@ -28,7 +30,6 @@ export default function ClientDashboard() {
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
   const pm = clientPerfectMonth;
   const rs = clientResetSession;
-  const [pendingReports, setPendingReports] = useState(clientMissedGoalsPendingReport);
 
   const handleMissReport = (data: MissedGoalReportData) => {
     setPendingReports(prev => prev.filter(g => g.id !== data.goalId));
