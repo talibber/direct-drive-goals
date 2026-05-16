@@ -282,28 +282,42 @@ export default function WeeklyCheckInPage() {
             </div>
           </div>
 
-          {/* Goal status */}
+          {/* Goal status — every active goal must be marked */}
           <div className="rounded-lg border border-border bg-card p-6 shadow-card space-y-4">
-            <h3 className="font-display font-semibold">Goal Status</h3>
-            {goals.map((g) => (
-              <div key={g.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                <span className="text-sm text-foreground">{g.title}</span>
-                <Select>
-                  <SelectTrigger className="w-32">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <h3 className="font-display font-semibold">Goal Status</h3>
+              <BreachFeeBadge label="$75 per missed commitment" />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Mark every active goal honestly. At-risk, missed, and needs-help statuses send a coaching draft to your coach for review and reply.
+            </p>
+            {activeGoals.length === 0 && (
+              <p className="text-sm text-muted-foreground italic">No active goals yet.</p>
+            )}
+            {activeGoals.map((g) => (
+              <div key={g.id} className="flex items-center justify-between gap-3 py-2 border-b border-border/50 last:border-0">
+                <span className="text-sm text-foreground flex-1">{g.title}</span>
+                <Select
+                  value={goalStatuses[g.id] || undefined}
+                  onValueChange={(v) => setGoalStatuses(prev => ({ ...prev, [g.id]: v as GoalStatusKey }))}
+                >
+                  <SelectTrigger className="w-40">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="on-track">On Track</SelectItem>
-                    <SelectItem value="at-risk">At Risk</SelectItem>
+                    <SelectItem value="on_track">On Track</SelectItem>
+                    <SelectItem value="at_risk">At Risk</SelectItem>
                     <SelectItem value="missed">Missed</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="needs_help">Needs Help</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             ))}
           </div>
 
-          <Button type="submit" variant="hero" size="lg" className="w-full text-base">
-            Submit Check-In
+          <Button type="submit" variant="hero" size="lg" className="w-full text-base" disabled={submitting}>
+            {submitting ? "Submitting…" : "Submit Check-In"}
           </Button>
         </form>
       </div>
