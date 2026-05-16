@@ -12,6 +12,7 @@ const links = [
   { to: "/coach/operator-call", label: "Operator Call", icon: Mic },
   { to: "/coach/achievement-group", label: "Achievement Group", icon: Trophy },
   { to: "/coach/weekly-qa", label: "Weekly Q&A", icon: BookOpen },
+  { to: "/coach/breaches", label: "Breach Fees", icon: AlertOctagon },
   { to: "/coach/metrics", label: "Metrics", icon: BarChart3 },
 ];
 
