@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageHead } from "@/components/PageHead";
 import { Link } from "react-router-dom";
 
 const tracks = [
