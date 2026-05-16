@@ -390,6 +390,9 @@ export type Database = {
           automation_level: number
           client_id: string
           created_at: string
+          human_in_loop: boolean
+          human_in_loop_end_date: string | null
+          human_in_loop_start_date: string | null
           id: string
           onboarded_at: string
           per_trigger_overrides: Json
@@ -400,6 +403,9 @@ export type Database = {
           automation_level?: number
           client_id: string
           created_at?: string
+          human_in_loop?: boolean
+          human_in_loop_end_date?: string | null
+          human_in_loop_start_date?: string | null
           id?: string
           onboarded_at?: string
           per_trigger_overrides?: Json
@@ -410,6 +416,9 @@ export type Database = {
           automation_level?: number
           client_id?: string
           created_at?: string
+          human_in_loop?: boolean
+          human_in_loop_end_date?: string | null
+          human_in_loop_start_date?: string | null
           id?: string
           onboarded_at?: string
           per_trigger_overrides?: Json
@@ -422,7 +431,9 @@ export type Database = {
         Row: {
           client_id: string
           current_level: number
+          environment: string
           id: string
+          is_demo: boolean
           last_updated: string
           monthly_points: number
           total_points: number
@@ -430,7 +441,9 @@ export type Database = {
         Insert: {
           client_id: string
           current_level?: number
+          environment?: string
           id?: string
+          is_demo?: boolean
           last_updated?: string
           monthly_points?: number
           total_points?: number
@@ -438,7 +451,9 @@ export type Database = {
         Update: {
           client_id?: string
           current_level?: number
+          environment?: string
           id?: string
+          is_demo?: boolean
           last_updated?: string
           monthly_points?: number
           total_points?: number
@@ -519,10 +534,12 @@ export type Database = {
           automation_eligible: boolean
           confidence_score: number
           created_at: string
+          environment: string
           event_id: string | null
           final_message: string | null
           goal_id: string | null
           id: string
+          is_demo: boolean
           response_due_at: string | null
           risk_level: string
           scheduled_send_at: string | null
@@ -541,10 +558,12 @@ export type Database = {
           automation_eligible?: boolean
           confidence_score?: number
           created_at?: string
+          environment?: string
           event_id?: string | null
           final_message?: string | null
           goal_id?: string | null
           id?: string
+          is_demo?: boolean
           response_due_at?: string | null
           risk_level?: string
           scheduled_send_at?: string | null
@@ -563,10 +582,12 @@ export type Database = {
           automation_eligible?: boolean
           confidence_score?: number
           created_at?: string
+          environment?: string
           event_id?: string | null
           final_message?: string | null
           goal_id?: string | null
           id?: string
+          is_demo?: boolean
           response_due_at?: string | null
           risk_level?: string
           scheduled_send_at?: string | null
@@ -683,11 +704,13 @@ export type Database = {
           assigned_owner: string | null
           client_visible: boolean | null
           created_at: string
+          environment: string
           event_payload: Json
           event_type: string
           goal_id: string | null
           id: string
           internal_due_at: string | null
+          is_demo: boolean
           priority: number | null
           risk_level: string | null
           status: string | null
@@ -699,11 +722,13 @@ export type Database = {
           assigned_owner?: string | null
           client_visible?: boolean | null
           created_at?: string
+          environment?: string
           event_payload?: Json
           event_type: string
           goal_id?: string | null
           id?: string
           internal_due_at?: string | null
+          is_demo?: boolean
           priority?: number | null
           risk_level?: string | null
           status?: string | null
@@ -715,11 +740,13 @@ export type Database = {
           assigned_owner?: string | null
           client_visible?: boolean | null
           created_at?: string
+          environment?: string
           event_payload?: Json
           event_type?: string
           goal_id?: string | null
           id?: string
           internal_due_at?: string | null
+          is_demo?: boolean
           priority?: number | null
           risk_level?: string | null
           status?: string | null
@@ -731,15 +758,18 @@ export type Database = {
       commitment_breaches: {
         Row: {
           amount: number
+          auto_charge_disabled: boolean
           breach_reason: string
           charge_completed_at: string | null
           charge_scheduled_at: string | null
           charged: boolean
           created_at: string
           decision: string | null
+          environment: string
           evidence: Json | null
           goal_id: string | null
           id: string
+          is_demo: boolean
           notes: string | null
           reset_call_enrolled: boolean
           suggested_decision: string | null
@@ -751,15 +781,18 @@ export type Database = {
         }
         Insert: {
           amount?: number
+          auto_charge_disabled?: boolean
           breach_reason: string
           charge_completed_at?: string | null
           charge_scheduled_at?: string | null
           charged?: boolean
           created_at?: string
           decision?: string | null
+          environment?: string
           evidence?: Json | null
           goal_id?: string | null
           id?: string
+          is_demo?: boolean
           notes?: string | null
           reset_call_enrolled?: boolean
           suggested_decision?: string | null
@@ -771,15 +804,18 @@ export type Database = {
         }
         Update: {
           amount?: number
+          auto_charge_disabled?: boolean
           breach_reason?: string
           charge_completed_at?: string | null
           charge_scheduled_at?: string | null
           charged?: boolean
           created_at?: string
           decision?: string | null
+          environment?: string
           evidence?: Json | null
           goal_id?: string | null
           id?: string
+          is_demo?: boolean
           notes?: string | null
           reset_call_enrolled?: boolean
           suggested_decision?: string | null
@@ -796,27 +832,36 @@ export type Database = {
           client_id: string
           content: string
           created_at: string
+          environment: string
           id: string
+          is_demo: boolean
           is_moderated: boolean
           photo_url: string | null
+          pod_id: string | null
           post_id: string
         }
         Insert: {
           client_id: string
           content?: string
           created_at?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           is_moderated?: boolean
           photo_url?: string | null
+          pod_id?: string | null
           post_id: string
         }
         Update: {
           client_id?: string
           content?: string
           created_at?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           is_moderated?: boolean
           photo_url?: string | null
+          pod_id?: string | null
           post_id?: string
         }
         Relationships: [
@@ -863,30 +908,39 @@ export type Database = {
           client_id: string
           content: string
           created_at: string
+          environment: string
           id: string
+          is_demo: boolean
           is_moderated: boolean
           likes_count: number
           photo_urls: string[] | null
+          pod_id: string | null
           post_type: string
         }
         Insert: {
           client_id: string
           content: string
           created_at?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           is_moderated?: boolean
           likes_count?: number
           photo_urls?: string[] | null
+          pod_id?: string | null
           post_type?: string
         }
         Update: {
           client_id?: string
           content?: string
           created_at?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           is_moderated?: boolean
           likes_count?: number
           photo_urls?: string[] | null
+          pod_id?: string | null
           post_type?: string
         }
         Relationships: []
@@ -1043,7 +1097,9 @@ export type Database = {
           coach_id: string
           context_text: string | null
           created_at: string
+          environment: string
           id: string
+          is_demo: boolean
           message_type: string
           question_text: string | null
           read_at: string | null
@@ -1059,7 +1115,9 @@ export type Database = {
           coach_id: string
           context_text?: string | null
           created_at?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           message_type?: string
           question_text?: string | null
           read_at?: string | null
@@ -1075,7 +1133,9 @@ export type Database = {
           coach_id?: string
           context_text?: string | null
           created_at?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           message_type?: string
           question_text?: string | null
           read_at?: string | null
@@ -1181,7 +1241,9 @@ export type Database = {
           current_value: number
           description: string | null
           due_date: string
+          environment: string
           id: string
+          is_demo: boolean
           metric_type: string
           proof_description: string | null
           proof_file_url: string | null
@@ -1208,7 +1270,9 @@ export type Database = {
           current_value?: number
           description?: string | null
           due_date: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           metric_type?: string
           proof_description?: string | null
           proof_file_url?: string | null
@@ -1235,7 +1299,9 @@ export type Database = {
           current_value?: number
           description?: string | null
           due_date?: string
+          environment?: string
           id?: string
+          is_demo?: boolean
           metric_type?: string
           proof_description?: string | null
           proof_file_url?: string | null
@@ -1265,9 +1331,11 @@ export type Database = {
           context: string | null
           created_at: string
           custom_description: string | null
+          environment: string
           flagged_at: string
           follow_up_at: string | null
           id: string
+          is_demo: boolean
           resolved_at: string | null
           resolved_by_client: boolean
           updated_at: string
@@ -1283,9 +1351,11 @@ export type Database = {
           context?: string | null
           created_at?: string
           custom_description?: string | null
+          environment?: string
           flagged_at?: string
           follow_up_at?: string | null
           id?: string
+          is_demo?: boolean
           resolved_at?: string | null
           resolved_by_client?: boolean
           updated_at?: string
@@ -1301,9 +1371,11 @@ export type Database = {
           context?: string | null
           created_at?: string
           custom_description?: string | null
+          environment?: string
           flagged_at?: string
           follow_up_at?: string | null
           id?: string
+          is_demo?: boolean
           resolved_at?: string | null
           resolved_by_client?: boolean
           updated_at?: string
@@ -1714,26 +1786,47 @@ export type Database = {
       }
       profiles: {
         Row: {
+          client_type: string
           coaching_track: string
           created_at: string
           display_name: string | null
           email: string | null
+          environment: string
+          is_demo: boolean
+          paid_at: string | null
+          pod_id: string | null
+          subscription_status: string | null
+          subscription_tier: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          client_type?: string
           coaching_track?: string
           created_at?: string
           display_name?: string | null
           email?: string | null
+          environment?: string
+          is_demo?: boolean
+          paid_at?: string | null
+          pod_id?: string | null
+          subscription_status?: string | null
+          subscription_tier?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          client_type?: string
           coaching_track?: string
           created_at?: string
           display_name?: string | null
           email?: string | null
+          environment?: string
+          is_demo?: boolean
+          paid_at?: string | null
+          pod_id?: string | null
+          subscription_status?: string | null
+          subscription_tier?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -2219,17 +2312,24 @@ export type Database = {
           client_id: string
           coaching_track: string
           commitment: string | null
+          completion_status: string | null
           confidence: number
+          confidence_score: number | null
           created_at: string
           decision_avoided: string | null
           decision_made: string | null
           energy: number
+          environment: string
           failures: string | null
           fear_cost: string | null
           focus: number
+          goal_id: string | null
           goal_statuses: Json
           habit_completion: number | null
           id: string
+          is_demo: boolean
+          needs_help: boolean | null
+          notes: string | null
           revenue_actions_count: number | null
           sleep: number
           story: string | null
@@ -2244,17 +2344,24 @@ export type Database = {
           client_id: string
           coaching_track?: string
           commitment?: string | null
+          completion_status?: string | null
           confidence?: number
+          confidence_score?: number | null
           created_at?: string
           decision_avoided?: string | null
           decision_made?: string | null
           energy?: number
+          environment?: string
           failures?: string | null
           fear_cost?: string | null
           focus?: number
+          goal_id?: string | null
           goal_statuses?: Json
           habit_completion?: number | null
           id?: string
+          is_demo?: boolean
+          needs_help?: boolean | null
+          notes?: string | null
           revenue_actions_count?: number | null
           sleep?: number
           story?: string | null
@@ -2269,17 +2376,24 @@ export type Database = {
           client_id?: string
           coaching_track?: string
           commitment?: string | null
+          completion_status?: string | null
           confidence?: number
+          confidence_score?: number | null
           created_at?: string
           decision_avoided?: string | null
           decision_made?: string | null
           energy?: number
+          environment?: string
           failures?: string | null
           fear_cost?: string | null
           focus?: number
+          goal_id?: string | null
           goal_statuses?: Json
           habit_completion?: number | null
           id?: string
+          is_demo?: boolean
+          needs_help?: boolean | null
+          notes?: string | null
           revenue_actions_count?: number | null
           sleep?: number
           story?: string | null
@@ -2295,6 +2409,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_view_post: {
+        Args: { _post_id: string; _user: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -2303,6 +2421,7 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      same_pod: { Args: { _pod: string; _user: string }; Returns: boolean }
     }
     Enums: {
       app_role:
