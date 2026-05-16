@@ -9,6 +9,7 @@ import { CoachStaleActivityAlert } from "@/components/CoachStaleActivityAlert";
 import { clients, applications, pendingCoachGoals, proofSubmittedGoals as initialProofGoals, perfectMonthAlerts as initialAlerts, resetSessions as initialResetSessions, resetSessionEngagements, coachHelpRadarItems, missedGoalReports, type Goal, type PerfectMonthAlert, type ResetSession, type HelpRadarItem } from "@/lib/mockData";
 import { Users, AlertTriangle, DollarSign, ClipboardCheck, Target, FileCheck, Trophy, RotateCcw, Upload, Link2, Send, Eye, EyeOff, CheckCircle2, Radio, BookOpen } from "lucide-react";
 import { CoachLibraryPanel } from "@/components/CoachLibraryPanel";
+import { CommandCenter } from "@/components/CommandCenter";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -53,6 +54,8 @@ export default function CoachDashboard() {
     <CoachLayout>
       <h1 className="font-display text-2xl md:text-3xl font-bold mb-2">Coach Dashboard</h1>
       <p className="text-muted-foreground mb-8">Overview of your coaching practice.</p>
+
+      <CommandCenter />
 
       {/* Perfect Month Alerts */}
       {unscheduledAlerts.length > 0 && (

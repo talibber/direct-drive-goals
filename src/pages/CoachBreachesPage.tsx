@@ -19,6 +19,9 @@ interface Breach {
   waiver_reason: string | null;
   reset_call_enrolled: boolean;
   created_at: string;
+  lifecycle_status: "candidate" | "approved" | "waived" | "charged" | "disputed";
+  is_demo: boolean;
+  auto_charge_disabled: boolean;
 }
 
 const reasonLabel: Record<string, string> = {
@@ -63,11 +66,20 @@ export default function CoachBreachesPage() {
     }
   }
 
-  async function markCharged(id: string) {
-    const { error } = await supabase
-      .from("commitment_breaches")
-      .update({ charged: true })
-      .eq("id", id);
+  async function approve(id: string) {
+    const { error } = await supabase.from("commitment_breaches").update({ lifecycle_status: "approved", decision: "approved" }).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success("Breach approved — still requires manual charge.");
+    load();
+  }
+
+  async function markCharged(b: Breach) {
+    if (b.is_demo) return toast.error("Demo breaches cannot be charged.");
+    if (b.auto_charge_disabled) {
+      const ok = window.confirm("Auto-charge is disabled. Mark this as manually charged?");
+      if (!ok) return;
+    }
+    const { error } = await supabase.from("commitment_breaches").update({ charged: true, lifecycle_status: "charged", charge_completed_at: new Date().toISOString() }).eq("id", b.id);
     if (error) return toast.error(error.message);
     toast.success("Marked as charged");
     load();
@@ -83,6 +95,7 @@ export default function CoachBreachesPage() {
       .from("commitment_breaches")
       .update({
         waived: true,
+        lifecycle_status: "waived",
         waiver_reason: waiverReason,
         waived_by: userData?.user?.id ?? null,
       })
@@ -150,15 +163,16 @@ export default function CoachBreachesPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  {b.waived && <Badge className="bg-muted text-foreground">Waived</Badge>}
-                  {b.charged && <Badge className="bg-success/10 text-success">Charged</Badge>}
+                  <Badge variant="outline" className="text-[10px] uppercase">{b.lifecycle_status}</Badge>
+                  {b.is_demo && <Badge variant="secondary">demo</Badge>}
+                  {!b.charged && !b.waived && b.lifecycle_status === "candidate" && (
+                    <Button size="sm" onClick={() => approve(b.id)}>Approve</Button>
+                  )}
+                  {!b.charged && !b.waived && b.lifecycle_status === "approved" && (
+                    <Button size="sm" onClick={() => markCharged(b)}>Mark Charged</Button>
+                  )}
                   {!b.charged && !b.waived && (
-                    <>
-                      <Button size="sm" onClick={() => markCharged(b.id)}>Mark Charged</Button>
-                      <Button size="sm" variant="outline" onClick={() => setWaiverFor(b.id)}>
-                        Waive
-                      </Button>
-                    </>
+                    <Button size="sm" variant="outline" onClick={() => setWaiverFor(b.id)}>Waive</Button>
                   )}
                 </div>
               </div>

@@ -167,6 +167,39 @@ async function clientDashboardNoMockInRealPath() {
   checks.push({ name: "ClientDashboard branches on real client", weight: 5, pass: ok });
 }
 
+async function productionFoundation() {
+  // Tenants + settings + legal_acceptances
+  const a = await supabase.from("tenants").select("id").limit(1);
+  const b = await supabase.from("system_settings").select("key").limit(1);
+  const c = await supabase.from("legal_acceptances").select("id").limit(1);
+  checks.push({ name: "Tenants / settings / legal tables", weight: 10, pass: !a.error && !b.error && !c.error });
+}
+
+async function tenantBackfill() {
+  const { count } = await supabase.from("profiles").select("user_id", { count: "exact", head: true }).is("tenant_id", null);
+  checks.push({ name: "All profiles have tenant_id", weight: 5, pass: (count ?? 0) === 0, detail: `${count ?? 0} unscoped` });
+}
+
+async function breachLifecycle() {
+  const { error } = await supabase.from("commitment_breaches").select("lifecycle_status").limit(1);
+  checks.push({ name: "Breach lifecycle_status column", weight: 5, pass: !error });
+}
+
+async function launchArtifacts() {
+  const want = [
+    "src/pages/SignupPage.tsx",
+    "src/pages/LegalAcceptancePage.tsx",
+    "src/pages/AdminDiagnosticsPage.tsx",
+    "src/components/CommandCenter.tsx",
+    "src/lib/env.ts",
+    "supabase/functions/production-readiness-check/index.ts",
+    "launch-readiness-report.md",
+  ];
+  const missing: string[] = [];
+  for (const f of want) { try { await Deno.stat(f); } catch { missing.push(f); } }
+  checks.push({ name: "Production launch artifacts present", weight: 10, pass: missing.length === 0, detail: missing.join(", ") });
+}
+
 async function main() {
   await Promise.all([
     scanLanguage(), schema(), edgeFunctions(), frontendPages(), navGroups(),
@@ -174,6 +207,7 @@ async function main() {
     styleLearningTables(), clientAutomationStatus(), commitmentStakesLifecycle(),
     highRiskGuard(), noClientSLA(),
     demoIsolation(), firstClientArtifacts(), clientDashboardNoMockInRealPath(),
+    productionFoundation(), tenantBackfill(), breachLifecycle(), launchArtifacts(),
   ]);
 
   const total = checks.reduce((a, c) => a + c.weight, 0);

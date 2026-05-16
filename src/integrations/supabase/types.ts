@@ -138,6 +138,7 @@ export type Database = {
           status: string
           suggested_action: string | null
           suggested_response_draft_id: string | null
+          tenant_id: string | null
           trigger: string
           updated_at: string
         }
@@ -157,6 +158,7 @@ export type Database = {
           status?: string
           suggested_action?: string | null
           suggested_response_draft_id?: string | null
+          tenant_id?: string | null
           trigger: string
           updated_at?: string
         }
@@ -176,6 +178,7 @@ export type Database = {
           status?: string
           suggested_action?: string | null
           suggested_response_draft_id?: string | null
+          tenant_id?: string | null
           trigger?: string
           updated_at?: string
         }
@@ -436,6 +439,7 @@ export type Database = {
           is_demo: boolean
           last_updated: string
           monthly_points: number
+          tenant_id: string | null
           total_points: number
         }
         Insert: {
@@ -446,6 +450,7 @@ export type Database = {
           is_demo?: boolean
           last_updated?: string
           monthly_points?: number
+          tenant_id?: string | null
           total_points?: number
         }
         Update: {
@@ -456,6 +461,7 @@ export type Database = {
           is_demo?: boolean
           last_updated?: string
           monthly_points?: number
+          tenant_id?: string | null
           total_points?: number
         }
         Relationships: []
@@ -472,6 +478,7 @@ export type Database = {
           owner_id: string | null
           source_id: string | null
           source_type: string | null
+          tenant_id: string | null
         }
         Insert: {
           client_facing_note?: string | null
@@ -484,6 +491,7 @@ export type Database = {
           owner_id?: string | null
           source_id?: string | null
           source_type?: string | null
+          tenant_id?: string | null
         }
         Update: {
           client_facing_note?: string | null
@@ -496,6 +504,7 @@ export type Database = {
           owner_id?: string | null
           source_id?: string | null
           source_type?: string | null
+          tenant_id?: string | null
         }
         Relationships: []
       }
@@ -507,6 +516,7 @@ export type Database = {
           coach_id: string
           created_at: string
           id: string
+          tenant_id: string | null
         }
         Insert: {
           activity_description: string
@@ -515,6 +525,7 @@ export type Database = {
           coach_id: string
           created_at?: string
           id?: string
+          tenant_id?: string | null
         }
         Update: {
           activity_description?: string
@@ -523,6 +534,7 @@ export type Database = {
           coach_id?: string
           created_at?: string
           id?: string
+          tenant_id?: string | null
         }
         Relationships: []
       }
@@ -540,12 +552,14 @@ export type Database = {
           goal_id: string | null
           id: string
           is_demo: boolean
+          regeneration_count: number
           response_due_at: string | null
           risk_level: string
           scheduled_send_at: string | null
           sent_at: string | null
           status: string
           suggested_tone: string | null
+          tenant_id: string | null
           tone_match_score: number
           trigger_type: string
           updated_at: string
@@ -564,12 +578,14 @@ export type Database = {
           goal_id?: string | null
           id?: string
           is_demo?: boolean
+          regeneration_count?: number
           response_due_at?: string | null
           risk_level?: string
           scheduled_send_at?: string | null
           sent_at?: string | null
           status?: string
           suggested_tone?: string | null
+          tenant_id?: string | null
           tone_match_score?: number
           trigger_type: string
           updated_at?: string
@@ -588,12 +604,14 @@ export type Database = {
           goal_id?: string | null
           id?: string
           is_demo?: boolean
+          regeneration_count?: number
           response_due_at?: string | null
           risk_level?: string
           scheduled_send_at?: string | null
           sent_at?: string | null
           status?: string
           suggested_tone?: string | null
+          tenant_id?: string | null
           tone_match_score?: number
           trigger_type?: string
           updated_at?: string
@@ -715,6 +733,7 @@ export type Database = {
           risk_level: string | null
           status: string | null
           suggested_action: string | null
+          tenant_id: string | null
           user_id: string
         }
         Insert: {
@@ -733,6 +752,7 @@ export type Database = {
           risk_level?: string | null
           status?: string | null
           suggested_action?: string | null
+          tenant_id?: string | null
           user_id: string
         }
         Update: {
@@ -751,6 +771,7 @@ export type Database = {
           risk_level?: string | null
           status?: string | null
           suggested_action?: string | null
+          tenant_id?: string | null
           user_id?: string
         }
         Relationships: []
@@ -770,9 +791,11 @@ export type Database = {
           goal_id: string | null
           id: string
           is_demo: boolean
+          lifecycle_status: string
           notes: string | null
           reset_call_enrolled: boolean
           suggested_decision: string | null
+          tenant_id: string | null
           updated_at: string
           user_id: string
           waived: boolean
@@ -793,9 +816,11 @@ export type Database = {
           goal_id?: string | null
           id?: string
           is_demo?: boolean
+          lifecycle_status?: string
           notes?: string | null
           reset_call_enrolled?: boolean
           suggested_decision?: string | null
+          tenant_id?: string | null
           updated_at?: string
           user_id: string
           waived?: boolean
@@ -816,9 +841,11 @@ export type Database = {
           goal_id?: string | null
           id?: string
           is_demo?: boolean
+          lifecycle_status?: string
           notes?: string | null
           reset_call_enrolled?: boolean
           suggested_decision?: string | null
+          tenant_id?: string | null
           updated_at?: string
           user_id?: string
           waived?: boolean
@@ -839,6 +866,7 @@ export type Database = {
           photo_url: string | null
           pod_id: string | null
           post_id: string
+          tenant_id: string | null
         }
         Insert: {
           client_id: string
@@ -851,6 +879,7 @@ export type Database = {
           photo_url?: string | null
           pod_id?: string | null
           post_id: string
+          tenant_id?: string | null
         }
         Update: {
           client_id?: string
@@ -863,6 +892,7 @@ export type Database = {
           photo_url?: string | null
           pod_id?: string | null
           post_id?: string
+          tenant_id?: string | null
         }
         Relationships: [
           {
@@ -916,6 +946,7 @@ export type Database = {
           photo_urls: string[] | null
           pod_id: string | null
           post_type: string
+          tenant_id: string | null
         }
         Insert: {
           client_id: string
@@ -929,6 +960,7 @@ export type Database = {
           photo_urls?: string[] | null
           pod_id?: string | null
           post_type?: string
+          tenant_id?: string | null
         }
         Update: {
           client_id?: string
@@ -942,6 +974,7 @@ export type Database = {
           photo_urls?: string[] | null
           pod_id?: string | null
           post_type?: string
+          tenant_id?: string | null
         }
         Relationships: []
       }
@@ -988,6 +1021,7 @@ export type Database = {
           content_id: string
           created_at: string
           id: string
+          tenant_id: string | null
           updated_at: string
         }
         Insert: {
@@ -1000,6 +1034,7 @@ export type Database = {
           content_id: string
           created_at?: string
           id?: string
+          tenant_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -1012,6 +1047,7 @@ export type Database = {
           content_id?: string
           created_at?: string
           id?: string
+          tenant_id?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -1073,6 +1109,7 @@ export type Database = {
           created_at: string
           id: string
           last_message_at: string
+          tenant_id: string | null
         }
         Insert: {
           client_id: string
@@ -1080,6 +1117,7 @@ export type Database = {
           created_at?: string
           id?: string
           last_message_at?: string
+          tenant_id?: string | null
         }
         Update: {
           client_id?: string
@@ -1087,6 +1125,7 @@ export type Database = {
           created_at?: string
           id?: string
           last_message_at?: string
+          tenant_id?: string | null
         }
         Relationships: []
       }
@@ -1107,6 +1146,7 @@ export type Database = {
           response_text: string | null
           response_voice_url: string | null
           sent_at: string
+          tenant_id: string | null
           voice_url: string | null
         }
         Insert: {
@@ -1125,6 +1165,7 @@ export type Database = {
           response_text?: string | null
           response_voice_url?: string | null
           sent_at?: string
+          tenant_id?: string | null
           voice_url?: string | null
         }
         Update: {
@@ -1143,6 +1184,7 @@ export type Database = {
           response_text?: string | null
           response_voice_url?: string | null
           sent_at?: string
+          tenant_id?: string | null
           voice_url?: string | null
         }
         Relationships: []
@@ -1194,6 +1236,7 @@ export type Database = {
           id: string
           self_assessment: string
           submitted_at: string
+          tenant_id: string | null
         }
         Insert: {
           client_id: string
@@ -1206,6 +1249,7 @@ export type Database = {
           id?: string
           self_assessment: string
           submitted_at?: string
+          tenant_id?: string | null
         }
         Update: {
           client_id?: string
@@ -1218,6 +1262,7 @@ export type Database = {
           id?: string
           self_assessment?: string
           submitted_at?: string
+          tenant_id?: string | null
         }
         Relationships: [
           {
@@ -1255,6 +1300,7 @@ export type Database = {
           status: Database["public"]["Enums"]["goal_status"]
           target: string
           target_value: number
+          tenant_id: string | null
           title: string
           updated_at: string
           user_id: string
@@ -1284,6 +1330,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["goal_status"]
           target: string
           target_value?: number
+          tenant_id?: string | null
           title: string
           updated_at?: string
           user_id: string
@@ -1313,6 +1360,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["goal_status"]
           target?: string
           target_value?: number
+          tenant_id?: string | null
           title?: string
           updated_at?: string
           user_id?: string
@@ -1338,6 +1386,7 @@ export type Database = {
           is_demo: boolean
           resolved_at: string | null
           resolved_by_client: boolean
+          tenant_id: string | null
           updated_at: string
         }
         Insert: {
@@ -1358,6 +1407,7 @@ export type Database = {
           is_demo?: boolean
           resolved_at?: string | null
           resolved_by_client?: boolean
+          tenant_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -1378,7 +1428,35 @@ export type Database = {
           is_demo?: boolean
           resolved_at?: string | null
           resolved_by_client?: boolean
+          tenant_id?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      legal_acceptances: {
+        Row: {
+          accepted_at: string
+          document: string
+          id: string
+          ip_address: string | null
+          user_id: string
+          version: string
+        }
+        Insert: {
+          accepted_at?: string
+          document: string
+          id?: string
+          ip_address?: string | null
+          user_id: string
+          version?: string
+        }
+        Update: {
+          accepted_at?: string
+          document?: string
+          id?: string
+          ip_address?: string | null
+          user_id?: string
+          version?: string
         }
         Relationships: []
       }
@@ -1436,6 +1514,7 @@ export type Database = {
           sender_id: string
           sender_role: string
           sent_at: string
+          tenant_id: string | null
         }
         Insert: {
           attachment_urls?: string[] | null
@@ -1446,6 +1525,7 @@ export type Database = {
           sender_id: string
           sender_role?: string
           sent_at?: string
+          tenant_id?: string | null
         }
         Update: {
           attachment_urls?: string[] | null
@@ -1456,6 +1536,7 @@ export type Database = {
           sender_id?: string
           sender_role?: string
           sent_at?: string
+          tenant_id?: string | null
         }
         Relationships: [
           {
@@ -1797,6 +1878,7 @@ export type Database = {
           pod_id: string | null
           subscription_status: string | null
           subscription_tier: string | null
+          tenant_id: string | null
           updated_at: string
           user_id: string
         }
@@ -1812,6 +1894,7 @@ export type Database = {
           pod_id?: string | null
           subscription_status?: string | null
           subscription_tier?: string | null
+          tenant_id?: string | null
           updated_at?: string
           user_id: string
         }
@@ -1827,6 +1910,7 @@ export type Database = {
           pod_id?: string | null
           subscription_status?: string | null
           subscription_tier?: string | null
+          tenant_id?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -2148,6 +2232,24 @@ export type Database = {
         }
         Relationships: []
       }
+      system_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       team_challenges: {
         Row: {
           completed: boolean
@@ -2254,6 +2356,30 @@ export type Database = {
         }
         Relationships: []
       }
+      tenants: {
+        Row: {
+          created_at: string
+          id: string
+          is_demo: boolean
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
       user_coaching_profiles: {
         Row: {
           at_risk_count: number
@@ -2334,6 +2460,7 @@ export type Database = {
           sleep: number
           story: string | null
           stress: number
+          tenant_id: string | null
           updated_at: string
           week_of: string
           wins: string | null
@@ -2366,6 +2493,7 @@ export type Database = {
           sleep?: number
           story?: string | null
           stress?: number
+          tenant_id?: string | null
           updated_at?: string
           week_of?: string
           wins?: string | null
@@ -2398,6 +2526,7 @@ export type Database = {
           sleep?: number
           story?: string | null
           stress?: number
+          tenant_id?: string | null
           updated_at?: string
           week_of?: string
           wins?: string | null
@@ -2413,6 +2542,7 @@ export type Database = {
         Args: { _post_id: string; _user: string }
         Returns: boolean
       }
+      current_tenant: { Args: { _user: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -2421,6 +2551,7 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      production_tenant_id: { Args: never; Returns: string }
       same_pod: { Args: { _pod: string; _user: string }; Returns: boolean }
     }
     Enums: {
