@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut, Mic, Zap, Trophy, BookOpen } from "lucide-react";
+import { LayoutDashboard, Users, ClipboardCheck, BarChart3, MessageSquare, LogOut, Mic, Zap, Trophy, BookOpen, AlertOctagon } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const links = [
