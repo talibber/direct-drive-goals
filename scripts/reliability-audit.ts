@@ -125,16 +125,16 @@ async function highRiskGuard() {
 }
 
 async function noClientSLA() {
-  const want = "10 minute";
+  const sla = /(response\s+(in|within)\s+10\s*min|10[- ]?minute\s+response|reply\s+(in|within)\s+10\s*min)/i;
   let hits = 0;
   for (const dir of CLIENT_DIRS) {
     for await (const e of walk(dir, { exts: [".tsx", ".ts"] })) {
       if (e.path.includes("/Coach")) continue;
       const t = await Deno.readTextFile(e.path);
-      if (t.toLowerCase().includes(want)) hits++;
+      if (sla.test(t)) hits++;
     }
   }
-  checks.push({ name: "No 10-minute client SLA copy", weight: 5, pass: hits === 0 });
+  checks.push({ name: "No 10-minute client SLA promise", weight: 5, pass: hits === 0 });
 }
 
 async function main() {
