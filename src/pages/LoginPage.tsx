@@ -65,15 +65,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Demo links - preserved for internal testing */}
-          <div className="mt-8 rounded-lg border border-border bg-card p-4 shadow-card">
-            <p className="text-xs text-muted-foreground mb-3 font-medium">Demo Access:</p>
-            <div className="flex flex-col gap-2">
-              <Link to="/dashboard"><Button variant="secondary" size="sm" className="w-full justify-start">→ Client Dashboard</Button></Link>
-              <Link to="/coach"><Button variant="secondary" size="sm" className="w-full justify-start">→ Coach Dashboard</Button></Link>
-              <Link to="/admin/diagnostics"><Button variant="secondary" size="sm" className="w-full justify-start">→ Production Diagnostics</Button></Link>
-            </div>
-          </div>
         </div>
       </section>
       <Footer />
