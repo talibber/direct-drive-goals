@@ -191,7 +191,7 @@ export default function CoachReviewQueuePage() {
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-bold">Coach Review Queue</h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Every AI-drafted coaching message lives here until you approve, edit, or reject. Nothing sends without you.
+            Every drafted coaching response lives here until you approve, edit, or reject. Nothing sends to the client without you.
           </p>
         </div>
         <Button variant="outline" size="sm" onClick={load}>Refresh</Button>
@@ -239,7 +239,7 @@ export default function CoachReviewQueuePage() {
               </div>
 
               <div>
-                <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">AI draft</p>
+                <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Drafted response</p>
                 <div className="rounded-md border border-border bg-background/40 p-3 text-sm whitespace-pre-wrap">{d.ai_draft}</div>
               </div>
 

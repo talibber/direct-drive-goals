@@ -292,6 +292,36 @@ export type Database = {
         }
         Relationships: []
       }
+      client_automation_settings: {
+        Row: {
+          automation_level: number
+          client_id: string
+          created_at: string
+          id: string
+          onboarded_at: string
+          per_trigger_overrides: Json
+          updated_at: string
+        }
+        Insert: {
+          automation_level?: number
+          client_id: string
+          created_at?: string
+          id?: string
+          onboarded_at?: string
+          per_trigger_overrides?: Json
+          updated_at?: string
+        }
+        Update: {
+          automation_level?: number
+          client_id?: string
+          created_at?: string
+          id?: string
+          onboarded_at?: string
+          per_trigger_overrides?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       client_points: {
         Row: {
           client_id: string
@@ -351,15 +381,20 @@ export type Database = {
           ai_draft: string
           approved_at: string | null
           approved_by: string | null
+          automation_eligible: boolean
           confidence_score: number
           created_at: string
           event_id: string | null
           final_message: string | null
           goal_id: string | null
           id: string
+          response_due_at: string | null
+          risk_level: string
+          scheduled_send_at: string | null
           sent_at: string | null
           status: string
           suggested_tone: string | null
+          tone_match_score: number
           trigger_type: string
           updated_at: string
           user_id: string
@@ -368,15 +403,20 @@ export type Database = {
           ai_draft: string
           approved_at?: string | null
           approved_by?: string | null
+          automation_eligible?: boolean
           confidence_score?: number
           created_at?: string
           event_id?: string | null
           final_message?: string | null
           goal_id?: string | null
           id?: string
+          response_due_at?: string | null
+          risk_level?: string
+          scheduled_send_at?: string | null
           sent_at?: string | null
           status?: string
           suggested_tone?: string | null
+          tone_match_score?: number
           trigger_type: string
           updated_at?: string
           user_id: string
@@ -385,15 +425,20 @@ export type Database = {
           ai_draft?: string
           approved_at?: string | null
           approved_by?: string | null
+          automation_eligible?: boolean
           confidence_score?: number
           created_at?: string
           event_id?: string | null
           final_message?: string | null
           goal_id?: string | null
           id?: string
+          response_due_at?: string | null
+          risk_level?: string
+          scheduled_send_at?: string | null
           sent_at?: string | null
           status?: string
           suggested_tone?: string | null
+          tone_match_score?: number
           trigger_type?: string
           updated_at?: string
           user_id?: string
@@ -411,27 +456,33 @@ export type Database = {
       coach_message_templates: {
         Row: {
           body: string
+          client_specific_for: string | null
           coach_id: string
           created_at: string
           id: string
+          is_reusable: boolean
           title: string
           trigger_type: string | null
           updated_at: string
         }
         Insert: {
           body: string
+          client_specific_for?: string | null
           coach_id: string
           created_at?: string
           id?: string
+          is_reusable?: boolean
           title: string
           trigger_type?: string | null
           updated_at?: string
         }
         Update: {
           body?: string
+          client_specific_for?: string | null
           coach_id?: string
           created_at?: string
           id?: string
+          is_reusable?: boolean
           title?: string
           trigger_type?: string | null
           updated_at?: string
@@ -1033,6 +1084,7 @@ export type Database = {
           addressed_at: string | null
           category: string
           client_id: string
+          client_status: string
           coach_note: string | null
           coach_status: Database["public"]["Enums"]["help_radar_status"]
           context: string | null
@@ -1048,6 +1100,7 @@ export type Database = {
           addressed_at?: string | null
           category: string
           client_id: string
+          client_status?: string
           coach_note?: string | null
           coach_status?: Database["public"]["Enums"]["help_radar_status"]
           context?: string | null
@@ -1063,6 +1116,7 @@ export type Database = {
           addressed_at?: string | null
           category?: string
           client_id?: string
+          client_status?: string
           coach_note?: string | null
           coach_status?: Database["public"]["Enums"]["help_radar_status"]
           context?: string | null

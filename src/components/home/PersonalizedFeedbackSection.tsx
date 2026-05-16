@@ -35,7 +35,7 @@ export default function PersonalizedFeedbackSection() {
 
         <div className="max-w-3xl mx-auto rounded-xl border border-primary/20 bg-primary/[0.03] p-6 md:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary mb-4">
-            Behavioral drift the system notices early
+            Behavioral drift your coach catches early
           </p>
           <ul className="space-y-3">
             {patterns.map((p) => (

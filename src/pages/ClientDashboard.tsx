@@ -7,9 +7,11 @@ import { MissedGoalReportModal, type MissedGoalReportData } from "@/components/M
 import { CoachActivityStrip } from "@/components/CoachActivityStrip";
 import { OnboardingChecklist } from "@/components/OnboardingChecklist";
 import { weeklyCheckIns, goals, coachNotes, billingHistory, clientPerfectMonth, clientResetSession, clientMissedGoalsPendingReport } from "@/lib/mockData";
-import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw } from "lucide-react";
+import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw, Info } from "lucide-react";
 import { Link } from "react-router-dom";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { YourNextMove } from "@/components/YourNextMove";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer } from "recharts";
 
 export default function ClientDashboard() {
   // In real implementation, coachingTrack comes from user profile
@@ -72,18 +74,45 @@ export default function ClientDashboard() {
         </div>
       )}
 
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="font-display text-2xl md:text-3xl font-bold">Welcome back, Marcus</h1>
         <p className="text-muted-foreground mt-1">Here's your performance snapshot.</p>
       </div>
 
+      {/* Your Next Move */}
+      <YourNextMove />
+
       {/* Stats */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-5 mb-8">
-        <StatCard label="Performance Score" value={pm.active ? latestScore + 10 : latestScore} change={pm.active ? "+10 Perfect Month bonus" : "+5 from last week"} trend="up" icon={Activity} />
+        <div className="relative">
+          <StatCard label="Performance Score" value={pm.active ? latestScore + 10 : latestScore} change={pm.active ? "+10 Perfect Month bonus" : "+5 from last week"} trend="up" icon={Activity} />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="absolute top-3 right-3 text-muted-foreground hover:text-foreground" aria-label="How is this calculated?">
+                <Info size={14} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs text-xs">
+              Your score is based on goal completion, proof quality, check-in consistency, and recovery speed.
+            </TooltipContent>
+          </Tooltip>
+        </div>
         <StatCard label="Commitment Ratio" value="80%" change="8 of 10 commitments" trend="up" icon={Target} />
         <StatCard label="Check-In Streak" value="6 wks" change="Personal best!" trend="up" icon={Flame} />
         <StatCard label="Evidence Submitted" value="92%" change="On time this month" trend="up" icon={Trophy} />
-        <StatCard label="Breach Fees" value="$150" change="2 commitment breaches" trend="down" icon={DollarSign} />
+        <div className="relative">
+          <StatCard label="Commitment Stakes" value="$150" change="2 missed commitments" trend="down" icon={DollarSign} />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="absolute top-3 right-3 text-muted-foreground hover:text-foreground" aria-label="What is this?">
+                <Info size={14} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs text-xs">
+              This reflects missed commitments tied to your accountability stake.
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </div>
 
       {/* Coach Activity Strip */}
@@ -106,7 +135,7 @@ export default function ClientDashboard() {
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 14%)" />
             <XAxis dataKey="week" stroke="hsl(0 0% 55%)" fontSize={12} />
             <YAxis stroke="hsl(0 0% 55%)" fontSize={12} domain={[0, 100]} />
-            <Tooltip
+            <ChartTooltip
               contentStyle={{
                 backgroundColor: "hsl(0 0% 7%)",
                 border: "1px solid hsl(0 0% 14%)",

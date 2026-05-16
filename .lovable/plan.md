@@ -1,65 +1,104 @@
-## Human-in-the-Loop Coaching Intelligence System
+# Terrible Coaching — Client-Facing Coaching Experience + Admin Automation Layer
 
-Build a consequence-backed accountability engine where user events generate AI coaching drafts that require coach approval before sending, and the system learns from every edit.
+This is a large multi-surface change. Below is the build plan grouped by area, with a final reliability/readiness score at the end.
 
-### 1. Database schema (one migration)
+---
 
-Six new tables:
+## 1. Client-facing language scrub (CRITICAL)
 
-- `coaching_events` — every signal (goal status changes, check-ins, breaches, help-radar)
-- `coach_message_drafts` — AI drafts with status `pending | approved | edited | rejected | sent | needs_human_review`, stores both `ai_draft` and `final_message`
-- `coach_style_learning` — per-edit deltas (phrases added/removed, tone/pressure/encouragement/directness/humor scores)
-- `user_coaching_profiles` — one row per user: preferred tone, blockers, reply rate, completion rate, breach/at-risk/missed counts, last engagement
-- `message_learning_outcomes` — did user reply, did next action complete, status after
-- `breach_review_queue` (extends existing `commitment_breaches` workflow) — `pending_review` flag added; nothing auto-charges
+Remove every client-visible occurrence of: AI, bot, automated, generated, assistant, model, machine learning, LLM, algorithm, draft, confidence score, tone match, system-generated.
 
-RLS: clients see only their own events/profiles; coaches see all. Standard `updated_at` triggers.
+Files to scrub:
+- `src/components/home/PersonalizedFeedbackSection.tsx` (heading/body copy)
+- `src/pages/HomePage.tsx`, `src/components/home/*` (audit)
+- `src/pages/ClientMessagesPage.tsx`, `ClientDashboard.tsx`, `WeeklyCheckInPage.tsx`, `HelpRadarPage.tsx`, `GoalsPage.tsx`, `ResetSessionPage.tsx`, `BillingPage.tsx`
+- `src/components/GoalCard.tsx`, `OnboardingChecklist.tsx`, `CoachActivityStrip.tsx`, `MissedGoalReportModal.tsx`
 
-### 2. Edge functions
+Replace with: Coach response / Your Coach / Terrible Coaching / Your next move / Coach note / Feedback / Follow-up.
 
-- `generate-coach-draft` — input: `{ user_id, goal_id?, event_type, payload }`. Loads user profile + recent coach style learnings + last 5 approved messages, calls Lovable AI (`google/gemini-3-flash-preview`) with a system prompt that encodes the Terrible Coaching voice + the tone framework for the given event type. Returns `{ draft, suggested_tone, confidence_score, requires_human_approval: true }`. Inserts a row into `coach_message_drafts` with status `pending`.
-- `analyze-coach-edit` — input: `{ draft_id }`. Diffs `ai_draft` vs `final_message`, calls AI to score tone shifts and extract added/removed phrases, writes to `coach_style_learning`.
-- `evaluate-help-radar` — runs on a schedule or on-demand per user: applies the trigger rules (at-risk, missed×2, 72h silence, repeated blocker, engagement drop) and emits `help_radar_triggered` events + drafts.
-- `record-message-outcome` — called when a user replies or completes the next action; updates `message_learning_outcomes` and rolls up into `user_coaching_profiles`.
+Add a regression test (`src/test/no-ai-language.test.ts`) that greps the built client-facing folders for forbidden words.
 
-All gated by `verify_jwt = true` except outcome-recording which the client triggers.
+## 2. Dashboard — "Your Next Move" module
 
-### 3. Client changes
+New component `src/components/YourNextMove.tsx`:
+- Computes top priority client action from: overdue proof, due check-in, unread coach reply, at-risk goal, revision-requested proof.
+- Single card at top of `ClientDashboard.tsx` above StatCards.
+- CTA: Submit Proof / Complete Check-In / Reply to Coach / Fix Goal / Review Feedback.
+- Shows $75 stake badge when applicable.
+- Rename `StatCard` "Breach Fees" → "Commitment Stakes" with tooltip.
+- Add Performance Score explanation tooltip.
 
-**Weekly check-in (`WeeklyCheckInPage.tsx`)**
-- Replace the mock `goals` import with the user's real active goals.
-- Each goal row gets a status select: `On Track | At Risk | Missed | Completed | Needs Help`.
-- On submit: emit one `coaching_event` per goal + one `weekly_goals_submitted` event, then call `generate-coach-draft` for each non-trivial signal.
+## 3. Goals — statuses + badge
 
-**$75 breach badge** — small reusable `<BreachFeeBadge />` component with tooltip ("Potential $75 breach fee applies…"). Drop into: missed check-in card, missed goal, missed commitment, breach review screen.
+- Extend goal `status` to support: active, on_track, at_risk, proof_due, pending_review, revision_requested, missed, verified (migration: alter enum / add CHECK).
+- `GoalCard.tsx`: show category, due date, target metric, progress, proof status, status pill, `<BreachFeeBadge label="$75 at stake" />` whenever stake-eligible.
 
-**Consent copy** — add the privacy paragraph to `OnboardingAssessmentPage`.
+## 4. Weekly Check-In — per-goal connection
 
-### 4. Coach screens
+Rewrite `WeeklyCheckInPage.tsx` so for each active goal:
+- progress %, proof submitted Y/N, what moved it, what blocked it, status (On Track/At Risk/Missed), help needed.
+- Persist into `weekly_checkins.goal_statuses` JSONB.
+- On At Risk / Missed: fire `generate-coach-draft` (already exists). All copy stays client-facing.
 
-- **`/coach/review-queue`** (new) — list of pending drafts with: user, trigger, related goal, prior status, blocker, AI draft, confidence, suggested tone, engagement history. Buttons: Approve & Send · Edit · Reject · Save as Template · Mark Needs Human Review. Editing opens a textarea; on approve, calls `analyze-coach-edit` then marks `sent`.
-- **`/coach/breaches`** (existing) — add the explicit "Breach Review Queue" framing; nothing charges without approval (already true).
-- **`/coach/clients/:clientId`** — add a Coaching Profile tab: blockers, engagement trend, message history, preferred tone, AI-vs-coach diff samples.
-- **`/coach/style-learning`** (new) — dashboard of common added/removed phrases and average tone scores; best/worst performing message types.
+## 5. Help Radar — intervention engine
 
-Add sidebar links: Review Queue, Style Learning.
+`HelpRadarPage.tsx`:
+- Form fields: category, what's happening, urgency (L/M/H), response type (Direct Answer / Tough Love / Plan / Resource / Voice Note), tried, avoiding.
+- Client statuses: Received / Reviewed / Response Sent / Follow-Up Scheduled / Resolved.
+- Add `client_status` column to `help_radar_items` (separate from internal `coach_status`).
+- On submit → call `evaluate-help-radar` (already creates draft).
 
-### 5. Verification
+## 6. Messages — sender identity scrub
 
-After build, manually run through the 6 verification scenarios in the prompt (goal+check-in → events; at-risk → draft appears, doesn't auto-send; edit → learning row written; reply → outcome updates profile; missed check-in → $75 badge + breach queue; help radar → trigger fires).
+`ClientMessagesPage.tsx`: render sender as "Your Coach" / coach display_name / "Terrible Coaching" only. Strip any draft/confidence metadata.
 
-### Out of scope for this pass
+## 7. Admin Coach Approval Queue
 
-- Auto-sending any coaching message (explicitly forbidden by spec).
-- Stripe charge wiring for breach fees (queue only).
-- Scheduled cron for `evaluate-help-radar` — will expose as edge function the coach can trigger from the queue page; cron can come later.
-- Crisis-detection NLP — will add a simple keyword guard that flags to `needs_human_review` and surfaces a crisis-resources note.
+Expand `src/pages/CoachReviewQueuePage.tsx` columns: Client, Trigger, Source, Drafted Response, Risk Level, Confidence %, Tone Match %, Suggested Follow-Up, Automation Eligibility, Approve / Edit / Reject / Send Now / Schedule Send / Learn From Edit / Save Template / Mark Reusable. Add "Response needed by" countdown + filters (Due in 10 min, Overdue, High risk, Ready, Needs edit).
 
-### Technical notes
+## 8. Automation tiers + 14-day human-in-the-loop
 
-- Reuses existing `goals`, `commitment_breaches`, `help_radar_items` tables — does not duplicate.
-- All AI calls server-side via Lovable AI Gateway with `LOVABLE_API_KEY`.
-- Style learning is coach-scoped (single coach for now, but `coach_id` column is there for future).
-- Drafts store `confidence_score` from the model's self-report; low confidence auto-flags `needs_human_review`.
+New table `client_automation_settings` (migration):
+- client_id, automation_level (0–4), per-message-type overrides JSONB, onboarded_at.
 
-This is ~1 migration, 4 edge functions, ~6 new/modified pages, and ~3 new components. Ready to execute on your approval.
+Edge function `auto-send-eligible-drafts`:
+- Cron every minute.
+- Picks drafts where status='pending', confidence ≥ threshold, not crisis_flag, client past 14-day HITL window, automation level allows trigger_type.
+- Sends, marks `sent_at`, records outcome.
+
+Update `generate-coach-draft` to set `automation_eligible` boolean + `risk_level` + `tone_match_score` (compare to coach_style_learning).
+
+## 9. Safety escalation
+
+In `generate-coach-draft`, regex/keyword scan input + AI output for: self-harm, abuse, medical, legal, substance, threats, distress, refund/chargeback/harassment/discrimination. If detected → status='needs_human_review', `risk_level='high'`, block auto-send. No client-visible flag.
+
+## 10. Reset Session, Community, Content, Proof, Admin Analytics, Navigation
+
+- `ResetSessionPage.tsx`: pattern_detected, likely_cause, reset_assignment, reflection, next_commitment fields (already mostly there — relabel + tighten copy).
+- `CommunityPage.tsx`: post privacy (Public / Anonymous / Team) + post types (Win/Question/Reflection/Challenge/Perspective Request).
+- `LibraryPage.tsx`: per-recommendation "Assigned because…" line tied to goal/help-radar/checkin.
+- Proof statuses extended in `goal_proof_submissions.status` enum + client copy.
+- `CoachMetricsPage.tsx`: add SLA tiles (avg response, % under 10min, % auto-send, % escalated, clients ready for higher tier).
+- `DashboardLayout` nav: Dashboard / Goals / Check-In / Messages / Help Radar / Community / Content / Profile. Move Sessions/Reset/Operator/Direct Access/Billing into contextual cards.
+
+## 11. Reliability score (final step)
+
+After implementation run an automated audit script (`scripts/reliability-audit.ts`):
+- Greps client folders for forbidden words (must be 0).
+- Verifies all new tables/columns exist.
+- Verifies edge functions deployed.
+- Verifies cron jobs present.
+- Verifies acceptance tests 1–15.
+Outputs a 0–100 reliability score with category breakdown.
+
+---
+
+## Technical notes
+
+- Migration consolidates: goal status enum extension, `help_radar_items.client_status`, `client_automation_settings` table, `coach_message_drafts.risk_level / tone_match_score / automation_eligible / scheduled_send_at / response_due_at` columns, `coach_message_templates.is_reusable / client_specific_for`, `community_posts.privacy / post_kind`.
+- Cron: `auto-send-eligible-drafts` every minute via `pg_cron`.
+- No client-visible mention of automation anywhere — enforced by test.
+
+## Scope guard
+
+This is ~25 files + 1 migration + 1 new edge function + 1 audit script. I'll batch by surface and run the reliability audit at the end before declaring rollout-ready.
