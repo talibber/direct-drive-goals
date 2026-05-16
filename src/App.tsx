@@ -35,6 +35,7 @@ import CoachDirectAccessPage from "./pages/CoachDirectAccessPage";
 import AchievementGroupPage from "./pages/AchievementGroupPage";
 import CoachAchievementGroupPage from "./pages/CoachAchievementGroupPage";
 import CoachWeeklyQAPage from "./pages/CoachWeeklyQAPage";
+import LegalPage from "./pages/LegalPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/apply" element={<ApplyPage />} />
           <Route path="/apply/select" element={<TrackSelectionPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/legal/:slug" element={<LegalPage />} />
 
           {/* Client */}
           <Route path="/dashboard" element={<ClientDashboard />} />

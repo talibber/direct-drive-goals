@@ -4,27 +4,36 @@ import { Link } from "react-router-dom";
 const tiers = [
   {
     name: "Life Track",
-    price: "$99",
-    tagline: "The system. The community. The standard.",
-    body: "Coaching call. Customized 30-60-90 goals. Weekly check-ins. Matched pod. Five coach touchpoints a month. For anyone ready to stop lying to themselves and move.",
+    founding: "$99",
+    standard: "$149",
+    tagline: "For personal goals, routines, and discipline.",
+    body: "60-minute initial call. Monthly goals. Weekly check-ins. Evidence tracking. Pod accountability. Unlimited in-app messaging. Access to the monthly Reset Call if needed.",
     badge: null,
     goldButton: false,
+    href: "/apply?track=life",
+    cta: "Apply for Life Track",
   },
   {
-    name: "Business Track",
-    price: "$199",
-    tagline: "Everything in Life Track plus a room full of operators.",
-    body: "Monthly expert calls. Direct access to your coach. Peer networking. For people running something who need more than accountability — they need perspective from someone who gets the weight.",
-    badge: "MOST POPULAR",
+    name: "Operator Track",
+    founding: "$199",
+    standard: "$299",
+    tagline: "For founders, creators, professionals, and builders.",
+    body: "Everything in Life Track, plus operator-level goal design, business-focused feedback, sharper weekly review, and pod matching with other high-output members.",
+    badge: "Most Popular",
     goldButton: false,
+    href: "/apply?track=operator",
+    cta: "Apply for Operator Track",
   },
   {
     name: "Direct",
-    price: "$1,000",
-    tagline: "Weekly 1-on-1 calls. Same-day responses. Pre-decision feedback.",
-    body: "For the person who wants the coach, not just the system. Five spots. That's it.",
-    badge: "5 SPOTS",
+    founding: "$1,000",
+    standard: "$1,500–$2,500",
+    tagline: "For the person who wants the coach, not just the system.",
+    body: "Weekly 1-on-1 calls. Priority app review. Same-day response target. Pre-decision feedback. Deeper goal and performance review. Limited availability.",
+    badge: "5 Founding Seats",
     goldButton: true,
+    href: "/apply?track=direct",
+    cta: "Apply for Direct",
   },
 ];
 
@@ -34,51 +43,52 @@ export default function PricingPreviewSection() {
       <div className="container">
         <div className="max-w-3xl mx-auto text-center mb-6">
           <h2 className="font-display text-3xl md:text-4xl font-bold">
-            Three ways in. One standard.
+            Three tracks. One standard.
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            The system is identical. The community is matched to your track. The access to me changes.
+            Founding rates are limited. Standard rates apply after the founding cohort fills.
           </p>
         </div>
-        <p className="text-center text-sm text-muted-foreground mb-12">
-          All tracks include $75 accountability fee per missed goal or missed check-in.
+        <p className="text-center text-sm text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+          All tracks include the $75 Commitment Breach Fee for missed check-ins, missing evidence, ghosting, or broken controllable commitments. Fee may be waived at coach discretion.
         </p>
 
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-5">
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`rounded-xl border p-6 flex flex-col ${
+              className={`rounded-xl border p-6 flex flex-col relative ${
                 tier.goldButton
                   ? "border-primary/30 bg-primary/[0.04]"
                   : "border-border bg-card"
               }`}
             >
-              <div className="flex items-center gap-3 mb-1">
-                <h3 className="font-display text-lg font-bold text-foreground">{tier.name}</h3>
-                {tier.badge && (
-                  <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
-                    tier.badge === "5 SPOTS"
-                      ? "text-primary border-primary/30 bg-primary/10 animate-pulse"
-                      : "text-primary border-primary/30 bg-primary/10"
-                  }`}>
-                    {tier.badge}
-                  </span>
-                )}
+              {tier.badge && (
+                <span className={`absolute -top-3 left-6 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
+                  tier.badge === "5 Founding Seats"
+                    ? "bg-primary text-primary-foreground animate-pulse"
+                    : "bg-primary text-primary-foreground"
+                }`}>
+                  {tier.badge}
+                </span>
+              )}
+              <h3 className="font-display text-lg font-bold text-foreground mb-2 mt-1">{tier.name}</h3>
+              <div className="mb-1">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-display font-bold text-gradient-gold">{tier.founding}</span>
+                  <span className="text-sm text-muted-foreground">/month founding</span>
+                </div>
+                <p className="text-xs text-muted-foreground/70 mt-1">Standard: {tier.standard}/month</p>
               </div>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-3xl font-display font-bold text-gradient-gold">{tier.price}</span>
-                <span className="text-sm text-muted-foreground">/month</span>
-              </div>
-              <p className="text-sm font-medium text-foreground/80 mb-2">{tier.tagline}</p>
+              <p className="text-sm font-medium text-foreground/80 mt-4 mb-2">{tier.tagline}</p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">{tier.body}</p>
-              <Link to="/pricing">
+              <Link to={tier.href}>
                 <Button
                   variant={tier.goldButton ? "hero" : "heroOutline"}
                   size="default"
                   className="w-full text-sm"
                 >
-                  See full details
+                  {tier.cta}
                 </Button>
               </Link>
             </div>
