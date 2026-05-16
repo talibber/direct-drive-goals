@@ -37,6 +37,8 @@ import CoachAchievementGroupPage from "./pages/CoachAchievementGroupPage";
 import CoachWeeklyQAPage from "./pages/CoachWeeklyQAPage";
 import CoachBreachesPage from "./pages/CoachBreachesPage";
 import CoachReviewQueuePage from "./pages/CoachReviewQueuePage";
+import CoachActionQueuePage from "./pages/CoachActionQueuePage";
+import CoachTeamSettingsPage from "./pages/CoachTeamSettingsPage";
 import CoachStyleLearningPage from "./pages/CoachStyleLearningPage";
 import LegalPage from "./pages/LegalPage";
 import NotFound from "./pages/NotFound";
