@@ -21,7 +21,7 @@ export function BreachFeeBadge({ className, label = "$75" }: Props) {
         </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-xs text-xs">
-        Potential $75 breach fee applies if this commitment is missed without an approved update. The purpose is urgency, not punishment. All breach fees go to the Breach Review Queue for coach approval — nothing is charged automatically.
+        Potential $75 breach fee applies if this commitment is missed without an approved update. The purpose is urgency, not punishment. All breach fees go to the Breach Review Queue for coach approval - nothing is charged automatically.
       </TooltipContent>
     </Tooltip>
   );

@@ -49,7 +49,7 @@ export function Footer() {
             © {new Date().getFullYear()} Terrible Coaching. All rights reserved.
           </p>
           <p className="text-[11px] text-muted-foreground/50 mt-1">
-            Life Track — Founding $99/mo | Operator Track — Founding $199/mo | Direct — Founding $1,000/mo
+            Life Track - Founding $99/mo | Operator Track - Founding $199/mo | Direct - Founding $1,000/mo
           </p>
         </div>
       </div>

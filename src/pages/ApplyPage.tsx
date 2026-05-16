@@ -276,7 +276,7 @@ export default function ApplyPage() {
               required
             />
 
-            {/* Q10 — Crisis */}
+            {/* Q10 - Crisis */}
             <RadioRow
               label="10. Are you currently in crisis, at risk of harming yourself or someone else, or seeking clinical mental health care from this program?"
               options={[{ v: "no", l: "No" }, { v: "yes", l: "Yes" }]}
@@ -294,7 +294,7 @@ export default function ApplyPage() {
               </div>
             )}
 
-            {/* Q11 — Breach Fee acknowledgment */}
+            {/* Q11 - Breach Fee acknowledgment */}
             <div className="rounded-lg border-2 border-border bg-card p-5">
               <Label className="flex items-start gap-3 cursor-pointer">
                 <Checkbox checked={breachAck} onCheckedChange={(v) => setBreachAck(v === true)} className="mt-0.5" />

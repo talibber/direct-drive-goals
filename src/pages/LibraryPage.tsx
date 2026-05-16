@@ -46,7 +46,7 @@ const mockPublishedQA: PublishedQA[] = [
     id: "qa1",
     weekOf: "Apr 7, 2026",
     question: "How do you stay disciplined when the initial excitement of a new goal wears off and it just feels like grinding?",
-    answer: "This is one of the most common patterns I see. The excitement fades around day 10-14, and that's where most people quit.\n\nHere's what actually works: stop relying on excitement entirely. Build your system around the minimum viable version of the habit. If your goal is to run 5 times a week, your minimum is putting on shoes and walking for 10 minutes. The point isn't the distance — it's maintaining the identity of someone who runs.\n\nThe grind isn't the problem. The problem is that you're comparing how you feel now to how you felt on day one. That comparison will always make the present feel worse.\n\nDiscipline isn't a feeling. It's a system. Build the system, and the feeling becomes irrelevant.",
+    answer: "This is one of the most common patterns I see. The excitement fades around day 10-14, and that's where most people quit.\n\nHere's what actually works: stop relying on excitement entirely. Build your system around the minimum viable version of the habit. If your goal is to run 5 times a week, your minimum is putting on shoes and walking for 10 minutes. The point isn't the distance - it's maintaining the identity of someone who runs.\n\nThe grind isn't the problem. The problem is that you're comparing how you feel now to how you felt on day one. That comparison will always make the present feel worse.\n\nDiscipline isn't a feeling. It's a system. Build the system, and the feeling becomes irrelevant.",
     answerFormat: "text",
     category: "Habits",
     trackVisibility: "all",
@@ -58,7 +58,7 @@ const mockPublishedQA: PublishedQA[] = [
     id: "qa2",
     weekOf: "Mar 31, 2026",
     question: "I know I need to have a hard conversation with a business partner but I keep finding reasons to delay it. What's the real issue?",
-    answer: "The real issue is rarely the conversation itself. It's the story you're telling yourself about what happens after.\n\nYou're not avoiding the talk — you're avoiding the discomfort of potential conflict, rejection, or change. And every day you delay, you're choosing short-term comfort over long-term clarity.\n\nApply the 48-hour rule: if you've been thinking about this for more than 48 hours, the decision to have the conversation is already made. Now it's just execution.\n\nScript the opening line. Set the meeting. The anxiety before is always worse than the conversation itself.",
+    answer: "The real issue is rarely the conversation itself. It's the story you're telling yourself about what happens after.\n\nYou're not avoiding the talk - you're avoiding the discomfort of potential conflict, rejection, or change. And every day you delay, you're choosing short-term comfort over long-term clarity.\n\nApply the 48-hour rule: if you've been thinking about this for more than 48 hours, the decision to have the conversation is already made. Now it's just execution.\n\nScript the opening line. Set the meeting. The anxiety before is always worse than the conversation itself.",
     answerFormat: "text",
     category: "Decisions",
     trackVisibility: "business",
@@ -70,7 +70,7 @@ const mockPublishedQA: PublishedQA[] = [
     id: "qa3",
     weekOf: "Mar 24, 2026",
     question: "My check-in scores have been flat for three weeks. Same energy, same focus, same stress. How do I break the plateau?",
-    answer: "Flat scores aren't always a plateau — sometimes they're stability. But if you're feeling stuck, here's what I'd look at:\n\nFirst, check your goals. Are they still challenging, or have you settled into comfortable targets? Comfort is the enemy of growth.\n\nSecond, look at what you're avoiding. Your Help Radar should have something on it. If it doesn't, you're probably not being honest about where you're stuck.\n\nThird, talk to your pod. The people around you can see patterns you can't. Ask them what they notice.\n\nA plateau breaks when you raise the bar, not when you try harder at the same level.",
+    answer: "Flat scores aren't always a plateau - sometimes they're stability. But if you're feeling stuck, here's what I'd look at:\n\nFirst, check your goals. Are they still challenging, or have you settled into comfortable targets? Comfort is the enemy of growth.\n\nSecond, look at what you're avoiding. Your Help Radar should have something on it. If it doesn't, you're probably not being honest about where you're stuck.\n\nThird, talk to your pod. The people around you can see patterns you can't. Ask them what they notice.\n\nA plateau breaks when you raise the bar, not when you try harder at the same level.",
     answerFormat: "text",
     category: "Execution",
     trackVisibility: "all",
@@ -83,24 +83,24 @@ const mockPublishedQA: PublishedQA[] = [
 const mockContent: ContentItem[] = [
   {
     id: "c1", title: "The Gap Between Knowing and Doing", category: "Execution", contentType: "Article",
-    body: "Most people don't have an information problem. They have an execution problem. You already know what to do — you're just not doing it consistently.\n\nThe gap between knowing and doing isn't closed by more knowledge. It's closed by structure, accountability, and honest self-assessment.\n\nHere's what typically happens: you learn something valuable, feel motivated for 48 hours, then return to your default patterns. The insight fades. The behavior stays the same.\n\nThe fix isn't more motivation. It's building systems that make the right action the default action. That's what your goals, check-ins, and stakes are designed to do.\n\nStop collecting insights. Start executing on the ones you already have.",
+    body: "Most people don't have an information problem. They have an execution problem. You already know what to do - you're just not doing it consistently.\n\nThe gap between knowing and doing isn't closed by more knowledge. It's closed by structure, accountability, and honest self-assessment.\n\nHere's what typically happens: you learn something valuable, feel motivated for 48 hours, then return to your default patterns. The insight fades. The behavior stays the same.\n\nThe fix isn't more motivation. It's building systems that make the right action the default action. That's what your goals, check-ins, and stakes are designed to do.\n\nStop collecting insights. Start executing on the ones you already have.",
     keyTakeaway: "Execution beats knowledge. Build systems that make the right action your default.", readTimeMinutes: 4, isCore: true,
     assignedByCoach: true, assignedNote: "Read this before your next check-in. Relates to what we discussed.", completed: false,
   },
   {
     id: "c2", title: "How to Set Goals That Actually Stick", category: "Execution", contentType: "Guide",
-    body: "A goal without measurement is a wish. A goal without a deadline is a dream. A goal without stakes is optional.\n\nThe Terrible Coaching goal framework requires three things:\n\n1. Specificity — not 'get healthier' but 'run 3x per week for 4 weeks'\n2. Measurability — a clear binary: did you or didn't you?\n3. Time-bound — a deadline that creates urgency\n\nWhen you set your goals, ask yourself: 'If I showed this to my coach, would they be able to verify whether I hit it or not?' If the answer is no, sharpen it.\n\nVague goals are comfortable. Specific goals are terrifying. That's exactly why they work.",
+    body: "A goal without measurement is a wish. A goal without a deadline is a dream. A goal without stakes is optional.\n\nThe Terrible Coaching goal framework requires three things:\n\n1. Specificity - not 'get healthier' but 'run 3x per week for 4 weeks'\n2. Measurability - a clear binary: did you or didn't you?\n3. Time-bound - a deadline that creates urgency\n\nWhen you set your goals, ask yourself: 'If I showed this to my coach, would they be able to verify whether I hit it or not?' If the answer is no, sharpen it.\n\nVague goals are comfortable. Specific goals are terrifying. That's exactly why they work.",
     keyTakeaway: "Make goals specific, measurable, and time-bound. Comfort is the enemy of progress.", readTimeMinutes: 5, isCore: true,
     completed: true, clientReflection: "This hit home. I've been setting goals that are too vague to actually measure.",
   },
   {
     id: "c3", title: "Understanding Your DISC Profile in Practice", category: "Mindset", contentType: "Article",
-    body: "Your DISC profile isn't a label — it's a lens. It shows you your natural tendencies, not your limitations.",
+    body: "Your DISC profile isn't a label - it's a lens. It shows you your natural tendencies, not your limitations.",
     keyTakeaway: "Your DISC profile shows tendencies, not limits. Build systems around your blind spots.", readTimeMinutes: 6, isCore: true, completed: false,
   },
   {
     id: "c4", title: "The 48-Hour Rule for Decision Making", category: "Decision Making", contentType: "Framework",
-    body: "When facing a decision that's been lingering for more than 48 hours, you're not gathering more information — you're avoiding the discomfort of commitment.",
+    body: "When facing a decision that's been lingering for more than 48 hours, you're not gathering more information - you're avoiding the discomfort of commitment.",
     keyTakeaway: "If a decision has been lingering for 48 hours, decide now. Delay costs more than mistakes.", readTimeMinutes: 3, isCore: false, completed: false,
   },
   {
@@ -251,7 +251,7 @@ export default function LibraryPage() {
           <div>
             <h2 className="font-display text-xl font-bold text-foreground">Weekly Q&A</h2>
             <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-              Submit a question privately. I answer the highest-value ones in content form — every week. You learn from your own patterns and everyone else's simultaneously.
+              Submit a question privately. I answer the highest-value ones in content form - every week. You learn from your own patterns and everyone else's simultaneously.
             </p>
           </div>
 
@@ -260,13 +260,13 @@ export default function LibraryPage() {
             <div>
               <label className="text-sm font-semibold text-foreground">Submit a question</label>
               <p className="text-xs text-muted-foreground mt-0.5">
-                Private submission. Your name never appears in the answer. Be specific — vague questions get vague answers.
+                Private submission. Your name never appears in the answer. Be specific - vague questions get vague answers.
               </p>
             </div>
             <Textarea
               value={questionText}
               onChange={e => setQuestionText(e.target.value)}
-              placeholder="What are you actually trying to figure out right now? Not the surface question — the real one underneath it."
+              placeholder="What are you actually trying to figure out right now? Not the surface question - the real one underneath it."
               className="min-h-[120px]"
             />
             {questionText.length > 0 && questionText.length < 50 && (

@@ -22,7 +22,7 @@ export default function FeeSection() {
             Why there's a $75 breach fee.
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            If you say something matters, your behavior should reflect it. The breach fee creates urgency around the commitments you voluntarily make. You are not punished for needing help, adjusting goals, or being human — only for repeatedly disappearing on the standard you agreed to. Inconsistency costs something either way. We just make the cost visible.
+            If you say something matters, your behavior should reflect it. The breach fee creates urgency around the commitments you voluntarily make. You are not punished for needing help, adjusting goals, or being human - only for repeatedly disappearing on the standard you agreed to. Inconsistency costs something either way. We just make the cost visible.
           </p>
         </div>
 

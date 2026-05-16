@@ -1,11 +1,11 @@
 const weeks = [
   {
     num: 1,
-    text: "Your coaching call happens. I listen to what's actually going on — not the polished version. After the call, I review the transcript and build your 30-60-90 day goals. You get a personalized framework, not a worksheet. Your pod introduces themselves. The system starts capturing data.",
+    text: "Your coaching call happens. I listen to what's actually going on - not the polished version. After the call, I review the transcript and build your 30-60-90 day goals. You get a personalized framework, not a worksheet. Your pod introduces themselves. The system starts capturing data.",
   },
   {
     num: 2,
-    text: "First check-in submitted. Your pod sees your streak start. I review your data and send feedback — not because you asked, because the data showed something. If you skip the check-in, you're not invisible. You're just costing yourself $75 and better coaching.",
+    text: "First check-in submitted. Your pod sees your streak start. I review your data and send feedback - not because you asked, because the data showed something. If you skip the check-in, you're not invisible. You're just costing yourself $75 and better coaching.",
   },
   {
     num: 3,
@@ -13,7 +13,7 @@ const weeks = [
   },
   {
     num: 4,
-    text: "Goals due. You submit proof. I verify. If you hit everything — Achievement group. A separate room where I debrief what worked. If you missed — Reset group and $75. Either way, the month ends with a clear read on who you said you'd be and what you actually did.",
+    text: "Goals due. You submit proof. I verify. If you hit everything - Achievement group. A separate room where I debrief what worked. If you missed - Reset group and $75. Either way, the month ends with a clear read on who you said you'd be and what you actually did.",
   },
 ];
 
@@ -30,7 +30,7 @@ export default function MonthSection() {
         <div className="max-w-5xl mx-auto">
           {/* Timeline row */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-5 relative">
-            {/* Connecting line — visible on md+ */}
+            {/* Connecting line - visible on md+ */}
             <div className="hidden md:block absolute top-5 left-[12.5%] right-[12.5%] h-px bg-primary/20" />
 
             {weeks.map((w) => (

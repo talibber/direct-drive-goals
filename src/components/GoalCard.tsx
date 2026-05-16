@@ -27,10 +27,10 @@ const statusConfig: Record<GoalStatus, { label: string; sublabel: string; color:
   revision_requested: { label: "Revision", sublabel: "Coach has requested changes", color: "text-danger border-danger/30 bg-danger/10", icon: Edit3 },
   active: { label: "Active", sublabel: "Approved and stake is live", color: "text-success border-success/30 bg-success/10", icon: CheckCircle },
   at_risk: { label: "At Risk", sublabel: "Due date approaching", color: "text-warning border-warning/30 bg-warning/10", icon: AlertTriangle },
-  missed: { label: "Missed", sublabel: "Goal not completed — stake charged", color: "text-danger border-danger/30 bg-danger/10", icon: XCircle },
+  missed: { label: "Missed", sublabel: "Goal not completed - stake charged", color: "text-danger border-danger/30 bg-danger/10", icon: XCircle },
   completed: { label: "Completed", sublabel: "Goal achieved", color: "text-success border-success/30 bg-success/10", icon: Target },
   rejected: { label: "Rejected", sublabel: "Goal not approved", color: "text-danger border-danger/30 bg-danger/10", icon: XCircle },
-  proof_pending: { label: "Proof Pending", sublabel: "Due date reached — submit your proof", color: "text-primary border-primary/30 bg-primary/10", icon: Upload },
+  proof_pending: { label: "Proof Pending", sublabel: "Due date reached - submit your proof", color: "text-primary border-primary/30 bg-primary/10", icon: Upload },
   proof_submitted: { label: "Proof Submitted", sublabel: "Awaiting coach verification", color: "text-primary border-primary/30 bg-primary/10", icon: FileCheck },
   waived: { label: "Waived", sublabel: "Stake waived by coach", color: "text-primary border-primary/30 bg-primary/10", icon: Shield },
 };

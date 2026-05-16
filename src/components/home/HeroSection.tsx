@@ -5,7 +5,7 @@ import { Target } from "lucide-react";
 const previewGoals = [
   { title: "Send 50 outreach messages this week", status: "on-track", progress: 78 },
   { title: "Monthly target: close 2 clients", status: "on-track", progress: 55 },
-  { title: "Daily journaling — evidence submitted", status: "at-risk", progress: 40 },
+  { title: "Daily journaling - evidence submitted", status: "at-risk", progress: 40 },
 ];
 
 export default function HeroSection() {
@@ -53,7 +53,7 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* Right column — Dashboard preview */}
+          {/* Right column - Dashboard preview */}
           <div className="relative animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <div className="absolute -inset-16 bg-[radial-gradient(ellipse_at_center,hsl(45_100%_51%/0.07),transparent_70%)] pointer-events-none" />
             <div className="relative rounded-xl border border-border bg-card p-6 shadow-[0_20px_60px_-15px_hsl(0_0%_0%/0.6)]">

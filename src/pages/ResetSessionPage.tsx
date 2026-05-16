@@ -110,7 +110,7 @@ export default function ResetSessionPage() {
               <div>
                 <p className="font-display font-bold text-foreground text-lg">You're enrolled</p>
                 <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                  A missed goal this month means you're part of the next Reset Session — a group coaching call where common patterns get addressed without attribution. No one is called out. Everyone benefits.
+                  A missed goal this month means you're part of the next Reset Session - a group coaching call where common patterns get addressed without attribution. No one is called out. Everyone benefits.
                 </p>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function ResetSessionPage() {
             </div>
           )}
 
-          {/* Post-session Commitment — only unlocked after watching */}
+          {/* Post-session Commitment - only unlocked after watching */}
           {session.completed && watched && (
             <div className="rounded-lg border border-success/30 bg-success/5 p-6">
               <h3 className="font-display font-semibold mb-2">Post-Session Commitment</h3>

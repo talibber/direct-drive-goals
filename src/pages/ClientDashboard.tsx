@@ -25,7 +25,7 @@ export default function ClientDashboard() {
   if (isReal && profile) {
     return <RealClientDashboard profile={profile} />;
   }
-  // Demo / unauthenticated view (mock data) — preserved for internal/admin demo use.
+  // Demo / unauthenticated view (mock data) - preserved for internal/admin demo use.
   const coachingTrack = "business";
   const latestScore = weeklyCheckIns[weeklyCheckIns.length - 1].score;
   const pm = clientPerfectMonth;
@@ -47,7 +47,7 @@ export default function ClientDashboard() {
             <Trophy size={28} className="text-primary-foreground" />
             <div>
               <p className="font-display font-bold text-primary-foreground text-lg">
-                Perfect Month — All goals completed and verified.
+                Perfect Month - All goals completed and verified.
               </p>
               <p className="text-sm text-primary-foreground/80 mt-0.5">
                 {pm.callScheduledAt
@@ -130,7 +130,7 @@ export default function ClientDashboard() {
         <CoachActivityStrip />
       </div>
 
-      {/* Gamification — Life Track only */}
+      {/* Gamification - Life Track only */}
       {coachingTrack !== "business" && (
         <div className="mb-8">
           <GamificationPanel />

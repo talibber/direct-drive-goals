@@ -16,7 +16,7 @@ export default function FounderSection() {
           <div className="flex-1 pt-2">
             <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
               <p>
-                I built Terrible Coaching because I got tired of watching smart people stay stuck — not because they did not know what to do, but because nobody around them was willing to hold them to the standard they claimed they wanted.
+                I built Terrible Coaching because I got tired of watching smart people stay stuck - not because they did not know what to do, but because nobody around them was willing to hold them to the standard they claimed they wanted.
               </p>
               <p>
                 Everyone has somebody saying 'you got this.' Very few people have somebody asking, 'Did you actually do what you said you were going to do?'

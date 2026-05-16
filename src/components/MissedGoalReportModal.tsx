@@ -5,13 +5,13 @@ import { AlertTriangle } from "lucide-react";
 
 const ROOT_CAUSES = [
   "I didn't prioritize it",
-  "Life happened — unexpected circumstance",
+  "Life happened - unexpected circumstance",
   "The goal was too aggressive",
   "I avoided it on purpose",
   "I didn't have the skills or knowledge",
   "I lacked accountability mid-month",
   "I started strong then lost momentum",
-  "I'm not sure — I need to figure this out",
+  "I'm not sure - I need to figure this out",
 ] as const;
 
 export interface MissedGoalReportData {
@@ -77,7 +77,7 @@ export function MissedGoalReportModal({ open, goalTitle, goalTarget, goalId, onS
             </div>
             <p className="font-display font-bold text-lg text-foreground">Submitted.</p>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
-              Your $75 stake has been charged. You're enrolled in this month's Reset Session. Your response will inform the session — without attribution.
+              Your $75 stake has been charged. You're enrolled in this month's Reset Session. Your response will inform the session - without attribution.
             </p>
           </div>
         </DialogContent>
@@ -91,9 +91,9 @@ export function MissedGoalReportModal({ open, goalTitle, goalTarget, goalId, onS
         <div className="space-y-6">
           {/* Header */}
           <div className="text-center space-y-2">
-            <h2 className="font-display text-xl font-bold text-foreground">Goal Missed — Tell Me Why</h2>
+            <h2 className="font-display text-xl font-bold text-foreground">Goal Missed - Tell Me Why</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              This isn't punishment. This is data. Be honest — it will be addressed in the Reset Session.
+              This isn't punishment. This is data. Be honest - it will be addressed in the Reset Session.
             </p>
           </div>
 
@@ -103,7 +103,7 @@ export function MissedGoalReportModal({ open, goalTitle, goalTarget, goalId, onS
             <p className="text-xs text-muted-foreground">Target: {goalTarget}</p>
           </div>
 
-          {/* Field 1 — Root cause */}
+          {/* Field 1 - Root cause */}
           <div>
             <label className="text-sm font-semibold text-foreground block mb-2">What was the real reason?</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -124,7 +124,7 @@ export function MissedGoalReportModal({ open, goalTitle, goalTarget, goalId, onS
             {errors.rootCause && <p className="text-xs text-danger mt-1">{errors.rootCause}</p>}
           </div>
 
-          {/* Field 2 — Explanation */}
+          {/* Field 2 - Explanation */}
           <div>
             <label className="text-sm font-semibold text-foreground block mb-2">Say more. What actually happened?</label>
             <Textarea
@@ -137,7 +137,7 @@ export function MissedGoalReportModal({ open, goalTitle, goalTarget, goalId, onS
             {errors.explanation && <p className="text-xs text-danger mt-1">{errors.explanation}</p>}
           </div>
 
-          {/* Field 3 — Pattern recognition */}
+          {/* Field 3 - Pattern recognition */}
           <div>
             <label className="text-sm font-semibold text-foreground block mb-2">Is this the first time this pattern has shown up for you?</label>
             <div className="flex gap-3">
@@ -173,7 +173,7 @@ export function MissedGoalReportModal({ open, goalTitle, goalTarget, goalId, onS
             )}
           </div>
 
-          {/* Field 4 — Commitment */}
+          {/* Field 4 - Commitment */}
           <div>
             <label className="text-sm font-semibold text-foreground block mb-2">What specifically will be different next month?</label>
             <Textarea

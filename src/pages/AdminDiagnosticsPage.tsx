@@ -19,7 +19,7 @@ export default function AdminDiagnosticsPage() {
     const results: Check[] = [];
 
     const { data: session } = await supabase.auth.getSession();
-    results.push({ name: "Auth connected", status: session.session ? "pass" : "warn", detail: session.session ? "Active session" : "No session — sign in to verify" });
+    results.push({ name: "Auth connected", status: session.session ? "pass" : "warn", detail: session.session ? "Active session" : "No session - sign in to verify" });
 
     const { data: tenants, error: tErr } = await supabase.from("tenants").select("id,slug,is_demo");
     results.push({ name: "Tenants table reachable", status: !tErr && (tenants?.length ?? 0) >= 2 ? "pass" : "fail", detail: tErr?.message ?? `${tenants?.length ?? 0} tenants` });
@@ -46,7 +46,7 @@ export default function AdminDiagnosticsPage() {
     const { count: candidates } = await supabase.from("commitment_breaches").select("id", { count: "exact", head: true }).eq("lifecycle_status", "candidate");
     results.push({ name: "Breach lifecycle tracked", status: candidates !== null ? "pass" : "fail", detail: `${candidates ?? 0} candidates awaiting review` });
 
-    results.push({ name: "Payments live", status: get("payments_live_enabled") ? "pass" : "warn", detail: "Stripe/Paddle not yet enabled — expected for beta" });
+    results.push({ name: "Payments live", status: get("payments_live_enabled") ? "pass" : "warn", detail: "Stripe/Paddle not yet enabled - expected for beta" });
 
     const passes = results.filter((r) => r.status === "pass").length;
     const total = results.length;

@@ -122,7 +122,7 @@ export default function HelpRadarPage() {
         What are you struggling with outside of your goals? Be honest. This is how we know where to focus.
       </p>
 
-      {/* Section 1 — Flag a Challenge Area */}
+      {/* Section 1 - Flag a Challenge Area */}
       <div className="rounded-lg border border-border bg-card p-6 mb-8">
         <h2 className="font-display font-semibold text-lg mb-4">Flag a Challenge Area</h2>
 
@@ -213,7 +213,7 @@ export default function HelpRadarPage() {
         )}
       </div>
 
-      {/* Section 2 — Active Challenges */}
+      {/* Section 2 - Active Challenges */}
       <div className="rounded-lg border border-border bg-card p-6">
         <h2 className="font-display font-semibold text-lg mb-4">Your Active Challenges</h2>
         {activeItems.length === 0 ? (

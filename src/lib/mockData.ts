@@ -258,7 +258,7 @@ export const billingHistory = [
 ];
 
 export const coachNotes = [
-  { date: "Apr 7", note: "Strong week. Follow through on the enterprise outreach. Stop overthinking the MVP scope—ship ugly." },
+  { date: "Apr 7", note: "Strong week. Follow through on the enterprise outreach. Stop overthinking the MVP scope-ship ugly." },
   { date: "Mar 31", note: "Missed journaling goal. We discussed why avoidance patterns show up when stakes feel real. Recommit next month." },
   { date: "Mar 24", note: "Energy dipped. Sleep needs to be the priority. No negotiation on the 10pm cutoff." },
 ];
@@ -346,7 +346,7 @@ export const helpRadarItems: HelpRadarItem[] = [
     customDescription: null,
     context: "Sleeping 5 hours most nights. Caffeine is the only thing keeping me functional. I know it's affecting my decision making but I can't figure out where the time goes.",
     coachStatus: "addressed",
-    coachNote: "We need to address the 10pm cutoff again. This is non-negotiable. Your performance data already shows the correlation — weeks with <6hrs sleep, your score drops 15+ points. Let's lock in a sleep protocol this week.",
+    coachNote: "We need to address the 10pm cutoff again. This is non-negotiable. Your performance data already shows the correlation - weeks with <6hrs sleep, your score drops 15+ points. Let's lock in a sleep protocol this week.",
     flaggedAt: "Apr 3, 2026",
     addressedAt: "Apr 5, 2026",
     resolvedByClient: false,
@@ -666,7 +666,7 @@ export const communityPosts: CommunityPost[] = [
     clientName: "Alex",
     level: 3,
     levelName: "No Excuses",
-    content: "Reset Session insight: I realized I'm not afraid of failure — I'm afraid of being seen failing. Different problem, different solution. Working on it.",
+    content: "Reset Session insight: I realized I'm not afraid of failure - I'm afraid of being seen failing. Different problem, different solution. Working on it.",
     postType: "reflection",
     likesCount: 11,
     liked: true,
@@ -869,7 +869,7 @@ export const mockMessages: Record<string, Message[]> = {
   ],
   "conv-2": [
     { id: "m8", conversationId: "conv-2", senderId: "coach-1", senderRole: "coach", content: "Sarah, you haven't checked in this week. What's going on?", attachmentUrls: [], sentAt: "Apr 8, 2026 9:00 AM", readAt: "Apr 8, 2026 12:00 PM" },
-    { id: "m9", conversationId: "conv-2", senderId: "2", senderRole: "client", content: "Sorry — work has been overwhelming. I'll do it tonight.", attachmentUrls: [], sentAt: "Apr 8, 2026 12:15 PM", readAt: "Apr 8, 2026 12:20 PM" },
+    { id: "m9", conversationId: "conv-2", senderId: "2", senderRole: "client", content: "Sorry - work has been overwhelming. I'll do it tonight.", attachmentUrls: [], sentAt: "Apr 8, 2026 12:15 PM", readAt: "Apr 8, 2026 12:20 PM" },
     { id: "m10", conversationId: "conv-2", senderId: "coach-1", senderRole: "coach", content: "Tonight doesn't work if you said that last week too. What's actually blocking you? Be honest.", attachmentUrls: [], sentAt: "Apr 8, 2026 12:25 PM", readAt: "Apr 8, 2026 1:00 PM" },
     { id: "m11", conversationId: "conv-2", senderId: "2", senderRole: "client", content: "I need to talk about adjusting my goal timeline.", attachmentUrls: [], sentAt: "Apr 9, 2026 3:45 PM", readAt: null },
   ],
@@ -889,6 +889,6 @@ export const mockMessages: Record<string, Message[]> = {
   ],
   "conv-5": [
     { id: "m22", conversationId: "conv-5", senderId: "5", senderRole: "client", content: "Newsletter is live! 142 subscribers on day one.", attachmentUrls: [], sentAt: "Apr 6, 2026 5:30 PM", readAt: "Apr 6, 2026 5:45 PM" },
-    { id: "m23", conversationId: "conv-5", senderId: "coach-1", senderRole: "coach", content: "Strong start. Now the hard part — doing it again next week. What's the topic?", attachmentUrls: [], sentAt: "Apr 6, 2026 6:00 PM", readAt: "Apr 6, 2026 6:15 PM" },
+    { id: "m23", conversationId: "conv-5", senderId: "coach-1", senderRole: "coach", content: "Strong start. Now the hard part - doing it again next week. What's the topic?", attachmentUrls: [], sentAt: "Apr 6, 2026 6:00 PM", readAt: "Apr 6, 2026 6:15 PM" },
   ],
 };

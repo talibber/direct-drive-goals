@@ -18,7 +18,7 @@ const lifeSteps: OnboardingStep[] = [
   {
     id: "s0",
     day: 0,
-    title: "Application approved — welcome in.",
+    title: "Application approved - welcome in.",
     description: "",
     status: "complete",
     completedAt: "Apr 3, 2026",
@@ -127,7 +127,7 @@ export function OnboardingChecklist({ track = "life" }: OnboardingChecklistProps
     : "Your first 7 days.";
 
   const subtitle = track === "business"
-    ? "Seven days to get the system calibrated to your business. Move fast — your stake is active after your first goal is approved."
+    ? "Seven days to get the system calibrated to your business. Move fast - your stake is active after your first goal is approved."
     : "Complete these in order. The system gets better the more honest you are from the start.";
 
   return (

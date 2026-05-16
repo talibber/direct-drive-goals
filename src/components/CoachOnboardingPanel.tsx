@@ -49,7 +49,7 @@ export function CoachOnboardingPanel() {
     <div className="rounded-lg border border-primary/30 bg-card p-5 shadow-card mb-8">
       <h3 className="font-display font-semibold text-foreground mb-1 flex items-center gap-2">
         <UserPlus size={18} className="text-primary" />
-        New Clients — Onboarding
+        New Clients - Onboarding
         <span className="ml-1 text-xs font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">
           {clients.length}
         </span>

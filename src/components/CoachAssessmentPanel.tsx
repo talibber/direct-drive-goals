@@ -125,12 +125,12 @@ export function CoachAssessmentPanel({ clientId }: { clientId?: string }) {
 
       {/* Coach Notes */}
       <div className="rounded-lg border border-primary/30 bg-card p-5 shadow-card">
-        <h3 className="font-display font-semibold text-foreground mb-1">Coaching approach notes — private</h3>
+        <h3 className="font-display font-semibold text-foreground mb-1">Coaching approach notes - private</h3>
         <p className="text-xs text-muted-foreground mb-3">Record how you plan to adapt your style for this client based on their results.</p>
         <Textarea
           value={notes}
           onChange={e => setNotes(e.target.value)}
-          placeholder="e.g. High D — be direct, skip small talk. Action-biased so front-load accountability structure..."
+          placeholder="e.g. High D - be direct, skip small talk. Action-biased so front-load accountability structure..."
           className="min-h-[100px] mb-3"
         />
         <Button variant="outline" size="sm" onClick={handleSave} className="gap-1.5">

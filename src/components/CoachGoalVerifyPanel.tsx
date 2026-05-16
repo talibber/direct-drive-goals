@@ -34,7 +34,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
 
   const handleWaive = () => {
     if (!coachNote.trim()) {
-      toast.error("A note is required when waiving the stake — the client needs context.");
+      toast.error("A note is required when waiving the stake - the client needs context.");
       return;
     }
     onAction(goal.id, "waived", coachNote);
@@ -75,7 +75,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
           </DialogHeader>
 
           <div className="grid md:grid-cols-5 gap-6 mt-2">
-            {/* Left — Evidence */}
+            {/* Left - Evidence */}
             <div className="md:col-span-3 space-y-4">
               {/* Goal details */}
               <div className="rounded-lg border border-border bg-secondary/30 p-4 space-y-2">
@@ -86,7 +86,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>
                     <span className="text-xs text-muted-foreground">Metric:</span>{" "}
-                    <span className="text-foreground">{goal.metricType} — {goal.targetValue}</span>
+                    <span className="text-foreground">{goal.metricType} - {goal.targetValue}</span>
                   </div>
                   <div>
                     <span className="text-xs text-muted-foreground">Target:</span>{" "}
@@ -176,7 +176,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
               )}
             </div>
 
-            {/* Right — Context + Actions */}
+            {/* Right - Context + Actions */}
             <div className="md:col-span-2 space-y-4">
               {/* Client context */}
               {goal.clientName && (
@@ -237,7 +237,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
         <DialogContent className="sm:max-w-md">
           <div className="text-center space-y-4 py-2">
             <AlertTriangle size={40} className="mx-auto text-danger" />
-            <h3 className="font-display font-semibold text-lg text-foreground">Confirm — Mark Missed</h3>
+            <h3 className="font-display font-semibold text-lg text-foreground">Confirm - Mark Missed</h3>
             <p className="text-sm text-muted-foreground">
               This will charge the client <span className="font-semibold text-foreground">${goal.stake}</span> and enroll them in the monthly Reset Session. This cannot be undone.
             </p>
@@ -246,7 +246,7 @@ export function CoachGoalVerifyPanel({ goal, open, onClose, onAction }: CoachGoa
                 Go back
               </Button>
               <Button onClick={confirmMiss} className="flex-1 bg-danger hover:bg-danger/90 text-danger-foreground">
-                Confirm — Mark Missed
+                Confirm - Mark Missed
               </Button>
             </div>
           </div>

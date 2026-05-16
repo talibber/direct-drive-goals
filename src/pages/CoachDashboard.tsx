@@ -89,7 +89,7 @@ export default function CoachDashboard() {
       {/* Stale Coach Activity Alert */}
       <CoachStaleActivityAlert />
 
-      {/* New Clients — Onboarding */}
+      {/* New Clients - Onboarding */}
       <CoachOnboardingPanel />
 
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
@@ -183,7 +183,7 @@ export default function CoachDashboard() {
             return (
               <div key={session.id} className="rounded-lg border border-danger/30 bg-card p-5">
                 <h3 className="font-display font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <RotateCcw size={18} className="text-danger" /> Reset Session — {session.month}
+                  <RotateCcw size={18} className="text-danger" /> Reset Session - {session.month}
                 </h3>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-3">
@@ -201,7 +201,7 @@ export default function CoachDashboard() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Common Patterns (Coach Prep — Private)</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Common Patterns (Coach Prep - Private)</p>
                     <textarea
                       defaultValue={session.sessionNotes || ""}
                       placeholder="Note common themes without attributing to specific clients..."
@@ -213,10 +213,10 @@ export default function CoachDashboard() {
                   </div>
                 </div>
 
-                {/* Client Miss Reasons — This Month */}
+                {/* Client Miss Reasons - This Month */}
                 {missedGoalReports.length > 0 && (
                   <div className="mt-6 border-t border-border pt-5">
-                    <h4 className="text-sm font-semibold text-foreground mb-4">Client Miss Reasons — This Month</h4>
+                    <h4 className="text-sm font-semibold text-foreground mb-4">Client Miss Reasons - This Month</h4>
                     
                     {/* Root cause breakdown */}
                     <div className="mb-4">
@@ -283,7 +283,7 @@ export default function CoachDashboard() {
             return (
               <div key={session.id} className="rounded-lg border border-border bg-card p-5">
                 <h3 className="font-display font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-success" /> Reset Session — {session.month}
+                  <CheckCircle2 size={18} className="text-success" /> Reset Session - {session.month}
                   <span className="text-xs font-normal text-muted-foreground ml-auto">Completed</span>
                 </h3>
 
@@ -362,7 +362,7 @@ export default function CoachDashboard() {
                                 {eng?.recordingWatched ? "Watched" : "Not watched"}
                               </span>
                               <span className={`flex items-center gap-1 ${eng?.commitmentSubmitted ? "text-success" : "text-muted-foreground"}`}>
-                                {eng?.commitmentSubmitted ? <CheckCircle2 size={12} /> : "—"}
+                                {eng?.commitmentSubmitted ? <CheckCircle2 size={12} /> : "-"}
                                 {eng?.commitmentSubmitted ? "Committed" : "No commitment"}
                               </span>
                               {noResponse && (
@@ -524,10 +524,10 @@ export default function CoachDashboard() {
 
                 {highNeed.length > 0 && (
                   <div>
-                    <p className="text-xs text-danger uppercase tracking-wider font-semibold mb-2">High Need — Review Soon</p>
+                    <p className="text-xs text-danger uppercase tracking-wider font-semibold mb-2">High Need - Review Soon</p>
                     <div className="space-y-1">
                       {highNeed.map((c) => (
-                        <p key={c.name} className="text-sm text-danger font-medium">{c.name} — {c.count} unaddressed challenges</p>
+                        <p key={c.name} className="text-sm text-danger font-medium">{c.name} - {c.count} unaddressed challenges</p>
                       ))}
                     </div>
                   </div>
@@ -545,7 +545,7 @@ export default function CoachDashboard() {
           {atRisk.filter(c => c.type === "Life").length > 0 && (
             <div className="rounded-lg border border-warning/30 bg-warning/5 p-5">
               <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
-                <AlertTriangle size={18} /> Life Track — Needs Attention
+                <AlertTriangle size={18} /> Life Track - Needs Attention
               </h3>
               <div className="space-y-3">
                 {atRisk.filter(c => c.type === "Life").map((c) => (
@@ -565,7 +565,7 @@ export default function CoachDashboard() {
           {atRisk.filter(c => c.type === "Business").length > 0 && (
             <div className="rounded-lg border border-warning/30 bg-warning/5 p-5">
               <h3 className="font-display font-semibold text-warning mb-3 flex items-center gap-2">
-                <AlertTriangle size={18} /> Operator Track — Needs Attention
+                <AlertTriangle size={18} /> Operator Track - Needs Attention
               </h3>
               <div className="space-y-3">
                 {atRisk.filter(c => c.type === "Business").map((c) => (

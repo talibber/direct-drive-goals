@@ -22,7 +22,7 @@ export function PerfectMonthSchedulePanel({ alert, open, onClose, onSchedule }: 
 
   if (!alert) return null;
 
-  const defaultTitle = `Next Level Call — ${alert.clientName} — ${alert.month}`;
+  const defaultTitle = `Next Level Call - ${alert.clientName} - ${alert.month}`;
 
   const handleSchedule = () => {
     if (!date) {
