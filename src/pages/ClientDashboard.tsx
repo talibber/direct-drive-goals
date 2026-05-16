@@ -11,7 +11,7 @@ import { Activity, Target, Flame, DollarSign, Trophy, RotateCcw, Info } from "lu
 import { Link } from "react-router-dom";
 import { YourNextMove } from "@/components/YourNextMove";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer } from "recharts";
 
 export default function ClientDashboard() {
   // In real implementation, coachingTrack comes from user profile
@@ -135,7 +135,7 @@ export default function ClientDashboard() {
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 14%)" />
             <XAxis dataKey="week" stroke="hsl(0 0% 55%)" fontSize={12} />
             <YAxis stroke="hsl(0 0% 55%)" fontSize={12} domain={[0, 100]} />
-            <Tooltip
+            <ChartTooltip
               contentStyle={{
                 backgroundColor: "hsl(0 0% 7%)",
                 border: "1px solid hsl(0 0% 14%)",
