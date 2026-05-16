@@ -91,7 +91,46 @@ Deno.serve(async (req) => {
       if (!insErr) created++;
     }
 
-    return new Response(JSON.stringify({ scanned: overdueGoals?.length ?? 0, created, skipped }), {
+    // Missed weekly check-in sweep: users with active goals who haven't
+    // submitted a weekly check-in in the last 8 days get a missed_checkin breach
+    // (one per user per week, deduped).
+    const eightDaysAgo = new Date(Date.now() - 8 * 86400_000).toISOString();
+    const sevenDaysAgo = new Date(Date.now() - 7 * 86400_000).toISOString();
+    const { data: activeUsers } = await supabase
+      .from("goals")
+      .select("user_id")
+      .in("status", ["pending_approval", "active"]);
+    const uniqueUsers = Array.from(new Set((activeUsers ?? []).map(u => u.user_id)));
+    let missedCheckinCreated = 0;
+    for (const user_id of uniqueUsers) {
+      const { data: recentCheckin } = await supabase
+        .from("coaching_events")
+        .select("id")
+        .eq("user_id", user_id)
+        .eq("event_type", "weekly_goals_submitted")
+        .gte("created_at", eightDaysAgo)
+        .limit(1)
+        .maybeSingle();
+      if (recentCheckin) continue;
+      const { data: recentBreach } = await supabase
+        .from("commitment_breaches")
+        .select("id")
+        .eq("user_id", user_id)
+        .eq("breach_reason", "missed_checkin")
+        .gte("created_at", sevenDaysAgo)
+        .limit(1)
+        .maybeSingle();
+      if (recentBreach) continue;
+      const { error: insErr } = await supabase.from("commitment_breaches").insert({
+        user_id,
+        breach_reason: "missed_checkin",
+        reset_call_enrolled: true,
+        amount: 75,
+      });
+      if (!insErr) missedCheckinCreated++;
+    }
+
+    return new Response(JSON.stringify({ scanned: overdueGoals?.length ?? 0, created, skipped, missedCheckinCreated }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

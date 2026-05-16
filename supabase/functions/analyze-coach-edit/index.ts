@@ -21,7 +21,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
     const { draft_id, coach_id } = await req.json();
-    if (!draft_id) return new Response(JSON.stringify({ error: "draft_id required" }), { status: 400, headers: corsHeaders });
+    if (!draft_id || !coach_id) {
+      return new Response(JSON.stringify({ error: "draft_id and coach_id required" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
 
     const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
@@ -56,7 +58,7 @@ Deno.serve(async (req) => {
     const len = Math.max(added.length, removed.length, 1);
     for (let i = 0; i < len; i++) {
       rows.push({
-        coach_id: coach_id || draft.user_id, // fallback for single-coach mode
+        coach_id,
         draft_id,
         phrase_added: added[i] || null,
         phrase_removed: removed[i] || null,
