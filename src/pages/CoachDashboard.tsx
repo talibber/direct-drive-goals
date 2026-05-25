@@ -42,7 +42,7 @@ export default function CoachDashboard() {
         cnt(supabase.from("weekly_checkins" as any).select("id", { count: "exact", head: true }).eq("is_demo", false).gte("created_at", since7)),
         cnt(supabase.from("goals").select("id", { count: "exact", head: true }).eq("status", "at_risk").eq("is_demo", false)),
         cnt(supabase.from("goals").select("id", { count: "exact", head: true }).eq("status", "missed").eq("is_demo", false)),
-        cnt(supabase.from("help_radar_items").select("id", { count: "exact", head: true }).eq("is_demo", false).neq("coach_status", "resolved")),
+        cnt(supabase.from("help_radar_items").select("id", { count: "exact", head: true }).eq("is_demo", false).in("coach_status", ["seen", "on_deck"])),
         cnt(supabase.from("coach_message_drafts").select("id", { count: "exact", head: true }).eq("is_demo", false).in("status", ["pending", "needs_human_review", "approved"])),
         cnt(supabase.from("direct_access_messages").select("id", { count: "exact", head: true }).eq("is_demo", false).is("read_at", null)),
         cnt(supabase.from("commitment_breaches").select("id", { count: "exact", head: true }).eq("is_demo", false).eq("lifecycle_status", "candidate")),
