@@ -179,7 +179,7 @@ ${(recentApproved || []).map(m => `[${m.trigger_type}] ${m.final_message?.slice(
         event_id: eventRow?.id,
         trigger_type: event_type,
         ai_draft: parsed.draft || "",
-        status: highRisk || lowConfidence ? "needs_human_review" : "pending",
+        status: highRisk ? "needs_human_review" : "pending",
         confidence_score: parsed.confidence_score ?? 0.5,
         suggested_tone: parsed.suggested_tone || null,
         risk_level,
@@ -189,6 +189,7 @@ ${(recentApproved || []).map(m => `[${m.trigger_type}] ${m.final_message?.slice(
       })
       .select("id")
       .single();
+
 
     if (draftErr) throw draftErr;
 
