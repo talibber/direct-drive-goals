@@ -163,9 +163,10 @@ ${(recentApproved || []).map(m => `[${m.trigger_type}] ${m.final_message?.slice(
       ? tonePref.filter((t: string) => t === parsed.suggested_tone).length / tonePref.length
       : 0;
 
-    // Eligibility for auto-send: must be low risk, decent confidence, simple trigger
-    const SIMPLE_TRIGGERS = new Set(["weekly_goals_submitted", "win_reinforcement", "proof_request", "checkin_missed"]);
-    const automation_eligible = !highRisk && (parsed.confidence_score ?? 0) >= 0.75 && SIMPLE_TRIGGERS.has(event_type);
+    // Launch posture: every draft must go through the coach approval queue.
+    // automation_eligible stays false until the global kill switch is flipped on.
+    const automation_eligible = false;
+
 
     // 10-minute response SLA target
     const response_due_at = new Date(Date.now() + 10 * 60_000).toISOString();
