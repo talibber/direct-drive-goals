@@ -3,6 +3,8 @@ import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const ACTIVE = new Set(["active", "trial"]);
+// past_due / canceled are routed to /billing for recovery instead of /onboarding/pending.
+const BILLING_RECOVERY = new Set(["past_due", "canceled"]);
 
 type State = { loading: boolean; allowed: boolean; redirect: string };
 
