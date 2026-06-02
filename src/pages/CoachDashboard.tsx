@@ -36,21 +36,38 @@ export default function CoachDashboard() {
       const since7 = new Date(Date.now() - 7 * 86400_000).toISOString();
       const cnt = async (q: any) => { const { count } = await q; return count ?? 0; };
 
-      const [active, new7, recent, atRisk, missed, radar, drafts, unread, breaches] = await Promise.all([
-        cnt(supabase.from("profiles").select("user_id", { count: "exact", head: true }).eq("client_type", "real").eq("is_demo", false)),
-        cnt(supabase.from("profiles").select("user_id", { count: "exact", head: true }).eq("client_type", "real").eq("is_demo", false).gte("created_at", since7)),
-        cnt(supabase.from("weekly_checkins" as any).select("id", { count: "exact", head: true }).eq("is_demo", false).gte("created_at", since7)),
-        cnt(supabase.from("goals").select("id", { count: "exact", head: true }).eq("status", "at_risk").eq("is_demo", false)),
-        cnt(supabase.from("goals").select("id", { count: "exact", head: true }).eq("status", "missed").eq("is_demo", false)),
-        cnt(supabase.from("help_radar_items").select("id", { count: "exact", head: true }).eq("is_demo", false).in("coach_status", ["seen", "on_deck"])),
-        cnt(supabase.from("coach_message_drafts").select("id", { count: "exact", head: true }).eq("is_demo", false).in("status", ["pending", "needs_human_review", "approved"])),
-        cnt(supabase.from("direct_access_messages").select("id", { count: "exact", head: true }).eq("is_demo", false).is("read_at", null)),
-        cnt(supabase.from("commitment_breaches").select("id", { count: "exact", head: true }).eq("is_demo", false).eq("lifecycle_status", "candidate")),
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+      const coachId = session.user.id;
+
+      // Get clients assigned to this coach (super-admin RLS will broaden automatically)
+      const { data: myClients } = await supabase
+        .from("profiles")
+        .select("user_id, created_at")
+        .eq("coach_id", coachId)
+        .eq("client_type", "real")
+        .eq("is_demo", false);
+      const clientIds = (myClients ?? []).map((c: any) => c.user_id);
+      const newClients7d = (myClients ?? []).filter((c: any) => c.created_at >= since7).length;
+      const activeClients = clientIds.length;
+
+      // If no assigned clients, surface zero counts (super-admin will still see all via RLS in detail pages)
+      const inClients = (q: any) => clientIds.length === 0 ? Promise.resolve({ count: 0 }) : q.in("client_id", clientIds);
+      const inUsers = (q: any) => clientIds.length === 0 ? Promise.resolve({ count: 0 }) : q.in("user_id", clientIds);
+
+      const [recent, atRisk, missed, radar, drafts, unread, breaches] = await Promise.all([
+        cnt(inClients(supabase.from("weekly_checkins" as any).select("id", { count: "exact", head: true }).eq("is_demo", false).gte("created_at", since7))),
+        cnt(inUsers(supabase.from("goals").select("id", { count: "exact", head: true }).eq("status", "at_risk").eq("is_demo", false))),
+        cnt(inUsers(supabase.from("goals").select("id", { count: "exact", head: true }).eq("status", "missed").eq("is_demo", false))),
+        cnt(inClients(supabase.from("help_radar_items").select("id", { count: "exact", head: true }).eq("is_demo", false).in("coach_status", ["seen", "on_deck"]))),
+        cnt(inUsers(supabase.from("coach_message_drafts").select("id", { count: "exact", head: true }).eq("is_demo", false).in("status", ["pending", "needs_human_review", "approved"]))),
+        cnt(inClients(supabase.from("direct_access_messages").select("id", { count: "exact", head: true }).eq("is_demo", false).is("read_at", null))),
+        cnt(inUsers(supabase.from("commitment_breaches").select("id", { count: "exact", head: true }).eq("is_demo", false).eq("lifecycle_status", "candidate"))),
       ]);
 
       if (cancelled) return;
       setCounts({
-        activeClients: active, newClients7d: new7, recentCheckins: recent,
+        activeClients, newClients7d, recentCheckins: recent,
         atRiskGoals: atRisk, missedGoals: missed, helpRadar: radar,
         pendingDrafts: drafts, unreadMessages: unread, breachCandidates: breaches,
       });

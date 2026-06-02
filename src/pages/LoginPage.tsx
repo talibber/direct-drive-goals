@@ -75,6 +75,15 @@ export default function LoginPage() {
     navigate("/dashboard");
   }
 
+  async function onForgotPassword() {
+    if (!email) return toast.error("Enter your email above, then click 'Forgot password'.");
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) return toast.error(error.message);
+    toast.success("Password reset email sent. Check your inbox.");
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -98,6 +107,9 @@ export default function LoginPage() {
               <Button variant="hero" className="w-full" type="submit" disabled={loading}>
                 {loading ? "Signing in..." : "Log In"}
               </Button>
+              <button type="button" onClick={onForgotPassword} className="block w-full text-center text-xs text-muted-foreground hover:text-primary underline-offset-2 hover:underline">
+                Forgot password?
+              </button>
             </form>
             <div className="my-4 text-center text-xs text-muted-foreground">or</div>
             <Button variant="outline" className="w-full" onClick={onGoogle}>Continue with Google</Button>
