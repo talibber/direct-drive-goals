@@ -1868,6 +1868,7 @@ export type Database = {
       profiles: {
         Row: {
           client_type: string
+          coach_id: string | null
           coaching_track: string
           created_at: string
           display_name: string | null
@@ -1884,6 +1885,7 @@ export type Database = {
         }
         Insert: {
           client_type?: string
+          coach_id?: string | null
           coaching_track?: string
           created_at?: string
           display_name?: string | null
@@ -1900,6 +1902,7 @@ export type Database = {
         }
         Update: {
           client_type?: string
+          coach_id?: string | null
           coaching_track?: string
           created_at?: string
           display_name?: string | null
@@ -2568,7 +2571,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_coach_of: {
+        Args: { _client: string; _coach: string }
+        Returns: boolean
+      }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      is_super_admin: { Args: { _user: string }; Returns: boolean }
       production_tenant_id: { Args: never; Returns: string }
       same_pod: { Args: { _pod: string; _user: string }; Returns: boolean }
     }
