@@ -84,13 +84,16 @@ Deno.serve(async (req) => {
     .limit(5);
   push("Subscription statuses valid", (badStatus?.length ?? 0) === 0 ? "pass" : "fail", `${badStatus?.length ?? 0} invalid statuses`, "rls");
 
-  // Active users must have a coach assigned.
-  const { count: activeNoCoach } = await sb
+  // Active users (excluding staff) must have a coach assigned.
+  const activeQuery = sb
     .from("profiles")
     .select("user_id", { count: "exact", head: true })
     .in("subscription_status", ["active", "trial"])
     .eq("client_type", "real")
     .is("coach_id", null);
+  const { count: activeNoCoach } = staffSet.length
+    ? await activeQuery.not("user_id", "in", `(${staffSet.join(",")})`)
+    : await activeQuery;
   push("Active real users have a coach", (activeNoCoach ?? 0) === 0 ? "pass" : "fail", `${activeNoCoach ?? 0} active users without coach`, "isolation");
 
   // Data sanity — counts only, no PII.
