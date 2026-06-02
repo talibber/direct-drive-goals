@@ -84,8 +84,13 @@ export default function BillingPage() {
           <p className="font-display text-xl font-bold text-foreground">Terrible Coaching - {planName} - ${planPrice}/mo</p>
           <p className="text-xs text-muted-foreground mt-1">Next billing: May 1, 2026</p>
         </div>
-        <Badge className={isPendingPayment ? "bg-warning/10 text-warning border-warning/30" : "bg-success/10 text-success border-success/30"}>
-          {isPendingPayment ? "Payment required" : status === "active" ? "Active" : status}
+        <Badge className={
+          status === "active" || isTrial ? "bg-success/10 text-success border-success/30"
+          : isPastDue ? "bg-warning/10 text-warning border-warning/30"
+          : isCanceled ? "bg-destructive/10 text-destructive border-destructive/30"
+          : "bg-muted text-muted-foreground border-border"
+        }>
+          {status === "active" ? "Active" : isTrial ? "Trial" : isPendingPayment ? "Payment required" : isPastDue ? "Past due" : isCanceled ? "Canceled" : "Inactive"}
         </Badge>
       </div>
 
