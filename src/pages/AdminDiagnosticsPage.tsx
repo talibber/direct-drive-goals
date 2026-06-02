@@ -81,24 +81,39 @@ export default function AdminDiagnosticsPage() {
         </div>
       </div>
 
-      <div className="space-y-2">
-        {checks.map((c, i) => (
-          <Card key={i} className="p-4 flex items-start gap-3">
-            {c.status === "pass" && <CheckCircle2 className="text-success mt-0.5" size={20} />}
-            {c.status === "warn" && <AlertTriangle className="text-primary mt-0.5" size={20} />}
-            {c.status === "fail" && <XCircle className="text-destructive mt-0.5" size={20} />}
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <p className="font-medium text-sm">{c.name}</p>
-                <Badge variant={c.status === "pass" ? "default" : c.status === "warn" ? "secondary" : "destructive"}>
-                  {c.status.toUpperCase()}
-                </Badge>
-              </div>
-              <p className="text-xs text-muted-foreground mt-0.5">{c.detail}</p>
+      {error && (
+        <div className="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">
+          {error}
+        </div>
+      )}
+
+      {(Object.keys(CATEGORY_LABEL) as Category[]).map((cat) => {
+        const group = checks.filter((c) => (c.category ?? "config") === cat);
+        if (!group.length) return null;
+        return (
+          <div key={cat} className="mb-6">
+            <h2 className="font-display text-sm uppercase tracking-wide text-muted-foreground mb-2">{CATEGORY_LABEL[cat]}</h2>
+            <div className="space-y-2">
+              {group.map((c, i) => (
+                <Card key={`${cat}-${i}`} className="p-4 flex items-start gap-3">
+                  {c.status === "pass" && <CheckCircle2 className="text-success mt-0.5" size={20} />}
+                  {c.status === "warn" && <AlertTriangle className="text-primary mt-0.5" size={20} />}
+                  {c.status === "fail" && <XCircle className="text-destructive mt-0.5" size={20} />}
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm">{c.name}</p>
+                      <Badge variant={c.status === "pass" ? "default" : c.status === "warn" ? "secondary" : "destructive"}>
+                        {c.status.toUpperCase()}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">{c.detail}</p>
+                  </div>
+                </Card>
+              ))}
             </div>
-          </Card>
-        ))}
-      </div>
+          </div>
+        );
+      })}
     </CoachLayout>
   );
 }
