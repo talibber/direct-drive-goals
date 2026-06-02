@@ -1,14 +1,17 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const ACTIVE = new Set(["active", "trial"]);
+// past_due / canceled are routed to /billing for recovery instead of /onboarding/pending.
+const BILLING_RECOVERY = new Set(["past_due", "canceled"]);
 
 type State = { loading: boolean; allowed: boolean; redirect: string };
 
 /** Gate for /dashboard/*: requires an authenticated user whose profile is active/trial OR staff. */
 export function ProtectedClientRoute({ children }: { children: ReactNode }) {
   const [s, setS] = useState<State>({ loading: true, allowed: false, redirect: "/login" });
+  const location = useLocation();
 
   useEffect(() => {
     let cancelled = false;
@@ -27,12 +30,19 @@ export function ProtectedClientRoute({ children }: { children: ReactNode }) {
       const status = (profile as any)?.subscription_status ?? "unprovisioned";
       if (profile && ACTIVE.has(status) && !(profile as any).is_demo) {
         setS({ loading: false, allowed: true, redirect: "" });
+      } else if (BILLING_RECOVERY.has(status)) {
+        // Allow access to /billing for recovery; redirect everything else there.
+        if (location.pathname.startsWith("/billing")) {
+          setS({ loading: false, allowed: true, redirect: "" });
+        } else {
+          setS({ loading: false, allowed: false, redirect: "/billing" });
+        }
       } else {
         setS({ loading: false, allowed: false, redirect: "/onboarding/pending" });
       }
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [location.pathname]);
 
   if (s.loading) return <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">Loading…</div>;
   if (!s.allowed) return <Navigate to={s.redirect} replace />;
