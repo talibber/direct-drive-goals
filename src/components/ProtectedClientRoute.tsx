@@ -29,6 +29,8 @@ export function ProtectedClientRoute({ children }: { children: ReactNode }) {
       const status = (profile as any)?.subscription_status ?? "unprovisioned";
       if (profile && ACTIVE.has(status) && !(profile as any).is_demo) {
         setS({ loading: false, allowed: true, redirect: "" });
+      } else if (BILLING_RECOVERY.has(status)) {
+        setS({ loading: false, allowed: false, redirect: "/billing" });
       } else {
         setS({ loading: false, allowed: false, redirect: "/onboarding/pending" });
       }
