@@ -42,7 +42,7 @@ export function ProtectedClientRoute({ children }: { children: ReactNode }) {
       }
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [location.pathname]);
 
   if (s.loading) return <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">Loading…</div>;
   if (!s.allowed) return <Navigate to={s.redirect} replace />;
