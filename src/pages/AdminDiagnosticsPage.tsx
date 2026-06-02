@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle2, XCircle, AlertTriangle, RefreshCw } from "lucide-react";
 
+type CheckStatus = "pass" | "warn" | "fail";
 type Category = "config" | "isolation" | "payments" | "rls" | "data";
 interface Check { name: string; status: CheckStatus; detail: string; category?: Category }
 
