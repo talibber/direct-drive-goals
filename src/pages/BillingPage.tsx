@@ -23,18 +23,58 @@ export default function BillingPage() {
       <h1 className="font-display text-2xl md:text-3xl font-bold mb-2">Billing</h1>
       <p className="text-muted-foreground mb-8">Your subscription and commitment breach fee history.</p>
 
+      {isUnprovisioned && (
+        <div className="rounded-lg border border-border bg-card p-5 mb-6">
+          <p className="font-display text-lg font-semibold mb-1">Application under review</p>
+          <p className="text-sm text-muted-foreground">
+            Your account isn't activated yet. Once your application is accepted, payment instructions will appear here.
+          </p>
+        </div>
+      )}
+
       {isPendingPayment && (
         <div className="rounded-lg border border-primary/40 bg-primary/[0.05] p-5 mb-6">
           <p className="font-display text-lg font-semibold mb-1">Complete payment to activate your account</p>
           <p className="text-sm text-muted-foreground mb-4">
-            Your application has been accepted. Your coach will send a secure checkout link by email. Once payment clears,
-            your dashboard unlocks automatically.
+            Your application has been accepted. A secure checkout link will arrive by email. Once payment clears, your
+            dashboard unlocks automatically.
           </p>
-          {/* TODO(payments): wire Stripe/Paddle checkout when secrets are configured.
-              Webhook should flip profiles.subscription_status from pending_payment → active. */}
+          {/* TODO(payments): wire Stripe checkout via create-checkout edge function once payments are enabled.
+              Webhook flips profiles.subscription_status from pending_payment → active. */}
           <Button variant="outline" disabled className="cursor-not-allowed">Pay now (coming soon)</Button>
         </div>
       )}
+
+      {isPastDue && (
+        <div className="rounded-lg border border-warning/40 bg-warning/[0.05] p-5 mb-6">
+          <p className="font-display text-lg font-semibold mb-1 text-warning">Payment past due</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Your last payment didn't go through. Dashboard access is paused until billing is current. Update your payment
+            method to restore access.
+          </p>
+          <Button variant="outline" disabled className="cursor-not-allowed">Update payment method (coming soon)</Button>
+        </div>
+      )}
+
+      {isCanceled && (
+        <div className="rounded-lg border border-destructive/40 bg-destructive/[0.05] p-5 mb-6">
+          <p className="font-display text-lg font-semibold mb-1 text-destructive">Subscription canceled</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Your access ends at the close of the current billing cycle. Reactivate any time to resume coaching.
+          </p>
+          <Button variant="outline" disabled className="cursor-not-allowed">Reactivate (coming soon)</Button>
+        </div>
+      )}
+
+      {isTrial && (
+        <div className="rounded-lg border border-success/40 bg-success/[0.05] p-5 mb-6">
+          <p className="font-display text-lg font-semibold mb-1 text-success">Trial active</p>
+          <p className="text-sm text-muted-foreground">
+            You're on a complimentary trial granted by an admin. No payment is required until your trial ends.
+          </p>
+        </div>
+      )}
+
 
 
       {/* Subscription card */}
