@@ -74,7 +74,7 @@ const App = () => (
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/onboarding/pending" element={<OnboardingPendingPage />} />
           <Route path="/onboarding/legal" element={<LegalAcceptancePage />} />
-          <Route path="/admin/diagnostics" element={<AdminDiagnosticsPage />} />
+          <Route path="/admin/diagnostics" element={coach(<AdminDiagnosticsPage />)} />
           <Route path="/legal/:slug" element={<LegalPage />} />
 
           {/* Client (gated) */}
