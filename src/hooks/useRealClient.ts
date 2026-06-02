@@ -10,11 +10,14 @@ export type ClientProfile = {
   is_demo: boolean;
   pod_id: string | null;
   subscription_status: string | null;
+  coach_id: string | null;
 };
+
+const ACTIVE = new Set(["active", "trial"]);
 
 /**
  * Returns { profile, loading, isReal } for the authenticated user.
- * If no session → isReal=false and profile=null (treat as demo view).
+ * isReal = real, non-demo profile WITH an active/trial subscription.
  */
 export function useRealClient() {
   const [profile, setProfile] = useState<ClientProfile | null>(null);
@@ -30,7 +33,7 @@ export function useRealClient() {
       }
       const { data } = await supabase
         .from("profiles")
-        .select("user_id, display_name, email, coaching_track, client_type, is_demo, pod_id, subscription_status")
+        .select("user_id, display_name, email, coaching_track, client_type, is_demo, pod_id, subscription_status, coach_id")
         .eq("user_id", session.user.id)
         .maybeSingle();
       if (!cancelled) {
@@ -41,6 +44,11 @@ export function useRealClient() {
     return () => { cancelled = true; };
   }, []);
 
-  const isReal = !!profile && profile.client_type === "real" && !profile.is_demo;
+  const isReal =
+    !!profile &&
+    profile.client_type === "real" &&
+    !profile.is_demo &&
+    ACTIVE.has(profile.subscription_status ?? "");
+
   return { profile, loading, isReal };
 }
