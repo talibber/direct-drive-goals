@@ -31,7 +31,12 @@ export function ProtectedClientRoute({ children }: { children: ReactNode }) {
       if (profile && ACTIVE.has(status) && !(profile as any).is_demo) {
         setS({ loading: false, allowed: true, redirect: "" });
       } else if (BILLING_RECOVERY.has(status)) {
-        setS({ loading: false, allowed: false, redirect: "/billing" });
+        // Allow access to /billing for recovery; redirect everything else there.
+        if (location.pathname.startsWith("/billing")) {
+          setS({ loading: false, allowed: true, redirect: "" });
+        } else {
+          setS({ loading: false, allowed: false, redirect: "/billing" });
+        }
       } else {
         setS({ loading: false, allowed: false, redirect: "/onboarding/pending" });
       }
