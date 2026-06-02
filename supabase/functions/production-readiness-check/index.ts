@@ -45,13 +45,18 @@ Deno.serve(async (req) => {
   const { count: orphanGoals } = await sb.from("goals").select("id", { count: "exact", head: true }).is("tenant_id", null);
   push("All goals scoped to tenant", (orphanGoals ?? 0) === 0 ? "pass" : "warn", `${orphanGoals ?? 0} unscoped`, "isolation");
 
-  // Real clients should all have a coach assigned (real onboarding requirement).
-  const { count: realNoCoach } = await sb
+  // Real clients (excluding staff) should all have a coach assigned.
+  const { data: staffIds } = await sb.from("staff_members").select("user_id");
+  const staffSet = (staffIds ?? []).map((r: any) => r.user_id);
+  const orphanQuery = sb
     .from("profiles")
     .select("user_id", { count: "exact", head: true })
     .eq("client_type", "real")
     .eq("is_demo", false)
     .is("coach_id", null);
+  const { count: realNoCoach } = staffSet.length
+    ? await orphanQuery.not("user_id", "in", `(${staffSet.join(",")})`)
+    : await orphanQuery;
   push("Real clients have a coach assigned", (realNoCoach ?? 0) === 0 ? "pass" : "fail", `${realNoCoach ?? 0} real clients without coach_id`, "isolation");
 
   // Real goals should inherit coach_id.
