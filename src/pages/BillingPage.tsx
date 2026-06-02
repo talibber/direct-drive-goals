@@ -13,6 +13,10 @@ export default function BillingPage() {
   const totalThisMonth = planPrice + stakesThisMonth;
   const status = profile?.subscription_status ?? "unprovisioned";
   const isPendingPayment = status === "pending_payment";
+  const isPastDue = status === "past_due";
+  const isCanceled = status === "canceled";
+  const isUnprovisioned = status === "unprovisioned";
+  const isTrial = status === "trial";
 
   return (
     <DashboardLayout coachingTrack={coachingTrack}>
