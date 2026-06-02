@@ -11,6 +11,7 @@ type State = { loading: boolean; allowed: boolean; redirect: string };
 /** Gate for /dashboard/*: requires an authenticated user whose profile is active/trial OR staff. */
 export function ProtectedClientRoute({ children }: { children: ReactNode }) {
   const [s, setS] = useState<State>({ loading: true, allowed: false, redirect: "/login" });
+  const location = useLocation();
 
   useEffect(() => {
     let cancelled = false;
