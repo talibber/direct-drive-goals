@@ -45,13 +45,18 @@ Deno.serve(async (req) => {
   const { count: orphanGoals } = await sb.from("goals").select("id", { count: "exact", head: true }).is("tenant_id", null);
   push("All goals scoped to tenant", (orphanGoals ?? 0) === 0 ? "pass" : "warn", `${orphanGoals ?? 0} unscoped`, "isolation");
 
-  // Real clients should all have a coach assigned (real onboarding requirement).
-  const { count: realNoCoach } = await sb
+  // Real clients (excluding staff) should all have a coach assigned.
+  const { data: staffIds } = await sb.from("staff_members").select("user_id");
+  const staffSet = (staffIds ?? []).map((r: any) => r.user_id);
+  const orphanQuery = sb
     .from("profiles")
     .select("user_id", { count: "exact", head: true })
     .eq("client_type", "real")
     .eq("is_demo", false)
     .is("coach_id", null);
+  const { count: realNoCoach } = staffSet.length
+    ? await orphanQuery.not("user_id", "in", `(${staffSet.join(",")})`)
+    : await orphanQuery;
   push("Real clients have a coach assigned", (realNoCoach ?? 0) === 0 ? "pass" : "fail", `${realNoCoach ?? 0} real clients without coach_id`, "isolation");
 
   // Real goals should inherit coach_id.
@@ -79,13 +84,16 @@ Deno.serve(async (req) => {
     .limit(5);
   push("Subscription statuses valid", (badStatus?.length ?? 0) === 0 ? "pass" : "fail", `${badStatus?.length ?? 0} invalid statuses`, "rls");
 
-  // Active users must have a coach assigned.
-  const { count: activeNoCoach } = await sb
+  // Active users (excluding staff) must have a coach assigned.
+  const activeQuery = sb
     .from("profiles")
     .select("user_id", { count: "exact", head: true })
     .in("subscription_status", ["active", "trial"])
     .eq("client_type", "real")
     .is("coach_id", null);
+  const { count: activeNoCoach } = staffSet.length
+    ? await activeQuery.not("user_id", "in", `(${staffSet.join(",")})`)
+    : await activeQuery;
   push("Active real users have a coach", (activeNoCoach ?? 0) === 0 ? "pass" : "fail", `${activeNoCoach ?? 0} active users without coach`, "isolation");
 
   // Data sanity — counts only, no PII.
