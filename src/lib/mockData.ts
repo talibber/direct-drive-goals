@@ -1,3 +1,17 @@
+// ──────────────────────────────────────────────────────────────────────────
+// MOCK / DEMO DATA. Never use in real client production flows.
+// In production builds this module emits a runtime warning the first time it
+// is imported so we can audit lingering call-sites.
+// To intentionally use mocks in dev: set VITE_ENABLE_MOCK=true.
+// ──────────────────────────────────────────────────────────────────────────
+const IS_DEV_MOCK_ENABLED =
+  // @ts-ignore
+  (import.meta as any)?.env?.DEV === true && (import.meta as any)?.env?.VITE_ENABLE_MOCK === "true";
+if (typeof window !== "undefined" && !IS_DEV_MOCK_ENABLED) {
+  // eslint-disable-next-line no-console
+  console.warn("[mockData] imported in production build — replace with live queries.");
+}
+
 export const weeklyCheckIns = [
   { week: "W1", energy: 7, stress: 5, focus: 8, confidence: 7, sleep: 6, habits: 80, score: 74 },
   { week: "W2", energy: 6, stress: 6, focus: 7, confidence: 6, sleep: 7, habits: 75, score: 69 },
